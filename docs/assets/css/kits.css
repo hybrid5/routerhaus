@@ -1,0 +1,570 @@
+/* ==========================================================
+   RouterHaus Kits — 2025 Premium UI (clean, fast, accessible)
+   - Tight variable system (light/dark), high-contrast defaults
+   - Faster glass (low blur), subtle depth, crisp borders
+   - Quiz modal: sticky header/footer, pill controls, progress
+   - Filters: color-only selection, simple semantics
+   - Cards: consistent media ratio, zero overflow, smooth hover
+   - Mobile drawer & compare polished; reduced motion supported
+   ========================================================== */
+
+/* ------------------- Design Tokens ------------------- */
+:root {
+  /* Fonts */
+  --font-sans: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+
+  /* Palette (light) */
+  --bg: #f8fafc;
+  --bg-elev: #ffffff;
+  --text-1: #0a0f1e;
+  --text-2: #3a4361;
+  --muted: #6d7694;
+
+  --primary: #7b7bff; /* violet-blue */
+  --accent: #5ea0ff;  /* azure */
+  --success: #19c38b;
+  --warning: #ff9d3a;
+  --danger: #ff6a6a;
+
+  /* Surfaces / depth */
+  --card: rgba(255,255,255,0.86);
+  --card-strong: rgba(255,255,255,0.96);
+  --surface: rgba(255,255,255,0.64);
+
+  --border: color-mix(in oklab, #0b1226 15%, transparent);
+  --border-strong: color-mix(in oklab, #0b1226 28%, transparent);
+  --ring: color-mix(in oklab, var(--primary) 35%, transparent);
+  --shadow: 0 18px 50px rgba(16, 24, 40, 0.16);
+  --shadow-sm: 0 10px 28px rgba(16, 24, 40, 0.10);
+
+  /* Rounding / spacing / timing */
+  --radius: 14px;
+  --radius-lg: 22px;
+  --space-1: .5rem; --space-2: .75rem; --space-3: 1rem; --space-4: 1.25rem;
+
+  /* Glass (kept light for perf) */
+  --glass-blur: 12px;
+  --glass-sat: 140%;
+  --glass-tint: rgba(255,255,255,0.42);
+
+  /* Motion */
+  --easing: cubic-bezier(.22,.61,.36,1);
+  --t-fast: .16s var(--easing);
+  --t: .22s var(--easing);
+
+  color-scheme: light dark;
+  accent-color: var(--primary);
+  scroll-behavior: smooth;
+}
+
+html[data-theme="dark"] {
+  --bg: #090e16;
+  --bg-elev: #0e1423;
+  --text-1: #eef2fb;
+  --text-2: #cbd4ea;
+  --muted: #9aa3be;
+
+  --card: rgba(18,22,36,0.62);
+  --card-strong: rgba(22,28,46,0.88);
+  --surface: rgba(24,30,50,0.52);
+
+  --border: color-mix(in oklab, #ffffff 18%, transparent);
+  --border-strong: color-mix(in oklab, #ffffff 32%, transparent);
+  --ring: color-mix(in oklab, var(--primary) 55%, transparent);
+  --shadow: 0 22px 64px rgba(0,0,0,.6);
+  --shadow-sm: 0 12px 36px rgba(0,0,0,.4);
+
+  --glass-tint: rgba(8,12,20,0.40);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) { /* mirrors the block above */ }
+}
+
+/* ------------------- Base / Resets ------------------- */
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body {
+  margin: 0;
+  background:
+    radial-gradient(1400px 900px at 70% -15%, color-mix(in oklab, var(--accent) 12%, transparent), transparent 65%),
+    var(--bg);
+  color: var(--text-1);
+  font-family: var(--font-sans);
+  font-size: clamp(14px, 1vw + 12px, 16px);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+img { max-width: 100%; display: block; }
+
+/* Scrollbars */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-thumb {
+  background: color-mix(in oklab, var(--muted) 40%, transparent);
+  border: 3px solid transparent; border-radius: 999px; background-clip: padding-box;
+}
+::-webkit-scrollbar-thumb:hover { background: color-mix(in oklab, var(--muted) 60%, transparent); }
+
+/* ------------------- Utility Surfaces ------------------- */
+.glass {
+  background: color-mix(in oklab, var(--card) 78%, var(--glass-tint));
+  backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-sat));
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-sat));
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+}
+
+/* ------------------- Layout ------------------- */
+.container { max-width: 1300px; margin-inline: auto; padding: clamp(14px, 2vw, 24px); }
+@media (min-width: 1440px) { .container { max-width: 1680px; } }
+
+.kits-layout {
+  display: grid; grid-template-columns: 340px minmax(0,1fr);
+  gap: clamp(14px, 1.8vw, 24px);
+}
+.kits-layout > * { min-width: 0; }
+
+/* ------------------- Header ------------------- */
+.page-header { display: block; margin: .75rem 0 .5rem; }
+.header-actions {
+  display: grid;
+  grid-template-columns: auto 1fr repeat(3, max-content);
+  gap: 10px;
+  align-items: center;
+  width: 100%;
+}
+#openQuiz, #editQuiz, #copyLink, #resetAll { height: 42px; }
+#searchInput { height: 42px; font-size: .95rem; }
+
+/* ------------------- Buttons / Chips ------------------- */
+.btn {
+  border-radius: var(--radius);
+  padding: .55rem .9rem;
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--text-1);
+  font-weight: 600; cursor: pointer;
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--t), box-shadow var(--t), background var(--t), filter var(--t);
+  font-size: .95rem;
+}
+.btn:hover { transform: translateY(-2px); box-shadow: var(--shadow); filter: brightness(1.04); }
+.btn:active { transform: translateY(-1px); }
+.btn.primary { background: var(--primary); color: #fff; border-color: color-mix(in oklab, var(--primary) 55%, transparent); }
+.btn.ghost { background: transparent; color: var(--text-1); }
+.btn.glass { background: var(--surface); }
+.btn.small { padding: .4rem .7rem; font-size: .92rem; }
+.btn.tiny { padding: .3rem .55rem; font-size: .84rem; }
+.btn:disabled { opacity: .55; cursor: not-allowed; transform: none; box-shadow: none; }
+
+.icon-btn {
+  border-radius: 12px; border: 1px solid var(--border);
+  background: var(--surface); padding: .38rem .6rem;
+  transition: background var(--t), transform var(--t);
+}
+.icon-btn:hover { background: color-mix(in oklab, var(--surface) 92%, transparent); transform: translateY(-2px); }
+
+.badge {
+  display: inline-grid; place-items: center;
+  min-width: 1.4rem; height: 1.4rem; padding: 0 .45rem;
+  font-size: .8rem; font-weight: 800; color: #fff; border-radius: 999px;
+  background: var(--accent);
+}
+
+/* ------------------- Filters Sidebar ------------------- */
+.filters-rail {
+  position: sticky; top: 16px; height: calc(100dvh - 32px);
+  overflow: auto; padding: 14px; border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  background: color-mix(in oklab, var(--card) 78%, var(--glass-tint));
+}
+.filters-header { display: flex; justify-content: space-between; align-items: baseline; }
+.filters-header small { color: var(--muted); }
+
+.divider { height: 1px; background: var(--border); margin: 12px 0; opacity: .5; }
+
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip {
+  border-radius: 999px; padding: .35rem .7rem;
+  background: var(--surface); border: 1px solid var(--border); color: var(--text-1);
+  font-size: .92rem; line-height: 1; transition: background var(--t), transform var(--t);
+}
+.chip:hover { background: color-mix(in oklab, var(--accent) 22%, var(--surface)); transform: translateY(-1px); }
+.active-chips { display: flex; gap: 8px; flex-wrap: wrap; margin-block: .5rem; }
+.active-chips .chip { background: var(--primary); color: #fff; border-color: transparent; }
+
+/* Facet blocks */
+.facet {
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: color-mix(in oklab, var(--surface) 72%, transparent);
+  overflow: hidden;
+}
+.facet + .facet { margin-top: 12px; }
+
+.facet summary {
+  list-style: none; cursor: pointer;
+  display: flex; align-items: center; justify-content: space-between; gap: 10px;
+  padding: 12px 14px; font-weight: 800;
+}
+.facet summary::-webkit-details-marker { display: none; }
+.facet .facet-meta { display: inline-flex; align-items: center; gap: 10px; }
+.facet .badge.count { background: color-mix(in oklab, var(--accent) 45%, transparent); color: var(--text-1); visibility: hidden; }
+.facet .chev { transition: transform var(--t); }
+details.facet[open] .chev { transform: rotate(180deg); }
+
+.facet .facet-controls { display: flex; justify-content: flex-end; gap: 8px; padding: 0 14px 8px; }
+.facet .facet-clear { border-radius: 12px; font-size: .85rem; padding: .3rem .6rem; border: 1px solid var(--border); background: transparent; cursor: pointer; }
+.facet .facet-clear:hover { background: color-mix(in oklab, var(--surface) 95%, transparent); }
+
+.facet .options { padding: 12px 14px; display: grid; gap: 8px; grid-template-columns: 1fr; }
+.facet .options.two-cols { grid-template-columns: 1fr 1fr; }
+
+/* Color-only selection (no custom checkmarks) */
+.facet .options label {
+  position: relative; display: flex; align-items: center;
+  border: 1px solid var(--border); border-radius: 14px; background: transparent;
+  padding: .45rem .8rem; cursor: pointer; transition: transform var(--t), background var(--t), color var(--t);
+  min-width: 0;
+}
+.facet .options label:hover { background: color-mix(in oklab, var(--surface) 90%, transparent); transform: translateY(-1px); }
+.facet .options input[type="checkbox"] { position: absolute; inset: 0; opacity: 0; pointer-events: none; }
+.facet .options input:checked + span {
+  background: var(--primary); color: #fff; border-radius: 12px; padding: .2rem .5rem; margin: -.2rem -.5rem;
+}
+
+/* Compare */
+#comparePanel, #compareDrawer {
+  border-radius: var(--radius-lg);
+  background: color-mix(in oklab, var(--card) 80%, var(--glass-tint));
+  border: 1px solid var(--border);
+  padding: 14px;
+}
+.compare-items { display: flex; flex-wrap: wrap; gap: 8px; }
+.compare-items .item {
+  padding: .35rem .7rem; border-radius: 999px;
+  background: color-mix(in oklab, var(--surface) 86%, transparent);
+  border: 1px solid var(--border); max-width: 240px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  transition: transform var(--t), background var(--t);
+}
+.compare-items .item:hover { transform: translateY(-1px); background: color-mix(in oklab, var(--accent) 28%, var(--surface)); }
+
+/* ------------------- Toolbar / Search ------------------- */
+.toolbar {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap;
+  margin-bottom: 12px; padding: 12px 14px;
+  border: 1px solid var(--border); border-radius: var(--radius-lg);
+  background: color-mix(in oklab, var(--card) 78%, var(--glass-tint));
+}
+.sort, .pagesize { display: flex; align-items: center; gap: 10px; white-space: nowrap; }
+.sort select, .pagesize select {
+  padding: .55rem .75rem; border-radius: 12px; background: var(--surface); border: 1px solid var(--border); transition: transform var(--t);
+  height: 42px; font-size: .95rem;
+}
+.sort select:hover, .pagesize select:hover { transform: translateY(-1px); }
+
+.toggle { display: flex; align-items: center; gap: 8px; white-space: nowrap; }
+.toggle input { width: 1.1rem; height: 1.1rem; }
+
+#searchInput {
+  flex: 1 1 clamp(220px, 33vw, 420px);
+  padding: .6rem 1rem; border-radius: 12px; border: 1px solid var(--border);
+  background: var(--surface); color: var(--text-1);
+  transition: box-shadow var(--t), transform var(--t), border-color var(--t);
+}
+#searchInput::placeholder { color: color-mix(in oklab, var(--text-2) 65%, transparent); }
+#searchInput:focus { border-color: var(--ring); box-shadow: 0 0 0 4px color-mix(in oklab, var(--ring) 45%, transparent); transform: translateY(-1px); }
+
+/* ------------------- Grid & Cards ------------------- */
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(clamp(280px, 28vw, 340px), 1fr));
+  gap: clamp(12px, 1.5vw, 20px);
+}
+.product {
+  display: grid;
+  grid-template-rows: auto auto 1fr auto;
+  gap: 10px;
+  padding: 14px;
+  border-radius: var(--radius-lg);
+  background: color-mix(in oklab, var(--card) 82%, var(--glass-tint));
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+  transition: transform var(--t), box-shadow var(--t), border-color var(--t);
+  will-change: transform, filter;
+  isolation: isolate; /* contain glow */
+  filter: drop-shadow(0 4px 10px color-mix(in oklab, var(--accent) 22%, transparent));
+}
+
+.product:hover {
+  box-shadow: var(--shadow), 0 0 18px 4px color-mix(in oklab, var(--accent) 35%, transparent);
+}
+
+.product .product-media {
+  width: 100%; aspect-ratio: 16/9; min-height: 180px; max-height: 220px;
+  border-radius: 12px; overflow: hidden; position: relative;
+  background:
+    linear-gradient(180deg, color-mix(in oklab, var(--surface) 75%, transparent), transparent),
+    radial-gradient(260px 160px at 65% 35%, color-mix(in oklab, var(--accent) 25%, transparent), transparent 75%),
+    color-mix(in oklab, var(--surface) 62%, transparent);
+  border: 1px solid var(--border); transition: transform var(--t);
+}
+.product:hover .product-media { transform: scale(1.03); }
+.product .product-media img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+
+.product .title {
+  font-weight: 900; letter-spacing: .2px;
+  font-size: clamp(.98rem, .9rem + .3vw, 1.12rem);
+  line-height: 1.3;
+  display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden;
+}
+@media (min-width: 1024px) { .product .title { -webkit-line-clamp: 3; } }
+
+.product .chips.line { display: flex; flex-wrap: wrap; gap: 8px; }
+.product .chips.line .chip { padding: .25rem .5rem; font-size: .82rem; background: color-mix(in oklab, var(--surface) 86%, transparent); }
+
+.product .specs { margin: 4px 0 6px; display: grid; gap: 8px; padding: 0; list-style: none; }
+.product .specs li { display: grid; grid-auto-flow: column; grid-auto-columns: max-content 1fr; align-items: start; gap: 10px; font-size: .92rem; }
+.product .specs li::before {
+  content: ""; width: 10px; height: 10px; margin-top: 6px; border-radius: 999px;
+  background: color-mix(in oklab, var(--accent) 65%, var(--primary));
+  box-shadow: inset 0 0 0 2.5px color-mix(in oklab, var(--bg-elev) 75%, transparent);
+}
+
+.priceRow { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.price { font-weight: 900; letter-spacing: .25px; }
+
+/* ------------------- Recommendations ------------------- */
+.recommendations { margin-block: 10px 18px; border-top: 1px solid var(--border); padding-top: 12px; }
+#recoNote { color: var(--muted); }
+
+/* ------------------- Pagination ------------------- */
+.pagination {
+  display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-top: 12px;
+}
+.pagination .page {
+  min-width: 40px; height: 40px; padding: 0 12px; border-radius: 12px;
+  border: 1px solid var(--border); background: var(--surface); font-weight: 800;
+  transition: transform var(--t), background var(--t), border-color var(--t);
+}
+.pagination .page:hover { transform: translateY(-2px); background: color-mix(in oklab, var(--surface) 92%, transparent); }
+.pagination .page[aria-current="page"] { background: var(--primary); color: #fff; border-color: transparent; }
+.pagination .disabled { opacity: .45; pointer-events: none; }
+
+/* ------------------- Skeletons ------------------- */
+.skeletons .skeleton { position: relative; overflow: hidden; }
+.shimmer {
+  background: linear-gradient(90deg, rgba(255,255,255,.06), rgba(255,255,255,.14), rgba(255,255,255,.06));
+  background-size: 200% 100%;
+  animation: shimmer 1.4s linear infinite;
+}
+@keyframes shimmer { from { background-position: -200% 0; } to { background-position: 200% 0; } }
+
+/* ------------------- Mobile Drawer ------------------- */
+.fab {
+  position: fixed; inset: auto 20px 20px auto; z-index: 140;
+  border-radius: 999px; padding: .65rem 1rem; border: 1px solid var(--border);
+  background: var(--surface); box-shadow: var(--shadow-sm);
+  transition: transform var(--t);
+}
+.fab:hover { transform: scale(1.04); }
+
+.drawer { position: fixed; inset: 0; display: none; z-index: 150; }
+.drawer[aria-hidden="false"] { display: block; }
+html.scroll-lock, html.scroll-lock body { overflow: hidden; }
+.drawer::before {
+  content: ""; position: absolute; inset: 0;
+  background: rgba(8,10,16,.75); backdrop-filter: blur(8px) saturate(130%);
+}
+.drawer .drawer-panel {
+  position: absolute; inset: auto 0 0 0; border-top-left-radius: 22px; border-top-right-radius: 22px;
+  padding: 14px; border: 1px solid var(--border);
+  background: color-mix(in oklab, var(--card-strong) 84%, var(--glass-tint)); box-shadow: var(--shadow);
+  transform: translateY(100%); transition: transform var(--t);
+}
+.drawer[aria-hidden="false"] .drawer-panel { transform: translateY(0); }
+.drawer-header { display: flex; align-items: center; justify-content: space-between; padding: 6px 6px 10px; }
+.drawer-body { max-height: 70dvh; overflow: auto; padding: 8px; }
+.drawer-footer { display: flex; gap: 10px; justify-content: flex-end; padding: 10px 6px 6px; }
+
+@media (min-width: 981px) { .fab, #filtersDrawer, .compare { display: none !important; } }
+@media (max-width: 980px) {
+  .kits-layout { grid-template-columns: 1fr; }
+  .filters-rail { display: none; }
+}
+
+/* =======================================================
+   QUIZ MODAL — premium treatment
+   - Works with <dialog> out of the box
+   - Sticky header/footer; scrollable body
+   - Pill radios; elegant selects; progress chip
+   ======================================================= */
+.modal {
+  width: min(94vw, 720px);
+  max-height: 88dvh;
+  margin: auto; padding: 0; border: none; border-radius: 26px;
+  background:
+    linear-gradient(180deg, color-mix(in oklab, var(--card-strong) 95%, var(--glass-tint)), color-mix(in oklab, var(--card) 74%, var(--glass-tint))),
+    var(--bg-elev);
+  color: var(--text-1);
+  box-shadow: 0 36px 110px rgba(0,0,0,.55), 0 10px 28px rgba(0,0,0,.30);
+  border: 1px solid var(--border-strong);
+  overflow: hidden;
+}
+
+/* Auto animation when the dialog opens (no JS class required) */
+@keyframes modalIn { from { transform: translateY(14px) scale(.98); opacity: 0; } to { transform: none; opacity: 1; } }
+@keyframes modalOut { from { transform: none; opacity: 1; } to { transform: translateY(14px) scale(.98); opacity: 0; } }
+.modal[open] { animation: modalIn .22s var(--easing); }
+.modal:not([open]) { animation: modalOut .18s var(--easing) both; }
+
+.modal::backdrop {
+  background:
+    radial-gradient(1500px 1000px at 50% 35%, rgba(45,55,110,.55), transparent 75%),
+    rgba(8,10,16,.82);
+  backdrop-filter: blur(10px) saturate(130%);
+}
+
+/* Structure */
+.modal .modal-content { display: grid; grid-template-rows: auto 1fr auto; max-height: inherit; }
+.modal .modal-content, .modal .modal-content * { min-width: 0; max-width: 100%; }
+
+/* Sticky header with title + close */
+.modal-header {
+  position: sticky; top: 0; z-index: 2;
+  display: flex; align-items: center; justify-content: space-between; gap: 10px;
+  padding: 18px 18px 12px;
+  background: linear-gradient(180deg, color-mix(in oklab, var(--surface) 46%, transparent), transparent);
+  border-bottom: 1px solid var(--border);
+}
+.modal-close {
+  width: 40px; height: 40px; border-radius: 12px; border: 1px solid var(--border);
+  background: color-mix(in oklab, var(--surface) 92%, transparent); display: grid; place-items: center;
+  box-shadow: var(--shadow-sm); cursor: pointer; transition: transform var(--t), background var(--t);
+}
+.modal-close:hover { transform: translateY(-2px); }
+
+/* Body */
+.quiz-body {
+  padding: 16px 18px; display: grid; gap: 14px; overflow: auto;
+  background: radial-gradient(1000px 700px at 95% -20%, color-mix(in oklab, var(--accent) 10%, transparent), transparent 65%);
+  overscroll-behavior: contain;
+}
+
+@media (min-width: 900px){
+  .quiz-body { grid-template-columns: repeat(2, minmax(0,1fr)); }
+}
+
+.quiz-body label { display: grid; gap: 8px; font-weight: 800; color: var(--text-1); }
+.quiz-body select {
+  appearance: none;
+  padding: .75rem 1rem; padding-right: 2.4rem;
+  border-radius: 14px; border: 1px solid var(--border);
+  background:
+    linear-gradient(180deg, color-mix(in oklab, var(--bg-elev) 95%, transparent), color-mix(in oklab, var(--surface) 35%, transparent)),
+    var(--bg-elev);
+  color: var(--text-1); font-weight: 600; font-size: .98rem;
+  background-image:
+    url("data:image/svg+xml,%3Csvg width='18' height='18' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M6 9l6 6 6-6' stroke='%2380A0C0' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right .8rem center; background-size: 18px;
+  transition: box-shadow var(--t), border-color var(--t), transform var(--t);
+}
+html[data-theme="dark"] .quiz-body select {
+  background-image:
+    url("data:image/svg+xml,%3Csvg width='18' height='18' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M6 9l6 6 6-6' stroke='%23C0D0E8' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+}
+.quiz-body select:hover { transform: translateY(-2px); }
+.quiz-body select:focus { border-color: var(--ring); box-shadow: 0 0 0 4px color-mix(in oklab, var(--ring) 45%, transparent); }
+
+/* Progress chip */
+.quiz-progress {
+  display: inline-flex; align-items: center; gap: 8px;
+  align-self: start;
+  background: color-mix(in oklab, var(--surface) 92%, transparent);
+  border: 1px solid var(--border);
+  padding: .25rem .6rem; border-radius: 999px; font-weight: 800;
+}
+
+/* Group cards */
+.q-group {
+  display: grid; gap: .75rem; margin-block: .35rem;
+  padding: 14px; border-radius: 16px;
+  border: 1px solid var(--border);
+  background:
+    linear-gradient(180deg, color-mix(in oklab, var(--surface) 38%, transparent), transparent),
+    color-mix(in oklab, var(--card) 72%, var(--glass-tint));
+  word-break: normal; overflow-wrap: anywhere;
+}
+
+/* Speed grid / radio pills */
+.speed-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: .6rem 1rem; }
+.speed-grid label,
+label.radio-pill {
+  position: relative; display: flex; align-items: center; justify-content: center;
+  min-height: 44px; padding: .45rem .7rem;
+  border-radius: 14px; border: 1px solid var(--border);
+  background: color-mix(in oklab, var(--surface) 86%, transparent);
+  font-weight: 800; cursor: pointer; user-select: none; text-align: center;
+  transition: transform var(--t), background var(--t), border-color var(--t), color var(--t);
+}
+.speed-grid label:hover,
+label.radio-pill:hover { transform: translateY(-2px); background: color-mix(in oklab, var(--surface) 94%, transparent); }
+.speed-grid input[type="radio"],
+label.radio-pill input[type="radio"] { position: absolute; inset: 0; opacity: 0; pointer-events: none; }
+.speed-grid label:has(input:checked),
+label.radio-pill:has(input:checked) {
+  background: var(--primary); color: #fff; border-color: transparent;
+  box-shadow: inset 0 -1px 0 rgba(0,0,0,.08);
+}
+
+/* Mesh preference row */
+.mesh-row { display: flex; flex-wrap: wrap; gap: .6rem; align-items: center; }
+.mesh-row .radio-pill { display: inline-flex; }
+.mesh-row .auto {
+  display: inline-flex; align-items: center; gap: .6rem; width: fit-content;
+  padding: .45rem .7rem; border-radius: 12px; border: 1px solid var(--border); background: color-mix(in oklab, var(--surface) 86%, transparent);
+  font-weight: 800;
+}
+.mesh-row .auto input[type="checkbox"] { width: 18px; height: 18px; accent-color: var(--primary); }
+
+/* Hints */
+.hint { font-size: .95rem; color: var(--text-2); min-height: 1.3em; }
+
+/* Sticky footer actions */
+.modal-actions {
+  position: sticky; bottom: 0; z-index: 2;
+  display: flex; gap: 10px; justify-content: flex-end;
+  padding: 12px 18px 16px; border-top: 1px solid var(--border);
+  background: linear-gradient(180deg, transparent, color-mix(in oklab, var(--surface) 30%, transparent));
+}
+
+/* ------------------- A11y / Motion ------------------- */
+:where(button,.btn,.chip,.icon-btn,select,input,summary,.page,label):focus-visible {
+  outline: none; box-shadow: 0 0 0 4px color-mix(in oklab, var(--ring) 55%, transparent);
+  border-color: var(--ring);
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+
+/* ------------------- Helpers ------------------- */
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0; }
+.hide { display: none !important; }
+
+/* ------------------- Responsive Adjustments ------------------- */
+@media (max-width: 720px){
+  .header-actions { grid-template-columns: 1fr; }
+  #openQuiz, #editQuiz, #copyLink, #resetAll, #searchInput { width: 100%; }
+  .toolbar { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .toolbar .sort, .toolbar .pagesize, .toggle, #openFiltersHeader { width: 100%; }
+  .facet .options.two-cols { grid-template-columns: 1fr; }
+}
+
+/* ------------------- Desktop header polish ------------------- */
+@media (min-width: 1024px) {
+  .content { padding-block: 16px 20px; }
+  .page-header { text-align: center; }
+  .header-actions .btn { padding: .75rem 1.1rem; }
+  #openQuiz.btn.primary { font-weight: 900; }
+}

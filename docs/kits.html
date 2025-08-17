@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>RouterHaus · Kits</title>
+  <meta name="description" content="Filter and compare the best router kits for apartments, homes, and offices." />
+  <meta name="color-scheme" content="light dark" />
+  <link rel="preload" href="kits.json" as="fetch" type="application/json" />
+
+  <!-- Theme (sync to system; no FOUC) -->
+  <script>
+    (() => {
+      const root = document.documentElement;
+      const media = matchMedia('(prefers-color-scheme: dark)');
+      const apply = () => root.setAttribute('data-theme', media.matches ? 'dark' : 'light');
+      apply(); media.addEventListener('change', apply);
+    })();
+  </script>
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="main.css" />
+  <link rel="stylesheet" href="assets/css/kits.css" />
+</head>
+<body>
+  <!-- Header partial mounts BEFORE main to avoid CLS -->
+  <div id="header-placeholder" data-partial="header.html"></div>
+
+  <main class="container kits-layout">
+    <!-- ===== Desktop filter rail ===== -->
+    <aside id="filtersAside" class="filters-rail glass" aria-label="Filters">
+      <div class="filters-header">
+        <h2>Filters</h2>
+        <small id="matchCount" aria-live="polite"></small>
+      </div>
+
+      <div class="facet-toolbar" role="group" aria-label="Facet tools">
+        <button type="button" id="expandAll" class="btn small">Expand all</button>
+        <button type="button" id="collapseAll" class="btn small">Collapse all</button>
+        <button type="button" id="clearAllFacets" class="btn small ghost">Clear all</button>
+      </div>
+
+      <form id="filtersForm" class="filters-form" aria-describedby="matchCount">
+        <!-- Quick Picks -->
+        <section class="facet" data-facet="quick" aria-labelledby="quick-picks-h">
+          <div class="facet-head">
+            <h3 id="quick-picks-h">Quick Picks</h3>
+            <button type="button" class="btn tiny facet-clear" data-clear="quick">Clear</button>
+          </div>
+          <div class="chips" id="quickChips" role="group" aria-label="Quick picks">
+            <button type="button" class="chip" data-qpick="families">Best for Families</button>
+            <button type="button" class="chip" data-qpick="budget">Budget-Friendly</button>
+            <button type="button" class="chip" data-qpick="gaming">Gaming Ready</button>
+            <button type="button" class="chip" data-qpick="mesh">Whole-Home Wi-Fi</button>
+            <button type="button" class="chip" data-qpick="fast">Fast Internet</button>
+            <button type="button" class="chip" data-qpick="wfh">Work from Home</button>
+          </div>
+        </section>
+
+        <div class="divider" aria-hidden="true"></div>
+
+        <!-- Brand -->
+        <details class="facet" data-facet="brand" open>
+          <summary>
+            <span>Brand</span>
+            <span class="facet-meta">
+              <span class="badge count" id="badge-brand">0</span>
+              <span class="chev" aria-hidden>▾</span>
+            </span>
+          </summary>
+          <div class="facet-controls">
+            <button type="button" class="btn tiny facet-clear" data-clear="brand">Clear</button>
+          </div>
+          <div class="options" id="facet-brand"></div>
+        </details>
+
+        <!-- Wi-Fi Gen -->
+        <details class="facet" data-facet="wifi" open>
+          <summary>
+            <span>Wi-Fi Speed & Tech</span>
+            <span class="facet-meta">
+              <span class="badge count" id="badge-wifiGen">0</span>
+              <span class="chev" aria-hidden>▾</span>
+            </span>
+          </summary>
+          <div class="facet-controls">
+            <button type="button" class="btn tiny facet-clear" data-clear="wifi">Clear</button>
+          </div>
+          <div class="options two-cols" id="facet-wifiGen"></div>
+        </details>
+
+        <!-- Bands -->
+        <details class="facet" data-facet="bands">
+          <summary>
+            <span>Wi-Fi Bands</span>
+            <span class="facet-meta"><span class="chev" aria-hidden>▾</span></span>
+          </summary>
+          <div class="facet-controls">
+            <button type="button" class="btn tiny facet-clear" data-clear="bands">Clear</button>
+          </div>
+          <div class="options two-cols" id="facet-wifiBands"></div>
+        </details>
+
+        <!-- Mesh -->
+        <details class="facet" data-facet="mesh" open>
+          <summary>
+            <span>Whole-Home Coverage (Mesh)</span>
+            <span class="facet-meta">
+              <span class="badge count" id="badge-meshReady">0</span>
+              <span class="chev" aria-hidden>▾</span>
+            </span>
+          </summary>
+          <div class="facet-controls">
+            <button type="button" class="btn tiny facet-clear" data-clear="mesh">Clear</button>
+          </div>
+          <div class="options" id="facet-meshReady"></div>
+          <div class="options" id="facet-meshEco"></div>
+        </details>
+
+        <!-- WAN Tier -->
+        <details class="facet" data-facet="wan">
+          <summary>
+            <span>Internet Speed Support</span>
+            <span class="facet-meta">
+              <span class="badge count" id="badge-wanTier">0</span>
+              <span class="chev" aria-hidden>▾</span>
+            </span>
+          </summary>
+          <div class="facet-controls">
+            <button type="button" class="btn tiny facet-clear" data-clear="wan">Clear</button>
+          </div>
+          <div class="options two-cols" id="facet-wanTier"></div>
+        </details>
+
+        <!-- LAN count -->
+        <details class="facet" data-facet="lanCount">
+          <summary>
+            <span>Wired Ports (LAN)</span>
+            <span class="facet-meta"><span class="chev" aria-hidden>▾</span></span>
+          </summary>
+          <div class="facet-controls">
+            <button type="button" class="btn tiny facet-clear" data-clear="lanCount">Clear</button>
+          </div>
+          <div class="options two-cols" id="facet-lanCount"></div>
+        </details>
+
+        <!-- Multi-Gig LAN -->
+        <details class="facet" data-facet="multiGigLan">
+          <summary>
+            <span>Super-Fast Wired Ports</span>
+            <span class="facet-meta"><span class="chev" aria-hidden>▾</span></span>
+          </summary>
+          <div class="facet-controls">
+            <button type="button" class="btn tiny facet-clear" data-clear="multiGigLan">Clear</button>
+          </div>
+          <div class="options two-cols" id="facet-multiGigLan"></div>
+        </details>
+
+        <!-- USB -->
+        <details class="facet" data-facet="usb">
+          <summary>
+            <span>USB Ports</span>
+            <span class="facet-meta"><span class="chev" aria-hidden>▾</span></span>
+          </summary>
+          <div class="facet-controls">
+            <button type="button" class="btn tiny facet-clear" data-clear="usb">Clear</button>
+          </div>
+          <div class="options two-cols" id="facet-usb"></div>
+        </details>
+
+        <!-- Coverage -->
+        <details class="facet" data-facet="coverage" open>
+          <summary>
+            <span>Home Size Coverage</span>
+            <span class="facet-meta">
+              <span class="badge count" id="badge-coverageBucket">0</span>
+              <span class="chev" aria-hidden>▾</span>
+            </span>
+          </summary>
+          <div class="facet-controls">
+            <button type="button" class="btn tiny facet-clear" data-clear="coverage">Clear</button>
+          </div>
+          <div class="options two-cols" id="facet-coverageBucket"></div>
+        </details>
+
+        <!-- Device load -->
+        <details class="facet" data-facet="device" open>
+          <summary>
+            <span>Number of Devices on Wi-Fi</span>
+            <span class="facet-meta">
+              <span class="badge count" id="badge-deviceLoad">0</span>
+              <span class="chev" aria-hidden>▾</span>
+            </span>
+          </summary>
+          <div class="facet-controls">
+            <button type="button" class="btn tiny facet-clear" data-clear="device">Clear</button>
+          </div>
+          <div class="options two-cols" id="facet-deviceLoad"></div>
+        </details>
+
+        <!-- Primary use -->
+        <details class="facet" data-facet="use" open>
+          <summary>
+            <span>Main Use</span>
+            <span class="facet-meta">
+              <span class="badge count" id="badge-primaryUse">0</span>
+              <span class="chev" aria-hidden>▾</span>
+            </span>
+          </summary>
+          <div class="facet-controls">
+            <button type="button" class="btn tiny facet-clear" data-clear="use">Clear</button>
+          </div>
+          <div class="options" id="facet-primaryUse"></div>
+        </details>
+
+        <!-- Access -->
+        <details class="facet" data-facet="access">
+          <summary>
+            <span>Internet Type</span>
+            <span class="facet-meta"><span class="chev" aria-hidden>▾</span></span>
+          </summary>
+          <div class="facet-controls">
+            <button type="button" class="btn tiny facet-clear" data-clear="access">Clear</button>
+          </div>
+          <div class="options two-cols" id="facet-access"></div>
+        </details>
+
+        <!-- Price -->
+        <details class="facet" data-facet="price">
+          <summary>
+            <span>Price Range</span>
+            <span class="facet-meta">
+              <span class="badge count" id="badge-priceBucket">0</span>
+              <span class="chev" aria-hidden>▾</span>
+            </span>
+          </summary>
+          <div class="facet-controls">
+            <button type="button" class="btn tiny facet-clear" data-clear="price">Clear</button>
+          </div>
+          <div class="options two-cols" id="facet-priceBucket"></div>
+        </details>
+
+        <!-- Compare Panel (desktop) -->
+        <section id="comparePanel" class="facet" data-facet="compare" aria-labelledby="compare-h">
+          <div class="facet-head">
+            <h3 id="compare-h">Compare</h3>
+            <button id="clearCompare" class="btn tiny ghost" type="button">Clear</button>
+          </div>
+          <div id="compareItemsPanel" class="compare-items"></div>
+        </section>
+      </form>
+    </aside>
+
+    <!-- ===== Mobile filter FAB & drawer ===== -->
+    <button id="filtersFab" class="fab" aria-controls="filtersDrawer" aria-expanded="false">
+      Filters <span id="activeCount" class="badge">0</span>
+    </button>
+    <div id="filtersDrawer" class="drawer" aria-hidden="true" aria-labelledby="drawerTitle" role="dialog">
+      <div class="drawer-panel glass">
+        <div class="drawer-header">
+          <h2 id="drawerTitle">Filters</h2>
+          <button class="icon-btn" data-close-drawer aria-label="Close filters">x</button>
+        </div>
+        <div class="drawer-body">
+          <div id="drawerFormMount"></div>
+        </div>
+        <div class="drawer-footer">
+          <button class="btn ghost" data-close-drawer>Cancel</button>
+          <button id="applyDrawer" class="btn primary">Apply</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== Content ===== -->
+    <section class="content" aria-live="polite">
+      <!-- Minimal page header: search only -->
+      <header class="page-header">
+        <div class="command-bar glass" role="region" aria-label="Search">
+          <label class="search" for="searchInput">
+            <span class="sr-only">Search routers</span>
+            <input type="text" id="searchInput" placeholder="Search by brand or model…" aria-label="Search routers">
+          </label>
+          <button id="searchBtn" class="btn glass" type="button" aria-label="Run search">Search</button>
+        </div>
+      </header>
+
+      <!-- Active filters -->
+      <div id="activeChips" class="active-chips" role="list" aria-label="Active filters"></div>
+
+      <!-- Toolbar -->
+      <div class="toolbar glass" role="region" aria-label="Results toolbar">
+        <label class="sort">
+          <span>Sort</span>
+          <select id="sortSelect" aria-label="Sort results">
+            <option value="relevance">Relevance</option>
+            <option value="wifi-desc">Wi-Fi Gen</option>
+            <option value="price-asc">Price ↑</option>
+            <option value="price-desc">Price ↓</option>
+            <option value="coverage-desc">Coverage</option>
+            <option value="wan-desc">WAN Tier</option>
+            <option value="reviews-desc">Reviews</option>
+          </select>
+        </label>
+
+        <label class="pagesize">
+          <span>Per page</span>
+          <select id="pageSizeSelect" aria-label="Results per page">
+            <option value="12" selected>12</option>
+            <option value="24">24</option>
+            <option value="48">48</option>
+          </select>
+        </label>
+
+        <label class="toggle">
+          <input type="checkbox" id="toggleRecos" checked />
+          <span>Show recommendations</span>
+        </label>
+
+        <button id="openFiltersHeader" class="btn glass" type="button">Filters</button>
+      </div>
+
+      <!-- Recommendations -->
+      <section id="recommendations" class="recommendations" aria-live="polite">
+        <div class="section-head">
+          <h2>Recommended for you</h2>
+          <small id="recoNote" class="subtle"></small>
+        </div>
+        <div id="recoGrid" class="product-grid"></div>
+      </section>
+
+      <!-- Pagination Top -->
+      <nav id="paginationTop" class="pagination" aria-label="Pagination top"></nav>
+
+      <!-- Results -->
+      <section class="results" aria-label="Results">
+        <div id="kitsStatus" class="sr-only" role="status" aria-live="polite">Loading kits…</div>
+        <div id="kitsError" class="hide" role="alert"></div>
+
+        <!-- Skeleton loader grid -->
+        <div id="skeletonGrid" class="product-grid skeletons" aria-hidden="true"></div>
+
+        <!-- Real results -->
+        <div id="kitResults" class="product-grid" aria-busy="false"></div>
+
+        <!-- Empty state -->
+        <div id="emptyState" class="empty hide" role="note" aria-live="polite">
+          <h3>No matches</h3>
+          <p>Try adjusting filters or tap a quick option:</p>
+          <div class="chips" id="emptyQuickChips" role="group" aria-label="Quick picks (empty results)">
+            <button type="button" class="chip" data-qpick="families">Best for Families</button>
+            <button type="button" class="chip" data-qpick="budget">Budget-Friendly</button>
+            <button type="button" class="chip" data-qpick="gaming">Gaming Ready</button>
+            <button type="button" class="chip" data-qpick="mesh">Whole-Home Wi-Fi</button>
+            <button type="button" class="chip" data-qpick="fast">Fast Internet</button>
+            <button type="button" class="chip" data-qpick="wfh">Work from Home</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Pagination Bottom -->
+      <nav id="paginationBottom" class="pagination" aria-label="Pagination bottom"></nav>
+    </section>
+  </main>
+
+  <!-- Sticky Compare trigger (mobile/any) -->
+  <button id="compareSticky" class="compare-sticky" hidden aria-controls="compareDrawer">
+    Compare (<span id="compareCount">0</span>)
+  </button>
+
+  <!-- Compare bar (mobile) -->
+  <aside id="compareDrawer" class="compare glass" aria-live="polite" hidden role="dialog" aria-label="Compare">
+    <div class="compare-header">
+      <strong>Compare</strong>
+      <button id="clearCompareMobile" class="btn small ghost" type="button">Clear</button>
+    </div>
+    <div id="compareItems" class="compare-items"></div>
+  </aside>
+
+  <!-- Quiz modal -->
+  <dialog id="quizModal" class="modal glass" aria-labelledby="quizTitle" aria-modal="true">
+    <div class="modal-content">
+      <header class="modal-header">
+        <h2 id="quizTitle">Let's Find Your Perfect Router Kit</h2>
+        <button type="button" class="quiz-close modal-close" aria-label="Close">x</button>
+      </header>
+
+      <form id="quizForm" class="quiz-body">
+        <div class="quiz-progress">Step <span id="quizStep">1</span>/7</div>
+
+        <!-- ENVIRONMENT -->
+        <fieldset class="q-group">
+          <legend>What's your home like?</legend>
+          <label>
+            <span class="sr-only">Home size</span>
+            <select id="qCoverage" required>
+              <option value="">Select...</option>
+              <option value="Apartment/Small">Apartment or Small Home (studio, 1-bed, under 1,800 sq ft)</option>
+              <option value="2–3 Bedroom">Medium Home (2-3 bedrooms, up to 3,200 sq ft)</option>
+              <option value="Large/Multi-floor">Large or Multi-Floor Home (over 3,200 sq ft)</option>
+              <option value="">I'm not sure – suggest based on other answers</option>
+            </select>
+          </label>
+          <p id="meshHint" class="hint" aria-live="polite">For larger homes, we recommend mesh for no dead spots.</p>
+        </fieldset>
+
+        <!-- LOAD -->
+        <fieldset class="q-group">
+          <legend>How many devices connect to your Wi-Fi?</legend>
+          <label>
+            <span class="sr-only">Number of devices</span>
+            <select id="qDevices" required>
+              <option value="">Select...</option>
+              <option value="1–5">1-5 (just basics, like a phone and laptop)</option>
+              <option value="6–15">6-15 (family with phones, TVs, and a few smart devices)</option>
+              <option value="16–30">16-30 (busy home with streaming and gaming)</option>
+              <option value="31–60">31-60 (smart home with lights, cameras, etc.)</option>
+              <option value="61–100">61-100 (lots of gadgets, like in an office)</option>
+              <option value="100+">100+ (heavy use, pros or big households)</option>
+              <option value="">I'm not sure – average for most homes</option>
+            </select>
+          </label>
+        </fieldset>
+
+        <!-- USE -->
+        <fieldset class="q-group">
+          <legend>What do you use Wi-Fi for most?</legend>
+          <label>
+            <span class="sr-only">Main use</span>
+            <select id="qUse" required>
+              <option value="">Select...</option>
+              <option value="All-Purpose">Everyday Use (browsing, email, social media)</option>
+              <option value="Gaming">Gaming (online games, low lag needed)</option>
+              <option value="Work-From-Home">Work from Home (video calls, file sharing)</option>
+              <option value="Smart-Home">Smart Home (lights, thermostats, cameras)</option>
+              <option value="Family Streaming">Family Streaming (Netflix, YouTube on multiple TVs)</option>
+              <option value="Prosumer">Advanced/Pro (high-speed downloads, servers)</option>
+              <option value="">I'm not sure – mix of everything</option>
+            </select>
+          </label>
+        </fieldset>
+
+        <!-- ACCESS -->
+        <fieldset class="q-group">
+          <legend>What type of internet do you have?</legend>
+          <label>
+            <span class="sr-only">Access type</span>
+            <select id="qAccess">
+              <option value="">No preference / I'm not sure</option>
+              <option value="Cable">Cable (most common, like Xfinity)</option>
+              <option value="Fiber">Fiber (super fast, like Google Fiber)</option>
+              <option value="FixedWireless5G">5G Wireless (home internet via cell towers)</option>
+              <option value="Satellite">Satellite (rural areas, like Starlink)</option>
+              <option value="DSL">DSL (older phone line internet)</option>
+            </select>
+          </label>
+        </fieldset>
+
+        <!-- SPEED -->
+        <fieldset class="q-group">
+          <legend>Your Internet Plan Speed</legend>
+          <div class="speed-grid" role="group" aria-label="Plan speed">
+            <label><input type="radio" name="qSpeedLabel" value="≤1G"> Basic (up to 1 Gbps)</label>
+            <label><input type="radio" name="qSpeedLabel" value="2.5G"> Medium (2.5 Gbps)</label>
+            <label><input type="radio" name="qSpeedLabel" value="5G"> High (5 Gbps)</label>
+            <label><input type="radio" name="qSpeedLabel" value="10G"> Ultra (10 Gbps)</label>
+            <label><input type="radio" name="qSpeedLabel" value=""> I'm not sure</label>
+          </div>
+        </fieldset>
+
+        <!-- MESH PREFERENCE -->
+        <fieldset class="q-group">
+          <legend>Do you want whole-home coverage?</legend>
+          <label class="mesh-row">
+            <input type="checkbox" id="qMeshAuto" checked>
+            <span>Auto decide for me (recommended)</span>
+          </label>
+          <div class="mesh-row">
+            <label class="radio-pill"><input type="radio" name="qMesh" value="" checked> No preference</label>
+            <label class="radio-pill"><input type="radio" name="qMesh" value="yes"> Require mesh</label>
+            <label class="radio-pill"><input type="radio" name="qMesh" value="no"> Standalone only</label>
+          </div>
+        </fieldset>
+
+        <!-- BUDGET (optional) -->
+        <fieldset class="q-group">
+          <legend>What's your budget?</legend>
+          <label>
+            <span class="sr-only">Budget</span>
+            <select id="qPrice">
+              <option value="">No preference / Show all</option>
+              <option value="<150">$ (Under $150)</option>
+              <option value="150–299">$$ ($150-299)</option>
+              <option value="300–599">$$$ ($300-599)</option>
+              <option value="600+">$$$$ ($600+)</option>
+            </select>
+          </label>
+        </fieldset>
+
+        <footer class="modal-actions">
+          <button type="button" class="btn" id="quizCancel">Cancel</button>
+          <button type="submit" class="btn primary">Show My Recommendations</button>
+        </footer>
+      </form>
+    </div>
+  </dialog>
+
+  <!-- Card template -->
+  <template id="cardTpl">
+    <article class="product glass" data-id="">
+      <div class="product-media">
+        <img loading="lazy" alt="" src="" onerror="this.style.display='none'">
+      </div>
+      <header class="product-header">
+        <h4 class="title"></h4>
+        <div class="chips line"></div>
+      </header>
+      <ul class="specs"></ul>
+      <div class="priceRow">
+        <strong class="price"></strong>
+        <div class="ctaRow">
+          <a class="btn small" target="_blank" rel="noopener">Buy</a>
+          <button class="icon-btn compare-btn" title="Compare" type="button" aria-pressed="false">+</button>
+        </div>
+      </div>
+    </article>
+  </template>
+
+  <!-- Skeleton card template -->
+  <template id="skeletonTpl">
+    <article class="product glass skeleton">
+      <div class="product-media shimmer"></div>
+      <header class="product-header">
+        <div class="title shimmer"></div>
+        <div class="chips line shimmer"></div>
+      </header>
+      <ul class="specs">
+        <li class="shimmer"></li>
+        <li class="shimmer"></li>
+        <li class="shimmer"></li>
+      </ul>
+      <div class="priceRow">
+        <div class="price shimmer"></div>
+        <div class="ctaRow">
+          <span class="btn small shimmer"></span>
+          <span class="icon-btn shimmer"></span>
+        </div>
+      </div>
+    </article>
+  </template>
+
+  <!-- Footer partial mounts AFTER main -->
+  <div id="footer-placeholder" data-partial="footer.html"></div>
+
+  <script>
+    window.RH_CONFIG = {
+      jsonUrl: 'kits.json',
+      enableRecos: true
+    };
+  </script>
+
+  <!-- App scripts -->
+  <script src="scripts.js" defer></script>
+  <script type="module" src="assets/js/kits.js"></script>
+  <script type="module" src="assets/js/quiz-modal.js"></script>
+
+  <!-- Quick Pick wiring via URL params (works without touching kits.js) -->
+  <script>
+    (function () {
+      // Map each quick pick to facet query values
+      const MAP = {
+        families: { use: 'Family Streaming', device: '16–30' },
+        budget:   { price: '<150' },
+        gaming:   { use: 'Gaming', wan: '2.5G' },
+        mesh:     { mesh: 'Mesh-ready' },
+        fast:     { wifi: '7' },
+        wfh:      { use: 'Work-From-Home' }
+      };
+
+      function applyQuickPick(key) {
+        const spec = MAP[key];
+        if (!spec) return;
+
+        // Build new query string from current, then apply quick-pick facets
+        const qs = new URLSearchParams(location.search);
+
+        // Remove any previous value for the facets we're setting (to avoid OR combos)
+        Object.keys(spec).forEach(k => qs.delete(k));
+
+        for (const [facet, value] of Object.entries(spec)) qs.set(facet, value);
+
+        // Fresh view: reset page and show recos
+        qs.delete('page');
+        qs.set('recos', '1');
+
+        // Navigate (kits.js reads facets from URL on load)
+        location.search = qs.toString();
+      }
+
+      // Delegate clicks from any [data-qpick] button, including the empty-state row
+      document.addEventListener('click', (e) => {
+        const btn = e.target.closest('[data-qpick]');
+        if (!btn) return;
+        applyQuickPick(btn.dataset.qpick);
+      });
+    })();
+  </script>
+
+  <noscript>Enable JavaScript to load filters and results.</noscript>
+</body>
+</html>

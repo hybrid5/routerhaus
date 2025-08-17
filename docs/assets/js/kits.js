@@ -776,7 +776,20 @@
     if (o.img) { img.src = o.img; img.alt = o.model || 'Router image'; }
     else { img.remove(); }
 
-    node.querySelector('.title').textContent = o.model;
+    const titleEl = node.querySelector('.title');
+    titleEl.textContent = ''; // clear any template text
+
+    const brandEl = document.createElement('em');
+    brandEl.className = 'brand';
+    brandEl.textContent = o.brand || '';
+
+    const modelEl = document.createElement('span');
+    modelEl.className = 'model';
+    modelEl.textContent = o.model || '';
+
+    if (brandEl.textContent) titleEl.appendChild(brandEl);
+    titleEl.appendChild(modelEl);
+
 
     const chips = node.querySelector('.chips.line');
     const chipTexts = Array.isArray(o.chipsOverride) && o.chipsOverride.length

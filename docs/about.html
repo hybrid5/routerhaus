@@ -1,81 +1,168 @@
 <!-- ===========================
-     RouterHaus v1 — about.html
+     RouterHaus v2 — about.html (aligned & expanded)
      =========================== -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Learn how RouterHaus makes networking simple with AI-powered recommendations." />
-  <title>About – RouterHaus</title>
+  <meta name="description" content="Learn how RouterHaus makes networking simple with AI-guided recommendations and enterprise-grade know-how." />
+  <title>About · RouterHaus</title>
 
   <!-- Fonts & Global Styles -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="main.css" />
   <!-- Page Styles -->
   <link rel="stylesheet" href="assets/css/about.css" />
+
+  <!-- Theme sync (matches consult/contact) -->
+  <meta name="color-scheme" content="light dark" />
+  <script>
+    (() => {
+      const root = document.documentElement;
+      const media = matchMedia('(prefers-color-scheme: dark)');
+      const apply = () => root.setAttribute('data-theme', media.matches ? 'dark' : 'light');
+      apply(); media.addEventListener('change', apply);
+    })();
+  </script>
+
+  <!-- Icons (CSS, consistent with other pages) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
 <body>
   <!-- Header partial -->
-  <div id="header-placeholder"></div>
+  <div id="header-placeholder" data-partial="header.html"></div>
 
   <main class="about-page">
-    <!-- ===== About Hero ===== -->
+    <!-- ===== Hero ===== -->
     <section class="hero">
       <div class="container hero-inner">
-        <div class="hero-copy">
+        <div class="hero-copy reveal">
           <span class="eyebrow">Our mission</span>
           <h1>About <span class="grad">RouterHaus</span></h1>
-          <p class="lede">We make network design simple with AI-driven recommendations and vetted, real-world hardware picks.</p>
+          <p class="lede">We make network design simple with AI-guided picks and field-tested architectures — so homes and teams get fast, stable, secure connectivity without the guesswork.</p>
+          <div class="hero-ctas">
+            <a class="btn primary" href="kits.html">Explore kits</a>
+            <a class="btn ghost" href="consult.html">Enterprise consulting</a>
+          </div>
         </div>
+
+        <aside class="hero-card glass reveal" aria-label="Highlights">
+          <div class="stats">
+            <div class="stat">
+              <div class="icon"><i class="fa-solid fa-wifi" aria-hidden="true"></i></div>
+              <strong>Coverage first</strong>
+              <span>Roaming that feels invisible</span>
+            </div>
+            <div class="stat">
+              <div class="icon"><i class="fa-solid fa-shield-halved" aria-hidden="true"></i></div>
+              <strong>Segmented by design</strong>
+              <span>Guest & IoT isolation</span>
+            </div>
+            <div class="stat">
+              <div class="icon"><i class="fa-solid fa-bolt" aria-hidden="true"></i></div>
+              <strong>Multi-gig ready</strong>
+              <span>2.5G / 10G backbones</span>
+            </div>
+          </div>
+        </aside>
       </div>
     </section>
 
     <!-- ===== Why RouterHaus ===== -->
     <section id="why" class="why">
       <div class="container">
-        <header class="section-head">
+        <header class="section-head reveal">
           <h2>Why RouterHaus?</h2>
           <p class="subtle">Clarity from the first click to final install.</p>
         </header>
 
         <div class="value-cards">
-          <article class="value-card glass">
+          <article class="value-card glass reveal">
             <div class="icon"><i class="fa-solid fa-robot" aria-hidden="true"></i></div>
             <h3>AI-Powered, Unbiased Picks</h3>
-            <p>Cross-brand matching based on your space, devices, ISP speed, and budget.</p>
+            <p>Cross-brand matching based on your space, device mix, and budget — not vendor quotas.</p>
           </article>
 
-          <article class="value-card glass">
+          <article class="value-card glass reveal">
             <div class="icon"><i class="fa-solid fa-bolt" aria-hidden="true"></i></div>
             <h3>Unlock Device Potential</h3>
-            <p>Right radios, channels, and backhaul so phones, TVs, and smart devices fly.</p>
+            <p>Right radios, channels, and backhaul so calls don’t drop and streams don’t buffer.</p>
           </article>
 
-          <article class="value-card glass">
+          <article class="value-card glass reveal">
             <div class="icon"><i class="fa-solid fa-screwdriver-wrench" aria-hidden="true"></i></div>
             <h3>Easy Setup & Real Support</h3>
-            <p>Step-by-step guides, remote staging, and optional on-site handoff.</p>
+            <p>Step-by-step guides, remote staging, and optional on-site handoff when you want it.</p>
           </article>
         </div>
+      </div>
+    </section>
 
+    <!-- ===== Our Approach (aligned with consult) ===== -->
+    <section class="approach">
+      <div class="container">
+        <header class="section-head reveal">
+          <h2>How we work</h2>
+          <p class="subtle">Proven, repeatable, and outcome-driven.</p>
+        </header>
+        <ol class="steps">
+          <li class="reveal"><span>1</span><strong>Discover</strong><em>Goals, constraints, and current gear</em></li>
+          <li class="reveal"><span>2</span><strong>Design</strong><em>AP placement, switching, security</em></li>
+          <li class="reveal"><span>3</span><strong>Validate</strong><em>Roaming, RF hygiene, throughput</em></li>
+          <li class="reveal"><span>4</span><strong>Support</strong><em>Monitoring and periodic tuning</em></li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ===== Who we serve (personas) ===== -->
+    <section class="personas">
+      <div class="container">
         <h3 class="persona-heading">Built for</h3>
         <div class="persona-grid">
-          <article class="persona-card glass">
+          <article class="persona-card glass reveal">
             <h4>Apartments & Condos</h4>
             <p>Kill dead zones and buffer spinners in compact spaces.</p>
           </article>
-          <article class="persona-card glass">
+          <article class="persona-card glass reveal">
             <h4>Large Homes</h4>
             <p>Whole-home mesh across floors, garages, and yards.</p>
           </article>
-          <article class="persona-card glass">
+          <article class="persona-card glass reveal">
             <h4>Remote Work / Home Office</h4>
             <p>Stable low-latency calls and faster uploads.</p>
           </article>
-          <article class="persona-card glass">
+          <article class="persona-card glass reveal">
             <h4>Gamers & Streamers</h4>
             <p>Lowest jitter, highest throughput — no excuses.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Principles (professional section) ===== -->
+    <section class="principles">
+      <div class="container">
+        <header class="section-head reveal">
+          <h2>Principles we don’t compromise</h2>
+          <p class="subtle">Choices that keep networks fast, quiet, and safe.</p>
+        </header>
+        <div class="principle-grid">
+          <article class="card reveal">
+            <h3>Coverage before speed tests</h3>
+            <p>We prioritize predictable roaming and clean RF before chasing headline throughput.</p>
+          </article>
+          <article class="card reveal">
+            <h3>Wire whenever you can</h3>
+            <p>Wired backhaul beats wireless mesh. We plan cable paths early to avoid regret later.</p>
+          </article>
+          <article class="card reveal">
+            <h3>Segment by default</h3>
+            <p>Guest and IoT isolation protects your core devices and keeps broadcast noise down.</p>
+          </article>
+          <article class="card reveal">
+            <h3>Simple beats clever</h3>
+            <p>Fewer SSIDs, clear naming, version-pinned firmware, and change control.</p>
           </article>
         </div>
       </div>
@@ -84,31 +171,45 @@
     <!-- ===== FAQ ===== -->
     <section id="faq" class="faq">
       <div class="container">
-        <h2 class="faq-title">FAQ</h2>
+        <header class="section-head reveal">
+          <h2 class="faq-title">FAQ</h2>
+        </header>
 
         <div class="accordion">
-          <div class="accordion-item">
-            <h4>How do you serve business clients?</h4><span>+</span>
+          <div class="accordion-item reveal">
+            <h4>How do you serve business clients?</h4><span aria-hidden="true">+</span>
             <p>We design controller-based networks with VLANs, VPN, Wi-Fi roaming, and remote management for offices, hospitality, and retail.</p>
           </div>
-          <div class="accordion-item">
-            <h4>What counts as a “large-scale” setup?</h4><span>+</span>
+          <div class="accordion-item reveal">
+            <h4>What counts as a “large-scale” setup?</h4><span aria-hidden="true">+</span>
             <p>Multi-AP or multi-switch environments, PoE devices (cameras, APs, phones), and multi-gig backbones.</p>
           </div>
-          <div class="accordion-item">
-            <h4>Is RouterHaus only for homes?</h4><span>+</span>
+          <div class="accordion-item reveal">
+            <h4>Is RouterHaus only for homes?</h4><span aria-hidden="true">+</span>
             <p>No. We cover apartments, smart homes, SMB, and enterprise — and we’re vendor-agnostic.</p>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== Footer CTA (aligned) ===== -->
+    <section class="footer-cta">
+      <div class="container cta-inner">
+        <h2>Ready to plan your network?</h2>
+        <p>Explore kits or start a consult — we’ll propose the best path forward.</p>
+        <div class="cta-actions">
+          <a class="btn primary" href="kits.html">Browse kits</a>
+          <a class="btn ghost" href="contact.html">Contact us</a>
         </div>
       </div>
     </section>
   </main>
 
   <!-- Footer partial -->
-  <div id="footer-placeholder"></div>
+  <div id="footer-placeholder" data-partial="footer.html"></div>
 
   <!-- Scripts -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/js/all.min.js" defer></script>
   <script src="scripts.js" defer></script>
+  <script type="module" src="assets/js/about.js"></script>
 </body>
 </html>

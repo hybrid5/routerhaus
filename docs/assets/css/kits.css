@@ -1,6 +1,6 @@
 /* ==========================================================
    RouterHaus Kits — Enhanced Premium Design System 2025
-   Clean, Modern, and Incredibly Responsive
+   Clean, Modern, and Incredibly Responsive - FIXED
    ========================================================== */
 
 /* ------------------- Enhanced Design Tokens ------------------- */
@@ -35,48 +35,48 @@
   --text-xl: clamp(1.25rem, 1.1rem + 0.75vw, 1.5rem);
   --text-2xl: clamp(1.5rem, 1.3rem + 1vw, 2rem);
   --text-3xl: clamp(2rem, 1.7rem + 1.5vw, 3rem);
-
+  
   /* Light theme palette */
   --bg: #f8fafc;
   --bg-elev: #ffffff;
   --text-1: #0a0f1e;
   --text-2: #3a4361;
   --muted: #6d7694;
-
+  
   /* Enhanced Surface System */
   --surface-primary: rgba(255, 255, 255, 0.9);
   --surface-secondary: rgba(255, 255, 255, 0.95);
   --surface-tertiary: rgba(255, 255, 255, 0.8);
   --surface-elevated: rgba(255, 255, 255, 0.98);
-
+  
   /* Advanced Glass System */
   --glass-bg: rgba(255, 255, 255, 0.1);
   --glass-border: rgba(255, 255, 255, 0.2);
   --glass-tint: rgba(255, 255, 255, 0.05);
   --glass-blur: 20px;
   --glass-sat: 140%;
-
+  
   /* Enhanced Border System */
   --border: rgba(0, 0, 0, 0.12);
   --border-strong: rgba(0, 0, 0, 0.2);
   --ring: color-mix(in oklab, var(--primary) 40%, transparent);
-
+  
   /* Advanced Shadow System */
   --shadow-soft: 0 2px 12px rgba(16, 24, 40, 0.08);
   --shadow: 0 10px 32px rgba(16, 24, 40, 0.12);
   --shadow-sm: 0 6px 20px rgba(16, 24, 40, 0.08);
   --shadow-strong: 0 20px 48px rgba(16, 24, 40, 0.15);
   --shadow-glow: 0 0 32px rgba(var(--primary-rgb), 0.3);
-
+  
   /* Spacing System */
   --space-1: 0.25rem; --space-2: 0.5rem; --space-3: 0.75rem; --space-4: 1rem;
   --space-5: 1.25rem; --space-6: 1.5rem; --space-8: 2rem; --space-10: 2.5rem;
   --space-12: 3rem; --space-16: 4rem; --space-20: 5rem; --space-24: 6rem;
-
+  
   /* Radius System */
   --radius-xs: 4px; --radius-sm: 8px; --radius: 12px; --radius-md: 14px;
   --radius-lg: 18px; --radius-xl: 24px; --radius-2xl: 32px; --radius-full: 9999px;
-
+  
   /* Animation System */
   --easing: cubic-bezier(0.25, 0.46, 0.45, 0.94);
   --easing-smooth: cubic-bezier(0.4, 0, 0.2, 1);
@@ -85,7 +85,7 @@
   --duration-fast: 0.15s;
   --duration-normal: 0.3s;
   --duration-slow: 0.5s;
-
+  
   color-scheme: light dark;
   accent-color: var(--primary);
   scroll-behavior: smooth;
@@ -98,20 +98,16 @@ html[data-theme="dark"] {
   --text-1: #f0f4f8;
   --text-2: #cbd5e0;
   --muted: #a0aec0;
-
   --surface-primary: rgba(15, 20, 25, 0.8);
   --surface-secondary: rgba(20, 25, 35, 0.9);
   --surface-tertiary: rgba(25, 30, 40, 0.7);
   --surface-elevated: rgba(30, 35, 45, 0.95);
-
   --glass-bg: rgba(10, 14, 22, 0.4);
   --glass-tint: rgba(10, 14, 22, 0.2);
   --glass-border: rgba(255, 255, 255, 0.1);
-
   --border: rgba(255, 255, 255, 0.15);
   --border-strong: rgba(255, 255, 255, 0.25);
   --ring: color-mix(in oklab, var(--primary) 50%, transparent);
-  
   --shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
   --shadow-sm: 0 10px 24px rgba(0, 0, 0, 0.3);
   --shadow-strong: 0 30px 60px rgba(0, 0, 0, 0.5);
@@ -295,7 +291,7 @@ img {
   background: color-mix(in oklab, var(--muted) 70%, transparent); 
 }
 
-/* ------------------- Layout System ------------------- */
+/* ------------------- Layout System - FIXED ------------------- */
 .container { 
   max-width: 1400px; 
   margin: 0 auto; 
@@ -304,7 +300,7 @@ img {
 
 .kits-layout {
   display: grid; 
-  grid-template-columns: 360px minmax(0, 1fr);
+  grid-template-columns: 300px 1fr;
   gap: clamp(20px, 2.5vw, 32px);
   align-items: start;
 }
@@ -837,32 +833,13 @@ details.facet[open] .chev {
   transform: scale(0.95);
 }
 
-/* ------------------- Enhanced Product Grid ------------------- */
+/* ------------------- Enhanced Product Grid - FIXED ------------------- */
 .product-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
   gap: var(--space-6);
   margin-bottom: var(--space-8);
-}
-
-@media (min-width: 640px) {
-  .product-grid {
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  }
-}
-
-@media (min-width: 1024px) {
-  .product-grid {
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: var(--space-8);
-  }
-}
-
-@media (min-width: 1200px) {
-  .product-grid {
-    grid-template-columns: repeat(4, 1fr);
-    gap: var(--space-6);
-  }
+  width: 100%;
 }
 
 /* ------------------- Enhanced Product Cards ------------------- */
@@ -879,6 +856,8 @@ details.facet[open] .chev {
   transition: all var(--duration-normal) var(--easing-smooth);
   cursor: pointer;
   position: relative;
+  min-width: 0;
+  width: 100%;
 }
 
 .product:hover {
@@ -1561,7 +1540,7 @@ details.facet[open] .chev {
   background: #dc2626;
 }
 
-/* ------------------- Enhanced Quiz Modal ------------------- */
+/* ------------------- Enhanced Quiz Modal - FIXED ------------------- */
 .modal {
   width: min(95vw, 900px);
   max-height: 95vh;
@@ -1574,6 +1553,11 @@ details.facet[open] .chev {
   box-shadow: var(--shadow-strong);
   border: 1px solid var(--border-strong);
   overflow: hidden;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 160;
 }
 
 .modal::backdrop {
@@ -1586,6 +1570,7 @@ details.facet[open] .chev {
   grid-template-rows: auto 1fr auto; 
   height: 100%;
   max-height: 95vh;
+  min-height: 600px;
 }
 
 .modal-header {
@@ -1646,6 +1631,7 @@ details.facet[open] .chev {
   gap: var(--space-6); 
   overflow: auto;
   background: var(--surface-secondary);
+  min-height: 0;
 }
 
 .quiz-progress {
@@ -1680,6 +1666,7 @@ details.facet[open] .chev {
   font-size: var(--text-sm);
   font-weight: 600;
   color: var(--text-2);
+  white-space: nowrap;
 }
 
 .q-group {
@@ -1881,9 +1868,47 @@ details.facet[open] .chev {
   100% { transform: translateX(100%); }
 }
 
-/* ------------------- Enhanced Responsive Design ------------------- */
+/* ------------------- Enhanced Responsive Design - FIXED ------------------- */
 
-/* Tablet and below */
+/* Large Desktop - Fixed grid layout */
+@media (min-width: 1400px) {
+  .kits-layout {
+    grid-template-columns: 380px 1fr;
+    gap: var(--space-10);
+  }
+  
+  .filters-rail {
+    padding: var(--space-5);
+  }
+  
+  .product-grid {
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: var(--space-8);
+  }
+  
+  .command-bar {
+    padding: var(--space-5);
+  }
+  
+  .toolbar {
+    padding: var(--space-5);
+  }
+}
+
+/* Standard Desktop - Fixed grid layout */
+@media (min-width: 1024px) and (max-width: 1399px) {
+  .kits-layout {
+    grid-template-columns: 320px 1fr;
+    gap: var(--space-6);
+  }
+  
+  .product-grid {
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: var(--space-6);
+  }
+}
+
+/* Tablet and below - Stack layout */
 @media (max-width: 1023px) {
   .kits-layout {
     grid-template-columns: 1fr;
@@ -1924,12 +1949,27 @@ details.facet[open] .chev {
   }
   
   .product-grid {
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: var(--space-4);
+  }
+  
+  .modal {
+    width: 95vw;
+    height: 95vh;
+    max-height: 95vh;
+  }
+  
+  .quiz-progress {
+    flex-wrap: wrap;
+    gap: var(--space-2);
+  }
+  
+  .speed-grid {
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
   }
 }
 
-/* Mobile phones */
+/* Mobile phones - Single column */
 @media (max-width: 640px) {
   .container {
     padding: 0 var(--space-4);
@@ -2004,6 +2044,9 @@ details.facet[open] .chev {
     height: 100vh;
     max-height: 100vh;
     border-radius: 0;
+    transform: none;
+    top: 0;
+    left: 0;
   }
   
   .modal-header {
@@ -2019,10 +2062,12 @@ details.facet[open] .chev {
     padding: var(--space-3);
     flex-direction: column;
     gap: var(--space-2);
+    align-items: stretch;
   }
   
   .progress-text {
     order: -1;
+    text-align: center;
   }
   
   .q-group {
@@ -2126,35 +2171,15 @@ details.facet[open] .chev {
   }
 }
 
-/* Large screens optimization */
-@media (min-width: 1400px) {
-  .kits-layout {
-    grid-template-columns: 380px minmax(0, 1fr);
-    gap: var(--space-10);
-  }
-  
-  .filters-rail {
-    padding: var(--space-5);
-  }
-  
-  .product-grid {
-    grid-template-columns: repeat(4, 1fr);
-    gap: var(--space-8);
-  }
-  
-  .command-bar {
-    padding: var(--space-5);
-  }
-  
-  .toolbar {
-    padding: var(--space-5);
-  }
-}
-
 /* Ultra-wide screens */
 @media (min-width: 1800px) {
   .product-grid {
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+    max-width: none;
+  }
+  
+  .kits-layout {
+    grid-template-columns: 400px 1fr;
   }
 }
 

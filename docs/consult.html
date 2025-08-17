@@ -1,5 +1,5 @@
 <!-- ===========================
-     RouterHaus v2 – consult.html
+     RouterHaus v2 — consult.html
      Enterprise & Large-Home Consulting
      =========================== -->
 <!DOCTYPE html>
@@ -8,6 +8,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="Expert network consulting, design, and white-glove deployment for large homes, estates, offices, hospitality, and campuses." />
+  <meta name="color-scheme" content="light dark" />
   <title>Consult · RouterHaus</title>
 
   <!-- Fonts & Base Styles -->
@@ -17,14 +18,17 @@
   <!-- Consult page styles -->
   <link rel="stylesheet" href="assets/css/consult.css" />
 
+  <!-- Icons (Font Awesome) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
   <!-- Theme sync -->
-  <meta name="color-scheme" content="light dark" />
   <script>
     (() => {
       const root = document.documentElement;
       const media = matchMedia('(prefers-color-scheme: dark)');
       const apply = () => root.setAttribute('data-theme', media.matches ? 'dark' : 'light');
-      apply(); media.addEventListener('change', apply);
+      apply();
+      media.addEventListener('change', apply);
     })();
   </script>
 </head>
@@ -193,14 +197,14 @@
           </article>
         </div>
         <div class="case-controls">
-          <button class="icon-btn" id="casePrev" aria-label="Previous">&larr;</button>
-          <button class="icon-btn" id="caseNext" aria-label="Next">&rarr;</button>
+          <button class="icon-btn" id="casePrev" aria-label="Previous" type="button">&larr;</button>
+          <button class="icon-btn" id="caseNext" aria-label="Next" type="button">&rarr;</button>
         </div>
       </div>
     </section>
 
     <!-- ===== Smart intake (multi-step) ===== -->
-    <section class="intake">
+    <section class="intake" id="intake">
       <div class="container">
         <header class="section-head reveal">
           <h2>Tell us about your space</h2>
@@ -208,8 +212,8 @@
         </header>
 
         <form id="intakeForm" novalidate>
-          <div class="progress">
-            <div class="bar" id="progressBar" style="width: 20%"></div>
+          <div class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="20">
+            <div class="bar" id="progressBar" style="width:20%"></div>
           </div>
 
           <!-- Step 1 -->
@@ -406,8 +410,5 @@
   <!-- Scripts -->
   <script src="scripts.js" defer></script>
   <script type="module" src="assets/js/consult.js"></script>
-
-  <!-- Icons (Font Awesome) -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </body>
 </html>

@@ -19,12 +19,12 @@
     try {
       const res = await fetch(path, { cache: 'no-store' });
       if (res.ok) target.innerHTML = await res.text();
-    } catch {}
+    } catch { /* ignore */ }
   }
 
   // ----- Intersection reveals -----
   const io = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
+    entries.forEach((e) => {
       if (e.isIntersecting) {
         e.target.classList.add('in-view');
         io.unobserve(e.target);
@@ -32,7 +32,7 @@
     });
   }, { rootMargin: '0px 0px -10% 0px', threshold: 0.1 });
 
-  function revealify() { $$('.reveal').forEach(el => io.observe(el)); }
+  function revealify() { $$('.reveal').forEach((el) => io.observe(el)); }
 
   // ----- Case scroller -----
   function wireCases() {
@@ -49,6 +49,7 @@
 
     const steps = $$('.step', form);
     const progressBar = byId('progressBar');
+    const progressWrap = progressBar?.parentElement;
     const msg = byId('formMsg');
     const nextBtn = byId('nextStep');
     const prevBtn = byId('prevStep');
@@ -59,25 +60,40 @@
 
     let idx = 0;
 
-    const setStep = (i) => {
+    const setStep = (i, opts = { focus: true }) => {
       idx = Math.max(0, Math.min(steps.length - 1, i));
       steps.forEach((s, j) => { s.hidden = j !== idx; });
       prevBtn.disabled = idx === 0;
       nextBtn.hidden = idx === steps.length - 1;
       submitBtn.hidden = idx !== steps.length - 1;
+
       const pct = Math.round(((idx + 1) / steps.length) * 100);
       progressBar.style.width = pct + '%';
+      progressWrap?.setAttribute('aria-valuenow', String(pct));
       msg.textContent = '';
-      steps[idx].querySelector('input,select,textarea')?.focus();
+
+      if (opts.focus) {
+        const first = steps[idx].querySelector('input,select,textarea');
+        try {
+          first?.focus({ preventScroll: true });
+        } catch {
+          first?.focus();
+        }
+      }
     };
 
     const validateStep = () => {
       msg.textContent = '';
+      // clear previous errors
+      $$('[data-error="1"]', steps[idx]).forEach(n => n.removeAttribute('data-error'));
       const required = $$('input[required],select[required],textarea[required]', steps[idx]);
       for (const el of required) {
-        if (!String(el.value || '').trim()) {
+        const val = String(el.value || '').trim();
+        const invalid = !val || (el.type === 'email' && !/^\S+@\S+\.\S+$/.test(val));
+        if (invalid) {
+          el.setAttribute('data-error', '1');
           msg.textContent = 'Please complete the required fields.';
-          el.focus();
+          try { el.focus({ preventScroll: true }); } catch { el.focus(); }
           return false;
         }
       }
@@ -95,6 +111,7 @@
       if (!validateStep()) return;
 
       const data = Object.fromEntries(new FormData(form).entries());
+
       // Persist locally
       try { localStorage.setItem('rh.consult.intake', JSON.stringify({ ...data, ts: new Date().toISOString() })); } catch {}
 
@@ -132,13 +149,17 @@ ${(data.notes || '').trim() || '(none)'}
     });
 
     // Open from hero/footer buttons
-    $$('.js-open-intake').forEach(b => b.addEventListener('click', () => {
-      form.hidden = false; after.hidden = true; setStep(0);
-      document.querySelector('.intake')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }));
+    $$('.js-open-intake').forEach((b) =>
+      b.addEventListener('click', () => {
+        form.hidden = false;
+        after.hidden = true;
+        setStep(0, { focus: true });
+        document.querySelector('.intake')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      })
+    );
 
-    // Start at first step
-    setStep(0);
+    // Initial step WITHOUT scrolling/focusing (prevents jumping to intake)
+    setStep(0, { focus: false });
   }
 
   // Capture UTM tags (if present) to localStorage for later CRM imports
@@ -154,9 +175,8 @@ ${(data.notes || '').trim() || '(none)'}
   document.addEventListener('DOMContentLoaded', async () => {
     await Promise.all([
       mountPartial(byId('header-placeholder')),
-      mountPartial(byId('footer-placeholder'))
+      mountPartial(byId('footer-placeholder')),
     ]);
-
     revealify();
     wireCases();
     wireIntake();

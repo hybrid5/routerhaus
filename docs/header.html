@@ -1,3 +1,4 @@
+<!-- header.html -->
 <!-- ===== Header ===== -->
 <header class="navbar" role="banner">
   <a class="logo" href="index.html" aria-label="RouterHaus home">Router<span>Haus</span></a>
@@ -5,13 +6,13 @@
   <!-- Desktop nav -->
   <nav class="nav-desktop" aria-label="Main navigation">
     <a href="index.html">Home</a>
-    <a href="kits.html" aria-current="page">Kits</a>
+    <a href="kits.html">Kits</a>
     <a href="blog.html">Blog</a>
     <a href="about.html">About</a>
     <a href="consult.html">Consult</a>
     <a href="contact.html">Contact</a>
 
-    <!-- Primary CTAs -->
+    <!-- Primary CTA -->
     <button id="openQuiz" class="btn primary" type="button">
       Help Me Find a Kit
     </button>
@@ -25,18 +26,18 @@
 
 <!-- ===== Sidebar (mobile) ===== -->
 <aside id="sidebar" class="sidebar" aria-hidden="true">
-  <button id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">Light Mode</button>
+  <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle theme">Light Mode</button>
 
-  <!-- Mobile CTAs (use data-* to avoid duplicate IDs) -->
+  <!-- Mobile CTA -->
   <div class="sidebar-ctas">
-    <button class="btn primary" type="button" data-open-quiz>
+    <button id="openQuiz" class="btn primary" type="button">
       Help Me Find a Kit
     </button>
   </div>
 
   <nav aria-label="Sidebar navigation">
     <a href="index.html">Home</a>
-    <a href="kits.html" aria-current="page">Kits</a>
+    <a href="kits.html">Kits</a>
     <a href="blog.html">Blog</a>
     <a href="about.html">About</a>
     <a href="consult.html">Consult</a>
@@ -44,26 +45,3 @@
   </nav>
 </aside>
 <div id="sidebar-overlay" class="overlay" tabindex="-1" aria-hidden="true"></div>
-
-<!-- Helper: forward mobile CTA clicks to the main quiz buttons -->
-<script>
-  (function () {
-    const forward = (attr, targetId) => {
-      document.addEventListener('click', (e) => {
-        const btn = e.target.closest(`[${attr}]`);
-        if (!btn) return;
-        const t = document.getElementById(targetId);
-        if (t) t.click();
-      });
-    };
-    forward('data-open-quiz', 'openQuiz');
-    forward('data-edit-quiz', 'editQuiz');
-
-    // Keep "Edit my answers" visibility in sync if header button is toggled
-    const editHeader = document.getElementById('editQuiz');
-    const editMobile = document.querySelector('[data-edit-quiz]');
-    const sync = () => { if (editMobile && editHeader) editMobile.hidden = editHeader.hasAttribute('hidden'); };
-    const mo = new MutationObserver(sync);
-    if (editHeader) { mo.observe(editHeader, { attributes: true, attributeFilter: ['hidden'] }); sync(); }
-  })();
-</script>

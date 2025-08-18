@@ -1,6 +1,6 @@
 /* ============================
    RouterHaus – home.js
-   Page-only behavior for index.html
+   Aligned with other pages
 ============================ */
 (() => {
   "use strict";
@@ -30,7 +30,6 @@
     };
 
     chips.forEach((btn) => {
-      if (!btn.getAttribute("type")) btn.setAttribute("type", "button");
       btn.addEventListener("click", () => {
         const key = btn.dataset.qpick;
         const qs = map[key] || "quiz=1";
@@ -62,8 +61,7 @@
   function wireAccordion(){
     $$(".accordion-item").forEach(item=>{
       item.addEventListener("click", (e)=>{
-        // avoid toggling when selecting text
-        if (getSelection()?.toString()) return;
+        if (getSelection()?.toString()) return; // avoid toggling when selecting text
         item.classList.toggle("open");
       });
     });

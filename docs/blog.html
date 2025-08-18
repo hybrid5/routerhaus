@@ -3,41 +3,59 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>RouterHaus Journal — Blog</title>
-  <link rel="stylesheet" href="assets/css/blog.css" />
   <meta name="description" content="RouterHaus Journal — Guides, reviews, and networking deep-dives." />
+  <title>RouterHaus Journal · Blog</title>
+
+  <!-- Fonts & Global Styles -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="main.css" />
+  <link rel="stylesheet" href="assets/css/blog.css" />
+
+  <!-- Theme sync (matches other pages) -->
+  <meta name="color-scheme" content="light dark" />
+  <script>
+    (() => {
+      const root = document.documentElement;
+      const media = matchMedia('(prefers-color-scheme: dark)');
+      const apply = () => root.setAttribute('data-theme', media.matches ? 'dark' : 'light');
+      apply(); media.addEventListener('change', apply);
+    })();
+  </script>
+
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
 <body>
-  <!-- Optional ambient background (kept subtle like Kits) -->
+  <!-- Ambient background (subtle like Kits) -->
   <div class="ambient-bg" aria-hidden="true">
     <span class="bg-orb orb-1"></span>
     <span class="bg-orb orb-2"></span>
     <span class="bg-orb orb-3"></span>
   </div>
 
-  <!-- Optional header/footer partials (if you use them elsewhere) -->
-  <div id="header-placeholder" data-partial="partials/header.html"></div>
+  <!-- Header / Footer partials (aligned paths) -->
+  <div id="header-placeholder" data-partial="header.html"></div>
 
   <main class="container blog-layout">
-    <!-- Page header -->
+    <!-- ===== Page header ===== -->
     <header class="page-header">
       <div class="head-wrap">
         <h1 class="page-title">The RouterHaus Journal</h1>
-        <p class="page-sub">Guides, reviews, and networking deep-dives — written for real homes and real people.</p>
+        <p class="page-sub">Guides, reviews, and networking deep-dives — written for real homes and real teams.</p>
       </div>
 
-      <!-- Command bar: search + sort + tag quick filter slot -->
+      <!-- Command bar: search + sort + page size + tags rail -->
       <section class="command-bar" aria-label="Blog controls">
         <div class="search-container">
           <div class="search-wrapper">
-            <span class="search-icon" aria-hidden="true">🔎</span>
+            <span class="search-icon" aria-hidden="true"><i class="fa-solid fa-magnifying-glass"></i></span>
             <input id="searchInput" type="search" placeholder="Search articles (title, author, tags, content) …" aria-label="Search blog" />
           </div>
           <button id="searchBtn" class="btn">Search</button>
 
           <div class="toolbar-group">
             <div class="sort">
-              <span class="icon" aria-hidden="true">⟲</span>
+              <span class="icon" aria-hidden="true"><i class="fa-solid fa-arrow-down-wide-short"></i></span>
               <label for="sortSelect">Sort</label>
               <select id="sortSelect" aria-label="Sort articles">
                 <option value="newest">Newest</option>
@@ -47,7 +65,7 @@
               </select>
             </div>
             <div class="pagesize">
-              <span class="icon" aria-hidden="true">▥</span>
+              <span class="icon" aria-hidden="true"><i class="fa-solid fa-table-cells-large"></i></span>
               <label for="pageSizeSelect">Per page</label>
               <select id="pageSizeSelect" aria-label="Articles per page">
                 <option>6</option>
@@ -86,7 +104,7 @@
 
     <!-- Empty state -->
     <section id="emptyState" class="empty-modern hide" aria-live="polite">
-      <div class="empty-icon" aria-hidden="true">∅</div>
+      <div class="empty-icon" aria-hidden="true"><i class="fa-solid fa-inbox"></i></div>
       <h3>No articles match your filters</h3>
       <p>Try clearing a tag, changing your search, or exploring a featured guide below.</p>
       <div id="emptyQuickChips" class="chips"></div>
@@ -110,9 +128,9 @@
     </aside>
   </main>
 
-  <div id="footer-placeholder" data-partial="partials/footer.html"></div>
+  <div id="footer-placeholder" data-partial="footer.html"></div>
 
-  <!-- Templates -->
+  <!-- ===== Templates ===== -->
   <template id="postCardTpl">
     <article class="post-card reveal" role="listitem">
       <a class="cover" href="#" aria-label="">
@@ -166,10 +184,10 @@
     <div class="modal-content">
       <div class="modal-header">
         <div class="modal-title-group">
-          <span class="modal-icon" aria-hidden="true">✦</span>
+          <span class="modal-icon" aria-hidden="true"><i class="fa-solid fa-star"></i></span>
           <h2 id="previewTitle">Preview</h2>
         </div>
-        <button class="modal-close" id="previewClose" type="button" aria-label="Close">×</button>
+        <button class="modal-close" id="previewClose" type="button" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
       </div>
 
       <div class="preview-body">
@@ -187,6 +205,7 @@
     </div>
   </dialog>
 
+  <!-- Scripts -->
   <script defer src="assets/js/blog.js"></script>
 </body>
 </html>

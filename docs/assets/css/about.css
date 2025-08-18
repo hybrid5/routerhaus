@@ -1,26 +1,8 @@
 /* filename: /css/about.css */
 /* ======================================
-   RouterHaus — About page (post-audit)
-   Page relies on main.css tokens; only page-unique layout/styles here.
+   RouterHaus — About page (page-level)
+   Relies on main.css tokens/components
    ====================================== */
-
-/* --- Token aliases to main.css --- */
-:root{
-  --bg: var(--bg);
-  --text-1: var(--text-primary);
-  --text-2: var(--text-muted);
-  --muted: var(--text-muted);
-  --card: var(--card);
-  --surface-primary: var(--card);
-  --surface-secondary: var(--surface);
-  --border: var(--border-color);
-  --primary: var(--primary);
-  --accent: var(--accent);
-  --radius: var(--radius);
-  --radius-lg: var(--radius-lg);
-  --shadow-soft: var(--shadow-sm);
-  --shadow: var(--shadow);
-}
 
 /* Section rhythm & typography */
 .about-page section { padding: clamp(36px, 7vw, 88px) 0; }
@@ -54,21 +36,22 @@
 }
 .about-page .hero-ctas{ display:flex; gap:10px; flex-wrap:wrap; margin-top:.5rem; }
 
+/* HERO card & stats */
 .about-page .hero-card{
   border-radius: var(--radius-lg); border:1px solid var(--border);
-  background: color-mix(in oklab, var(--surface-secondary) 92%, transparent);
-  padding: clamp(14px, 2vw, 18px); box-shadow: var(--shadow-soft);
+  background: color-mix(in oklab, var(--surface-secondary, rgba(255,255,255,.95)) 92%, transparent);
+  padding: clamp(14px, 2vw, 18px); box-shadow: var(--shadow-sm);
 }
 .about-page .hero-card .stats{ display:grid; gap:12px; grid-template-columns: repeat(3, minmax(0,1fr)); }
 @media (max-width: 720px){ .about-page .hero-card .stats{ grid-template-columns: 1fr; } }
 .about-page .hero-card .stat{
   display:grid; gap:4px; justify-items:flex-start; border:1px solid var(--border); border-radius:16px;
-  background: var(--surface-primary); padding:12px;
+  background: var(--surface-primary, rgba(255,255,255,.9)); padding:12px;
 }
 .about-page .hero-card .stat .icon{
   width:34px; height:34px; display:grid; place-items:center; border-radius:10px;
   background: linear-gradient(135deg, var(--primary), color-mix(in oklab, var(--accent) 40%, transparent));
-  color:#fff; box-shadow: var(--shadow-soft);
+  color:#fff; box-shadow: var(--shadow-sm);
 }
 .about-page .hero-card .stat strong{ font-size:1rem; }
 .about-page .hero-card .stat span{ color: var(--text-2); font-size:.95rem; }
@@ -86,8 +69,8 @@
 .about-page .value-card{
   border-radius: var(--radius-lg);
   border: 1px solid var(--border);
-  background: color-mix(in oklab, var(--surface-secondary) 92%, transparent);
-  box-shadow: var(--shadow-soft);
+  background: color-mix(in oklab, var(--surface-secondary, rgba(255,255,255,.95)) 92%, transparent);
+  box-shadow: var(--shadow-sm);
   padding: clamp(14px, 2vw, 18px);
 }
 .about-page .value-card .icon{
@@ -109,8 +92,8 @@
 .about-page .steps li{
   display:grid; gap:6px; justify-items:center; text-align:center; padding:12px;
   border-radius:16px; border:1px solid var(--border);
-  background: color-mix(in oklab, var(--surface-secondary) 90%, transparent);
-  box-shadow: var(--shadow-soft);
+  background: color-mix(in oklab, var(--surface-secondary, rgba(255,255,255,.95)) 90%, transparent);
+  box-shadow: var(--shadow-sm);
 }
 .about-page .steps li span{
   width: 36px; height: 36px; border-radius: 999px; display:grid; place-items:center;
@@ -119,7 +102,7 @@
 .about-page .steps li em{ color: var(--muted); font-style: normal; font-size: .95rem; }
 
 /* ===== PERSONAS ===== */
-.about-page .personas{ padding-top: 0; } /* tighter chaining after approach */
+.about-page .personas{ padding-top: 0; }
 .about-page .persona-heading{
   margin: clamp(18px, 3vw, 28px) 0 clamp(8px, 1.4vw, 14px);
   font-size: clamp(1.1rem, .9rem + .9vw, 1.5rem); color: var(--accent);
@@ -134,14 +117,14 @@
 .about-page .persona-card{
   border-radius: var(--radius-lg);
   border: 1px solid var(--border);
-  background: color-mix(in oklab, var(--surface-secondary) 92%, transparent);
+  background: color-mix(in oklab, var(--surface-secondary, rgba(255,255,255,.95)) 92%, transparent);
   padding: clamp(14px, 2vw, 18px);
-  box-shadow: var(--shadow-soft);
+  box-shadow: var(--shadow-sm);
   transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
 }
 .about-page .persona-card:hover{
   transform: translateY(-3px);
-  box-shadow: var(--shadow);
+  box-shadow: var(--shadow-strong);
   border-color: color-mix(in oklab, var(--primary) 40%, var(--border));
 }
 .about-page .persona-card h4{ margin: 0 0 .25rem; font-size: 1.02rem; color: var(--text-1); }
@@ -157,8 +140,8 @@
 @media (max-width: 560px){ .about-page .principle-grid{ grid-template-columns: 1fr; } }
 .about-page .principles .card{
   border-radius: var(--radius-lg); border:1px solid var(--border);
-  background: color-mix(in oklab, var(--surface-secondary) 92%, transparent);
-  padding: clamp(14px,2vw,18px); box-shadow: var(--shadow-soft);
+  background: color-mix(in oklab, var(--surface-secondary, rgba(255,255,255,.95)) 92%, transparent);
+  padding: clamp(14px,2vw,18px); box-shadow: var(--shadow-sm);
 }
 .about-page .principles .card h3{ margin:0 0 .35rem; font-size:1.1rem; }
 .about-page .principles .card p{ margin:0; color: var(--text-2); }
@@ -167,19 +150,8 @@
 .about-page .faq .section-head{ text-align:center; }
 .about-page .faq-title{ margin: 0 0 .6rem; }
 .about-page .accordion{ max-width: 900px; margin: 0 auto; }
-.about-page .accordion-item{
-  border-top: 1px solid var(--border);
-  cursor: pointer; padding: 1rem 0; position: relative;
-}
-.about-page .accordion-item h4{ margin: 0; font-size: clamp(1.05rem, 1rem + .3vw, 1.25rem); }
-.about-page .accordion-item span{
-  position: absolute; right: .25rem; top: .85rem; font-size: 1.2rem;
-  color: var(--primary); transition: transform .2s ease;
-}
-.about-page .accordion-item.open span{ transform: rotate(45deg); }
-.about-page .accordion-item p{ color: var(--text-2); margin: .55rem 0 0; display: none; }
-.about-page .accordion-item.open p{ display: block; }
 
-/* ===== Utilities shared with site ===== */
+/* Utilities (share hooks exist in main) */
+.glass{ background: color-mix(in oklab, var(--card) 86%, transparent); backdrop-filter: blur(16px) saturate(140%); }
 .reveal{ opacity:0; transform: translateY(8px); transition: opacity .22s cubic-bezier(.22,.61,.36,1), transform .22s cubic-bezier(.22,.61,.36,1); }
 .reveal.in-view{ opacity:1; transform:none; }

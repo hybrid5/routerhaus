@@ -1,0 +1,589 @@
+/* RouterHaus Journal — Next-gen Blog
+ * - Search: tokenized, fuzzy (nopunct), AND semantics
+ * - Tags: live counts; impossible options disabled (but never your current selection)
+ * - Sort: newest/popular/reading time
+ * - Pagination + URL sync
+ * - Featured hero, quick preview modal, newsletter (LS demo)
+ * - Reuses Kits patterns; zero new emojis beyond search icon already shown
+ */
+
+(() => {
+  // ---------- Small utils ----------
+  const $  = (s, r=document) => r.querySelector(s);
+  const $$ = (s, r=document) => Array.from(r.querySelectorAll(s));
+  const byId = (id) => document.getElementById(id);
+  const clamp = (n,a,b) => Math.max(a, Math.min(b, n));
+  const nopunct = (s) => String(s||'').toLowerCase().replace(/[\W_]+/g, '');
+  const collator = new Intl.Collator(undefined, { numeric:true, sensitivity:'base' });
+  const fmtDate = (dStr) => {
+    try { return new Intl.DateTimeFormat(undefined, { year:'numeric', month:'short', day:'2-digit' }).format(new Date(dStr)); }
+    catch { return dStr || ''; }
+  };
+  const debounce = (fn, d=200) => { let t; return (...a)=>{ clearTimeout(t); t=setTimeout(()=>fn(...a), d); }; };
+  const LS = {
+    get: (k, d=null) => { try { return JSON.parse(localStorage.getItem(k)) ?? d; } catch { return d; } },
+    set: (k, v) => localStorage.setItem(k, JSON.stringify(v)),
+    del: (k) => localStorage.removeItem(k),
+  };
+
+  // ---------- Elements ----------
+  const el = {
+    headerMount: byId('header-placeholder'),
+    footerMount: byId('footer-placeholder'),
+
+    searchInput: byId('searchInput'),
+    searchBtn: byId('searchBtn'),
+
+    sortSelect: byId('sortSelect'),
+    pageSizeSelect: byId('pageSizeSelect'),
+
+    tagsBar: byId('tagsBar'),
+    activeChips: byId('activeChips'),
+    emptyQuickChips: byId('emptyQuickChips'),
+
+    featuredHero: byId('featuredHero'),
+
+    paginationTop: byId('paginationTop'),
+    paginationBottom: byId('paginationBottom'),
+
+    skeletonTpl: byId('skeletonTpl'),
+    postCardTpl: byId('postCardTpl'),
+    skeletonGrid: byId('skeletonGrid'),
+    resultsGrid: byId('postResults'),
+
+    emptyState: byId('emptyState'),
+    matchCount: byId('matchCount'),
+
+    // preview modal
+    previewModal: byId('postPreviewModal'),
+    previewClose: byId('previewClose'),
+    previewTitle: byId('previewTitle'),
+    previewMeta: byId('previewMeta'),
+    previewBody: byId('previewBody'),
+    previewCover: byId('previewCover'),
+    previewReadLink: byId('previewReadLink'),
+
+    // newsletter
+    nlForm: byId('newsletterForm'),
+    nlEmail: byId('nlEmail'),
+    nlMsg: byId('nlMsg'),
+  };
+
+  // ---------- State ----------
+  const urlQS = new URLSearchParams(location.search);
+  const state = {
+    posts: [],
+    filtered: [],
+    tags: new Set((urlQS.get('tags') || '').split(',').filter(Boolean)),
+    tagList: [],               // ordered list of tag strings
+    sort: urlQS.get('sort') || 'newest',
+    page: Math.max(1, Number(urlQS.get('page')) || 1),
+    pageSize: Number(urlQS.get('ps')) || 12,
+    search: (urlQS.get('q') || '').trim().toLowerCase(),
+  };
+
+  // ---------- Partials (optional) ----------
+  const mountPartial = async (target) => {
+    const path = target?.dataset?.partial;
+    if (!path) return;
+    try {
+      const res = await fetch(path, { cache: 'no-store' });
+      if (res.ok) target.innerHTML = await res.text();
+    } catch {}
+  };
+
+  // ---------- Data ----------
+  const FALLBACK_POSTS = [
+    {
+      id:'p1',
+      title:'Wi-Fi 7 vs 6E: What Actually Changes at Home?',
+      slug:'wifi-7-vs-6e',
+      author:'N. Patel',
+      date:'2025-02-10',
+      tags:['Wi-Fi 7','How-To','Buying Guide'],
+      excerpt:'A plain-English breakdown of Wi-Fi 7 and whether you’ll feel the difference on your phone, console, and smart home.',
+      content:'<p>Wi-Fi 7 adds wider channels (320 MHz), multi-link operation, and lower latency. But should you upgrade now? We benchmarked across real homes…</p><h3>Key takeaways</h3><ul><li>320 MHz channels help only if your devices support them.</li><li>Latency improvements are real for multi-AP mesh.</li></ul>',
+      cover:'https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1400&auto=format&fit=crop',
+      minutes:7,
+      featured:true,
+      views:12840
+    },
+    {
+      id:'p2',
+      title:'The Mesh Playbook: Fix Dead Zones Without Rewiring',
+      slug:'mesh-playbook',
+      author:'A. Rios',
+      date:'2025-01-28',
+      tags:['Mesh','Troubleshooting'],
+      excerpt:'We map out three practical placements for townhomes, ranch houses, and apartments that kill dead zones.',
+      content:'<p>Mesh isn’t magic — placement is. Here are three patterns we recommend repeatedly in client homes, with diagrams and gotchas to avoid…</p>',
+      cover:'https://images.unsplash.com/photo-1518779578993-ec3579fee39f?q=80&w=1400&auto=format&fit=crop',
+      minutes:6,
+      featured:false,
+      views:9320
+    },
+    {
+      id:'p3',
+      title:'2.5G WAN on a Budget: Real Options Under $200',
+      slug:'two-point-five-g-wan-budget',
+      author:'K. Lee',
+      date:'2024-12-16',
+      tags:['Buying Guide','2.5G','Value'],
+      excerpt:'If you’ve got multigig fiber but a sane budget, these are the boxes that actually deliver ≥2 Gbps in our tests.',
+      content:'<p>We gathered routers and gateways that hit at least 2 Gbps in WAN tests without overheating or dropping connections…</p>',
+      cover:'https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?q=80&w=1400&auto=format&fit=crop',
+      minutes:5,
+      featured:false,
+      views:15420
+    }
+  ];
+
+  const getJsonUrl = () => (window.RH_CONFIG?.blogJsonUrl || 'blog.json');
+  const fetchPosts = async () => {
+    try {
+      const res = await fetch(getJsonUrl(), { cache: 'no-store' });
+      if (!res.ok) throw new Error('bad status');
+      const arr = await res.json();
+      if (!Array.isArray(arr) || !arr.length) return FALLBACK_POSTS;
+      return arr.map(normalizePost);
+    } catch {
+      return FALLBACK_POSTS.map(normalizePost);
+    }
+  };
+
+  function normalizePost(p, idx) {
+    const o = { ...p };
+    o.id = o.id || `bp_${idx}_${(o.slug || o.title || 'post').replace(/\W+/g,'').slice(0,18)}`;
+    o.title = String(o.title || 'Untitled').trim();
+    o.slug = String(o.slug || o.id);
+    o.author = o.author || 'RouterHaus';
+    o.date = o.date || new Date().toISOString().slice(0,10);
+    o.tags = Array.isArray(o.tags) ? o.tags.filter(Boolean) : [];
+    o.excerpt = o.excerpt || '';
+    o.content = o.content || '';
+    o.cover = typeof o.cover === 'string' ? o.cover : '';
+    o.minutes = Number.isFinite(Number(o.minutes)) ? Number(o.minutes) : Math.max(3, Math.round((o.content || o.excerpt).split(/\s+/).length / 200));
+    o.featured = !!o.featured;
+    o.views = Number.isFinite(Number(o.views)) ? Number(o.views) : 0;
+    return o;
+  }
+
+  // ---------- URL sync ----------
+  const syncUrl = () => {
+    const qs = new URLSearchParams();
+    if (state.search) qs.set('q', state.search);
+    if (state.sort !== 'newest') qs.set('sort', state.sort);
+    if (state.page > 1) qs.set('page', String(state.page));
+    if (state.pageSize !== 12) qs.set('ps', String(state.pageSize));
+    if (state.tags.size) qs.set('tags', [...state.tags].join(','));
+    history.replaceState(null, '', qs.toString() ? `?${qs}` : location.pathname);
+  };
+
+  // ---------- Tags ----------
+  function collectTags(posts) {
+    const map = new Map();
+    posts.forEach(p => (p.tags||[]).forEach(t => map.set(t, (map.get(t)||0) + 1)));
+    const arr = [...map.entries()].sort((a,b) => collator.compare(a[0], b[0]));
+    state.tagList = arr.map(([tag]) => tag);
+    return map; // counts
+  }
+
+  function renderTagsBar(counts, filteredBase) {
+    el.tagsBar.innerHTML = '';
+    const baseSet = new Set(filteredBase); // posts visible before applying tag itself
+
+    state.tagList.forEach(tag => {
+      const count = counts.get(tag) || 0;
+
+      // compute "what if I add this tag" count
+      const nextCount = filteredBase.filter(p => p.tags.includes(tag)).length;
+
+      const btn = document.createElement('button');
+      btn.className = 'chip';
+      btn.type = 'button';
+      btn.setAttribute('aria-pressed', state.tags.has(tag) ? 'true' : 'false');
+      btn.textContent = tag;
+
+      const small = document.createElement('span');
+      small.className = 'count';
+      small.textContent = ` (${nextCount})`;
+      btn.appendChild(small);
+
+      const impossible = nextCount === 0 && !state.tags.has(tag);
+      if (impossible) btn.classList.add('disabled');
+
+      btn.addEventListener('click', () => {
+        if (impossible) return;
+        if (state.tags.has(tag)) state.tags.delete(tag); else state.tags.add(tag);
+        state.page = 1;
+        onStateChanged({});
+      });
+
+      el.tagsBar.appendChild(btn);
+    });
+  }
+
+  // ---------- Filtering ----------
+  function passesSearch(p, term) {
+    if (!term) return true;
+    const hayRaw = [
+      p.title, p.author, p.excerpt, p.content,
+      ...(p.tags || [])
+    ].join(' ').toLowerCase();
+
+    const hayComp = nopunct(hayRaw);
+    const tokens = term.split(/\s+/).filter(Boolean);
+    for (const t of tokens) {
+      const tComp = nopunct(t);
+      if (!(hayRaw.includes(t) || hayComp.includes(tComp))) return false;
+    }
+    return true;
+  }
+
+  function applyFilters() {
+    const withSearch = state.posts.filter(p => passesSearch(p, state.search));
+
+    // compute tag-only counts relative to search
+    const filteredBase = withSearch.slice();
+
+    // apply tags (AND semantics across different tags)
+    const withTags = [...state.tags].reduce((arr, tag) => arr.filter(p => p.tags.includes(tag)), filteredBase);
+
+    state.filtered = withTags;
+    return { filteredBase, tagCounts: collectTags(withSearch) };
+  }
+
+  // ---------- Sorting ----------
+  const comparators = {
+    newest: (a,b) => new Date(b.date) - new Date(a.date),
+    popular: (a,b) => (b.views - a.views) || (new Date(b.date) - new Date(a.date)),
+    'reading-asc': (a,b) => (a.minutes - b.minutes) || (new Date(b.date) - new Date(a.date)),
+    'reading-desc': (a,b) => (b.minutes - a.minutes) || (new Date(b.date) - new Date(a.date)),
+  };
+
+  // ---------- Pagination ----------
+  function paginate() {
+    const total = state.filtered.length;
+    const pageCount = Math.max(1, Math.ceil(total / state.pageSize));
+    state.page = clamp(state.page, 1, pageCount);
+    const start = (state.page - 1) * state.pageSize;
+    const end = start + state.pageSize;
+    renderPagination(el.paginationTop, pageCount);
+    renderPagination(el.paginationBottom, pageCount);
+    return state.filtered.slice(start, end);
+  }
+
+  function renderPagination(container, pageCount) {
+    if (!container) return;
+    container.innerHTML = '';
+    if (pageCount <= 1) return;
+
+    const makeBtn = (label, page, cls='page') => {
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.className = cls;
+      b.textContent = label;
+      b.dataset.page = String(page);
+      b.disabled = page === state.page;
+      if (cls === 'page' && page === state.page) b.setAttribute('aria-current', 'page');
+      b.addEventListener('click', () => { state.page = page; onStateChanged({ scrollToTop:true }); });
+      return b;
+    };
+
+    const prev = makeBtn('Prev', clamp(state.page - 1, 1, pageCount), 'page prev');
+    prev.disabled = state.page === 1;
+    container.appendChild(prev);
+
+    const nums = numberedPages(state.page, pageCount);
+    for (const p of nums) {
+      if (p === '…') {
+        const s = document.createElement('span');
+        s.className = 'page disabled'; s.textContent = '…';
+        container.appendChild(s);
+      } else {
+        container.appendChild(makeBtn(String(p), p));
+      }
+    }
+
+    const next = makeBtn('Next', clamp(state.page + 1, 1, pageCount), 'page next');
+    next.disabled = state.page === pageCount;
+    container.appendChild(next);
+  }
+
+  function numberedPages(current, total) {
+    const arr = [];
+    const win = 2;
+    const start = Math.max(1, current - win);
+    const end = Math.min(total, current + win);
+    if (start > 1) { arr.push(1); if (start > 2) arr.push('…'); }
+    for (let i=start;i<=end;i++) arr.push(i);
+    if (end < total) { if (end < total - 1) arr.push('…'); arr.push(total); }
+    return arr;
+  }
+
+  // ---------- Rendering ----------
+  function renderSkeletons(n = state.pageSize) {
+    el.skeletonGrid.innerHTML = '';
+    el.skeletonGrid.style.display = '';
+    for (let i=0;i<n;i++) el.skeletonGrid.appendChild(el.skeletonTpl.content.cloneNode(true));
+  }
+  function hideSkeletons(){ el.skeletonGrid.style.display = 'none'; }
+
+  function renderFeatured() {
+    const f = state.posts.find(p => p.featured) || state.posts.slice().sort((a,b)=>new Date(b.date)-new Date(a.date))[0];
+    if (!f) { el.featuredHero.innerHTML=''; el.featuredHero.style.display='none'; return; }
+    el.featuredHero.style.display='';
+    el.featuredHero.innerHTML = `
+      <div class="hero-wrap">
+        <div class="hero-text">
+          <div class="hero-meta">
+            <strong>${f.author}</strong><span class="dot">•</span><time>${fmtDate(f.date)}</time><span class="dot">•</span><span>${f.minutes} min read</span>
+          </div>
+          <h2><a href="./${f.slug || '#'}">${escapeHtml(f.title)}</a></h2>
+          <p>${escapeHtml(f.excerpt)}</p>
+          <div class="chips hero-tags">
+            ${f.tags.map(t => `<span class="chip" tabindex="0" role="button" data-tag="${escapeAttr(t)}">${escapeHtml(t)}</span>`).join('')}
+          </div>
+          <div class="hero-actions">
+            <a class="btn primary" href="./${f.slug || '#'}">Read the article</a>
+            <button class="btn ghost" type="button" data-preview="${f.id}">Quick preview</button>
+          </div>
+        </div>
+        <div class="hero-cover"><img src="${escapeAttr(f.cover || '')}" alt="" /></div>
+      </div>
+    `;
+    // Tag chip clicks apply filter
+    $$('.hero-tags .chip', el.featuredHero).forEach(ch => {
+      ch.addEventListener('click', () => {
+        const t = ch.dataset.tag;
+        if (t) state.tags.add(t);
+        state.page = 1;
+        onStateChanged({ scrollToTop:true });
+      });
+    });
+    el.featuredHero.querySelector('[data-preview]')?.addEventListener('click', () => openPreview(f));
+  }
+
+  function renderActiveChips() {
+    el.activeChips.innerHTML = '';
+    if (!state.tags.size) { el.activeChips.style.display='none'; return; }
+    el.activeChips.style.display='';
+    for (const t of state.tags) {
+      const btn = document.createElement('button');
+      btn.type='button'; btn.className='chip'; btn.setAttribute('role','listitem');
+      btn.setAttribute('aria-label', `Remove tag: ${t}`);
+      btn.textContent = `${t} ✕`;
+      btn.addEventListener('click', () => { state.tags.delete(t); state.page=1; onStateChanged({}); });
+      el.activeChips.appendChild(btn);
+    }
+  }
+
+  function renderResults(items) {
+    el.resultsGrid.innerHTML = '';
+    const frag = document.createDocumentFragment();
+    for (const p of items) frag.appendChild(renderCard(p));
+    el.resultsGrid.appendChild(frag);
+  }
+
+  function renderCard(p) {
+    const node = el.postCardTpl.content.cloneNode(true);
+    const art = node.querySelector('.post-card');
+
+    const aCover = node.querySelector('.cover');
+    const img = node.querySelector('img');
+    const featured = node.querySelector('.featured-badge');
+    const titleLink = node.querySelector('.title-link');
+    const author = node.querySelector('.author');
+    const date = node.querySelector('.date');
+    const read = node.querySelector('.read');
+    const viewsDot = node.querySelector('.views-dot');
+    const views = node.querySelector('.views');
+    const excerpt = node.querySelector('.excerpt');
+    const tags = node.querySelector('.chips.line.tags');
+    const readBtn = node.querySelector('.ctaRow a');
+    const previewBtn = node.querySelector('.previewBtn');
+
+    aCover.href = `./${p.slug}`;
+    aCover.setAttribute('aria-label', p.title);
+    img.src = p.cover || '';
+    img.alt = '';
+
+    if (p.featured) featured.hidden = false;
+
+    titleLink.href = `./${p.slug}`;
+    titleLink.textContent = p.title;
+
+    author.textContent = p.author;
+    date.textContent = fmtDate(p.date);
+    read.textContent = `${p.minutes} min read`;
+
+    if (p.views > 0) {
+      views.textContent = `${p.views.toLocaleString()} views`;
+      views.hidden = false;
+      viewsDot.hidden = false;
+    }
+
+    excerpt.textContent = p.excerpt;
+    tags.innerHTML = '';
+    (p.tags || []).forEach(t => {
+      const chip = document.createElement('span');
+      chip.className = 'chip';
+      chip.textContent = t;
+      chip.tabIndex = 0;
+      chip.role = 'button';
+      chip.addEventListener('click', () => { state.tags.add(t); state.page=1; onStateChanged({}); });
+      tags.appendChild(chip);
+    });
+
+    readBtn.href = `./${p.slug}`;
+    previewBtn.addEventListener('click', () => openPreview(p));
+
+    return node;
+  }
+
+  // ---------- Preview Modal ----------
+  function openPreview(p) {
+    if (!el.previewModal) return;
+    el.previewTitle.textContent = p.title;
+    el.previewMeta.textContent = `${p.author} • ${fmtDate(p.date)} • ${p.minutes} min read`;
+    el.previewCover.innerHTML = p.cover ? `<img src="${escapeAttr(p.cover)}" alt="">` : '';
+    el.previewBody.innerHTML = p.content || `<p>${escapeHtml(p.excerpt)}</p>`;
+    el.previewReadLink.href = `./${p.slug}`;
+
+    try { if (typeof el.previewModal.showModal === 'function') el.previewModal.showModal(); else el.previewModal.setAttribute('open',''); }
+    catch { el.previewModal.setAttribute('open',''); }
+  }
+  function closePreview(){ try{ el.previewModal.close(); }catch{ el.previewModal.removeAttribute('open'); } }
+  el.previewClose?.addEventListener('click', closePreview);
+  el.previewModal?.addEventListener('click', (e) => {
+    const r = el.previewModal.getBoundingClientRect();
+    const inside = e.clientX >= r.left && e.clientX <= r.right && e.clientY >= r.top && e.clientY <= r.bottom;
+    if (!inside) closePreview();
+  });
+  el.previewModal?.addEventListener('cancel', (e)=>{ e.preventDefault(); closePreview(); });
+
+  // ---------- Toolbar / Search ----------
+  function wireToolbar() {
+    if (el.sortSelect) {
+      el.sortSelect.value = state.sort;
+      el.sortSelect.addEventListener('change', () => { state.sort = el.sortSelect.value; state.page=1; onStateChanged({}); });
+    }
+    if (el.pageSizeSelect) {
+      el.pageSizeSelect.value = String(state.pageSize);
+      el.pageSizeSelect.addEventListener('change', () => { state.pageSize = Number(el.pageSizeSelect.value); state.page=1; onStateChanged({}); });
+    }
+    if (el.searchInput) {
+      el.searchInput.value = state.search;
+      const apply = () => { state.search = (el.searchInput.value||'').trim().toLowerCase(); state.page=1; onStateChanged({ scrollToTop:true }); };
+      const onType = debounce(apply, 220);
+      el.searchInput.addEventListener('input', onType);
+      el.searchInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') { e.preventDefault(); apply(); }
+        if (e.key === 'Escape' && el.searchInput.value) { e.preventDefault(); el.searchInput.value=''; apply(); }
+      });
+      el.searchBtn?.addEventListener('click', apply);
+      // "/" or Cmd/Ctrl+K focus
+      document.addEventListener('keydown', (e) => {
+        const tag = (document.activeElement?.tagName || '').toLowerCase();
+        const typing = tag === 'input' || tag === 'textarea' || tag === 'select' || document.activeElement?.isContentEditable;
+        const modK = (e.key.toLowerCase()==='k' && (e.ctrlKey || e.metaKey));
+        if (typing && !modK) return;
+        if (modK || e.key === '/') { e.preventDefault(); el.searchInput.focus(); el.searchInput.select(); }
+      });
+    }
+  }
+
+  // ---------- Newsletter (demo) ----------
+  el.nlForm?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const email = (el.nlEmail?.value || '').trim();
+    if (!email || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) {
+      el.nlMsg.textContent = 'Enter a valid email.';
+      return;
+    }
+    const list = new Set(LS.get('rh.newsletter', []));
+    list.add(email);
+    LS.set('rh.newsletter', [...list]);
+    el.nlMsg.textContent = 'Thanks — check your inbox for a confirmation!';
+    el.nlEmail.value = '';
+  });
+
+  // ---------- Lifecycle ----------
+  async function init(){
+    await Promise.all([mountPartial(el.headerMount), mountPartial(el.footerMount)]);
+
+    renderSkeletons(12);
+    try {
+      state.posts = (await fetchPosts()).map(normalizePost);
+      hideSkeletons();
+    } catch {
+      hideSkeletons();
+      state.posts = FALLBACK_POSTS.map(normalizePost);
+    }
+
+    wireToolbar();
+    renderFeatured();
+    // initial
+    onStateChanged({ initial:true });
+
+    // Focus search if q present
+    if (state.search) el.searchInput?.focus();
+  }
+
+  function onStateChanged(opts) {
+    // Filter
+    const { filteredBase, tagCounts } = applyFilters();
+
+    // Sort
+    (comparators[state.sort] || comparators.newest) && state.filtered.sort(comparators[state.sort] || comparators.newest);
+
+    // Counts + disabled tag buttons
+    renderTagsBar(tagCounts, filteredBase);
+
+    // Match count
+    const total = state.filtered.length;
+    const all = state.posts.length;
+    el.matchCount.textContent = `${total} match${total===1?'':'es'} / ${all}`;
+
+    // Active chips
+    renderActiveChips();
+
+    // Results
+    const pageItems = paginate();
+    renderResults(pageItems);
+
+    // Empty state
+    el.emptyState.classList.toggle('hide', total > 0);
+
+    // Quick chips for empty state
+    renderEmptyChips();
+
+    // URL
+    syncUrl();
+
+    if (opts?.scrollToTop) window.scrollTo({ top:0, behavior:'smooth' });
+  }
+
+  function renderEmptyChips() {
+    const c = el.emptyQuickChips;
+    if (!c) return;
+    c.innerHTML = '';
+    const add = (label, fn) => {
+      const b = document.createElement('button');
+      b.className = 'chip';
+      b.type = 'button';
+      b.textContent = label;
+      b.addEventListener('click', () => { fn(); state.page=1; onStateChanged({}); });
+      c.appendChild(b);
+    };
+    add('Show Featured', () => { state.search=''; el.searchInput.value=''; state.tags.clear(); state.sort='popular'; });
+    add('Short Reads (≤6 min)', () => { state.search=''; state.tags.clear(); state.sort='reading-asc'; });
+    if (state.tagList[0]) add(`Tag: ${state.tagList[0]}`, () => { state.tags.clear(); state.tags.add(state.tagList[0]); });
+  }
+
+  // ---------- Helpers ----------
+  function escapeHtml(s){ return String(s||'').replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])); }
+  function escapeAttr(s){ return escapeHtml(s).replace(/"/g,'&quot;'); }
+
+  document.addEventListener('DOMContentLoaded', init);
+})();

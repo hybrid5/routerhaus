@@ -138,7 +138,7 @@ ${(data.notes || '').trim() || '(none)'}
       downloadBrief.download = `routerhaus-consult-${(data.name || 'intake').toLowerCase().replace(/\W+/g,'-')}.json`;
 
       // Mailto (easy handoff)
-      const to = 'consult@routerhaus.com';
+      const to = 'admin@routerhaus.com';
       const subject = encodeURIComponent('Consult request');
       const body = encodeURIComponent(summary);
       mailtoLink.href = `mailto:${to}?subject=${subject}&body=${body}`;

@@ -1,11 +1,10 @@
 /* ==========================================================
    RouterHaus Journal — Blog (2025)
-   Aligned with Kits/Consult/Contact tokens, glass, chips, grid, etc.
+   Aligned with About/Kits/Consult tokens and glass.
    Light/Dark ready with fallbacks to global site tokens.
    ========================================================== */
 
 /* ------------------- Tokens & Theming ------------------- */
-/* We alias to site-wide tokens when present, then fall back to sensible defaults. */
 :root{
   /* Brand (LIGHT → match dark-mode purples exactly) */
   --primary-h: 234.433; --primary-s: 100%; --primary-l: 80.98%;
@@ -32,7 +31,7 @@
   --text-2xl: clamp(1.5rem,1.3rem + 1vw,2rem);
   --text-3xl: clamp(2rem,1.7rem + 1.5vw,3rem);
 
-  /* Surfaces (light defaults; alias to site tokens when available) */
+  /* Surfaces (alias to site tokens when available) */
   --bg: var(--rh-bg, var(--bg, #f8fafc));
   --bg-elev: var(--rh-bg-elev, var(--bg-elev, #ffffff));
   --text-1: var(--rh-text-1, var(--text-primary, #0a0f1e));
@@ -50,7 +49,7 @@
   --glass-tint: rgba(255,255,255,.05);
   --glass-blur: 20px; --glass-sat: 140%;
 
-  /* Borders/Rings (alias to site border-color when present) */
+  /* Borders/Rings */
   --border: var(--border-color, rgba(0,0,0,.12));
   --border-strong: rgba(0,0,0,.2);
   --ring: color-mix(in oklab, var(--primary) 40%, transparent);
@@ -83,7 +82,7 @@
   scroll-behavior: smooth;
 }
 
-/* Dark theme (pref sets) — falls back if site doesn't supply its own variables */
+/* Dark theme */
 html[data-theme="dark"]{
   --bg: var(--rh-bg-dark, var(--bg-dark, #0a0e16));
   --bg-elev: var(--rh-bg-elev-dark, var(--bg-elev-dark, #0f1419));
@@ -108,7 +107,7 @@ html[data-theme="dark"]{
   --shadow-sm: 0 10px 24px rgba(0,0,0,.3);
   --shadow-strong: 0 30px 60px rgba(0,0,0,.5);
 
-  --orb-opacity: .10; /* slightly stronger in dark */
+  --orb-opacity: .10;
 }
 
 /* ------------------- Base ------------------- */
@@ -117,7 +116,7 @@ html[data-theme="dark"]{
 *::after{ box-sizing: border-box; }
 html, body{ height:100%; margin:0; }
 
-/* Light-mode accent boost so colors are clearly present */
+/* Light-mode accent boost */
 html:not([data-theme="dark"]) body{
   background:
     radial-gradient(ellipse 1400px 900px at 70% -10%, color-mix(in oklab, var(--accent) 12%, transparent), transparent 70%),
@@ -125,7 +124,6 @@ html:not([data-theme="dark"]) body{
     var(--bg);
 }
 body{
-  /* default (dark mode or if overridden above) */
   background:
     radial-gradient(ellipse 1400px 900px at 70% -10%, color-mix(in oklab, var(--accent) 8%, transparent), transparent 70%),
     radial-gradient(ellipse 800px 600px at 30% 110%, color-mix(in oklab, var(--primary) 6%, transparent), transparent 70%),
@@ -141,7 +139,7 @@ body{
 img{ max-width:100%; display:block; height:auto; }
 a{ color: inherit; text-decoration: none; }
 
-/* Ambient background (can be disabled by removing .ambient-bg or adding .no-ambient to body) */
+/* Ambient background */
 .ambient-bg{ position:fixed; inset:0; pointer-events:none; z-index:-1; }
 .bg-orb{ position:absolute; border-radius:50%; filter:blur(100px); opacity:var(--orb-opacity); animation:float 25s ease-in-out infinite; }
 .orb-1{ width:600px; height:600px; background:radial-gradient(circle,var(--primary) 0%,transparent 70%); top:-15%; right:-15%; }
@@ -157,7 +155,7 @@ a{ color: inherit; text-decoration: none; }
   padding: clamp(12px, 2vw, 24px);
 }
 
-/* Buttons & chips (shared look) */
+/* Buttons & chips */
 .btn{
   display:inline-flex; align-items:center; justify-content:center; gap:var(--space-2);
   border-radius: var(--radius); padding: var(--space-3) var(--space-4);
@@ -180,19 +178,24 @@ a{ color: inherit; text-decoration: none; }
 .chip.disabled{ opacity:.45; cursor:not-allowed; transform:none; }
 .chip .count{ opacity:.8; font-weight:600; }
 
+/* Gradient text utility (match About .grad) */
+.grad{
+  background: linear-gradient(90deg, var(--accent), var(--primary));
+  -webkit-background-clip:text; background-clip:text;
+  -webkit-text-fill-color: transparent; color: transparent;
+}
+
 /* Page header + command bar */
 .page-header{ margin-bottom: var(--space-6); }
 .head-wrap{ margin-bottom: var(--space-3); }
 
-/* h1.page-title → match About's .grad style (purple gradient text) */
+/* H1 — only the inner .grad word is accented (like About) */
 .page-title{
   margin:0 0 var(--space-1);
   font-size: var(--text-3xl);
   font-weight:900;
   letter-spacing:-.01em;
-  background: linear-gradient(90deg, var(--accent), var(--primary));
-  -webkit-background-clip: text; background-clip: text;
-  -webkit-text-fill-color: transparent; color: transparent;
+  color: var(--text-1);
 }
 
 .page-sub{ margin:0; color: var(--text-2); }
@@ -382,7 +385,7 @@ a{ color: inherit; text-decoration: none; }
 .empty-modern h3{ margin:0 0 var(--space-2); }
 .empty-modern p{ margin:0 0 var(--space-4); color: var(--text-2); }
 
-/* Reveal (align with other pages) */
+/* Reveal */
 .reveal{ opacity:0; transform: translateY(8px); transition: opacity .22s var(--easing-smooth), transform .22s var(--easing-smooth); }
 .reveal.in-view{ opacity:1; transform:none; }
 

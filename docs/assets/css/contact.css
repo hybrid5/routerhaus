@@ -1,38 +1,23 @@
 /* filename: /css/contact.css */
 /* ==========================================================
-   RouterHaus — Contact page (post-audit)
-   Relies on main.css for base/reset/buttons; this file keeps unique layouts/components.
+   RouterHaus — Contact page (page-level)
+   Uses main.css shared tokens/components; keeps page blocks
    ========================================================== */
 
-/* --- Token aliases to main.css --- */
-:root{
-  --primary: var(--primary);
-  --accent: var(--accent);
-  --text-1: var(--text-primary);
-  --text-2: var(--text-muted);
-  --muted: var(--text-muted);
-  --bg: var(--bg);
-  --surface-primary: var(--card);
-  --surface-secondary: var(--surface);
-  --surface-tertiary: var(--surface);
-  --surface-elevated: var(--card);
-  --border: var(--border-color);
-  --ring: var(--focus);
-  --shadow-soft: var(--shadow-sm);
-  --shadow: var(--shadow);
-  --shadow-sm: var(--shadow-sm);
-  --shadow-strong: var(--shadow-lg);
-  --radius: var(--radius);
-  --radius-lg: var(--radius-lg);
-  --radius-xl: 24px;
-  --radius-2xl: 32px;
+/* ------------------- Base ------------------- */
+html,body{
+  background:var(--bg); color:var(--text-1);
+  font-family:var(--font-sans, Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif);
+  font-size:clamp(1rem,.9rem + .5vw,1.125rem); line-height:1.6;
+  -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
 }
+.container{margin-inline:auto;padding:clamp(16px,3vw,28px);}
 
 /* ------------------- Hero ------------------- */
 .contact-hero{
   background:
     radial-gradient(1000px 540px at 85% -20%,color-mix(in oklab,var(--accent) 8%,transparent),transparent 70%),
-    linear-gradient(180deg,color-mix(in oklab,var(--surface-tertiary) 40%,transparent),transparent 50%),
+    linear-gradient(180deg,color-mix(in oklab,var(--surface-tertiary, rgba(255,255,255,.8)) 40%,transparent),transparent 50%),
     var(--bg);
   padding:clamp(24px,6vw,64px) 0;
 }
@@ -46,7 +31,7 @@
 .hero-mini{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px;color:var(--text-2)}
 @media (max-width:980px){.hero-inner{grid-template-columns:1fr}}
 
-/* ------------------- Sections scaffold ------------------- */
+/* ------------------- Section scaffold ------------------- */
 .section-head{text-align:center;margin-bottom:clamp(10px,2vw,16px)}
 .section-head h2{font-size:clamp(1.4rem,1rem + 1.4vw,2rem);margin:0 0 .35rem}
 .section-head p{color:var(--text-2);margin:0}
@@ -59,7 +44,7 @@
 
 .card{
   border-radius:var(--radius-xl);border:1px solid var(--border);
-  background:var(--surface-primary);padding:clamp(14px,2vw,18px);box-shadow:var(--shadow-sm);
+  background:var(--surface-primary, rgba(255,255,255,.9));padding:clamp(14px,2vw,18px);box-shadow:var(--shadow-sm);
   transition:transform .3s cubic-bezier(.4,0,.2,1),box-shadow .3s cubic-bezier(.4,0,.2,1),border-color .3s cubic-bezier(.4,0,.2,1)
 }
 .card:hover{transform:translateY(-6px) scale(1.01);box-shadow:var(--shadow-strong);border-color:var(--primary)}
@@ -72,7 +57,7 @@
 
 #contactForm{
   border-radius:var(--radius-2xl);
-  background:var(--surface-elevated);
+  background:var(--surface-elevated, rgba(255,255,255,.98));
   border:1px solid var(--border);
   padding:clamp(16px,2.4vw,24px);
   box-shadow:var(--shadow);
@@ -89,7 +74,7 @@
   padding:.7rem .9rem;
   border-radius:var(--radius);
   border:1px solid var(--border);
-  background:var(--surface-secondary);
+  background:var(--surface-secondary, rgba(255,255,255,.95));
   color:var(--text-1);
   transition:border-color .3s cubic-bezier(.4,0,.2,1),box-shadow .3s cubic-bezier(.4,0,.2,1),background .3s cubic-bezier(.4,0,.2,1);
   outline:none;
@@ -111,8 +96,8 @@
 .form-grid .agree{grid-column:1 / -1;display:flex;align-items:center;gap:10px;color:var(--text-2)}
 .form-grid .agree input{width:18px;height:18px;accent-color:var(--primary)}
 
-/* States */
-.form-grid input:hover,.form-grid select:hover,.form-grid textarea:hover{background:var(--surface-tertiary)}
+/* Hover/Focus/Placeholder */
+.form-grid input:hover,.form-grid select:hover,.form-grid textarea:hover{background:var(--surface-tertiary, rgba(255,255,255,.8))}
 .form-grid input:focus,.form-grid select:focus,.form-grid textarea:focus{
   border-color:var(--ring);
   box-shadow:0 0 0 4px color-mix(in oklab,var(--ring) 28%,transparent)
@@ -127,24 +112,21 @@
 .form-msg{min-height:1.2em;color:var(--danger);margin-top:6px;font-weight:600}
 
 /* After submit */
-.after-contact{margin-top:14px;border:1px solid var(--border);border-radius:var(--radius-xl);padding:16px;background:var(--surface-primary)}
+.after-contact{margin-top:14px;border:1px solid var(--border);border-radius:var(--radius-xl);padding:16px;background:var(--surface-primary, rgba(255,255,255,.9))}
 .after-contact .stack{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px}
 
 /* ------------------- Other sections ------------------- */
 .coverage,.faq,.channels,.footer-cta{padding:clamp(24px,6vw,60px) 0}
 .faq-grid{display:grid;gap:12px;grid-template-columns:repeat(2,minmax(0,1fr))}
-.faq details{border:1px solid var(--border);border-radius:var(--radius-lg);background:var(--surface-secondary);padding:10px 12px}
+.faq details{border:1px solid var(--border);border-radius:var(--radius-lg);background:var(--surface-secondary, rgba(255,255,255,.95));padding:10px 12px}
 .faq summary{cursor:pointer;font-weight:700}
 .faq p{color:var(--text-2);margin:.5rem 0 0}
 @media (max-width:900px){.faq-grid{grid-template-columns:1fr}}
 
-.footer-cta{background:linear-gradient(180deg,color-mix(in oklab,var(--surface-tertiary) 45%,transparent),transparent),var(--bg);border-top:1px solid var(--border)}
+.footer-cta{background:linear-gradient(180deg,color-mix(in oklab,var(--surface-tertiary, rgba(255,255,255,.8)) 45%,transparent),transparent),var(--bg);border-top:1px solid var(--border)}
 .cta-inner{text-align:center}
 .cta-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:8px}
 
-/* ------------------- Reveal ------------------- */
+/* ------------------- Reveal (hooks in main) ------------------- */
 .reveal{opacity:0;transform:translateY(8px);transition:opacity .3s cubic-bezier(.4,0,.2,1),transform .3s cubic-bezier(.4,0,.2,1)}
 .reveal.in-view{opacity:1;transform:none}
-
-/* Local variant */
-.btn.ghost{ background:transparent; color:var(--text-2); border:1px solid var(--border); }

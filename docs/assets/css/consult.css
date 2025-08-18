@@ -1,38 +1,23 @@
 /* filename: /css/consult.css */
 /* ==========================================================
-   RouterHaus — Consult page (post-audit)
-   Relies on main.css for base/reset/buttons; this file keeps unique layouts/components.
+   RouterHaus — Consult page (page-level)
+   Uses main.css shared tokens/components; keeps page blocks
    ========================================================== */
 
-/* --- Token aliases to main.css --- */
-:root{
-  --primary: var(--primary);
-  --accent: var(--accent);
-  --text-1: var(--text-primary);
-  --text-2: var(--text-muted);
-  --muted: var(--text-muted);
-  --bg: var(--bg);
-  --surface-primary: var(--card);
-  --surface-secondary: var(--surface);
-  --surface-tertiary: var(--surface);
-  --surface-elevated: var(--card);
-  --border: var(--border-color);
-  --ring: var(--focus);
-  --shadow-soft: var(--shadow-sm);
-  --shadow: var(--shadow);
-  --shadow-sm: var(--shadow-sm);
-  --shadow-strong: var(--shadow-lg);
-  --radius: var(--radius);
-  --radius-lg: var(--radius-lg);
-  --radius-xl: 24px;
-  --radius-2xl: 32px;
+/* ------------------- Base ------------------- */
+html,body{
+  background:var(--bg); color:var(--text-1);
+  font-family:var(--font-sans, Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif);
+  font-size:clamp(1rem,.9rem + .5vw,1.125rem); line-height:1.6;
+  -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale;
 }
+.container{margin-inline:auto;padding:clamp(16px,3vw,28px);}
 
 /* ------------------- Hero ------------------- */
 .consult-hero{
   background:
     radial-gradient(1100px 700px at 80% -20%,color-mix(in oklab,var(--accent) 8%,transparent),transparent 70%),
-    linear-gradient(180deg,color-mix(in oklab,var(--surface-tertiary) 40%,transparent),transparent 50%),
+    linear-gradient(180deg,color-mix(in oklab,var(--surface-tertiary, rgba(255,255,255,.8)) 40%,transparent),transparent 50%),
     var(--bg);
   padding:clamp(24px,6vw,64px) 0;
 }
@@ -44,19 +29,19 @@
 .hero-bullets li{margin:.25rem 0}
 .hero-art{
   position:relative;border-radius:var(--radius-xl);border:1px solid var(--border);
-  background:var(--surface-primary);min-height:320px;display:grid;place-items:center;box-shadow:var(--shadow-sm)
+  background:var(--surface-primary, rgba(255,255,255,.9));min-height:320px;display:grid;place-items:center;box-shadow:var(--shadow-sm)
 }
 .hero-art .rings{position:absolute;inset:-10%;background:
   radial-gradient(240px 240px at 20% 25%,color-mix(in oklab,var(--primary) 20%,transparent),transparent 70%),
   radial-gradient(300px 300px at 80% 60%,color-mix(in oklab,var(--accent) 20%,transparent),transparent 70%);filter:blur(6px);opacity:.6}
 .hero-art .stats{position:relative;display:grid;gap:10px}
-.stat{display:grid;justify-items:center;padding:.8rem 1rem;border-radius:14px;background:var(--surface-tertiary);border:1px solid var(--border)}
+.stat{display:grid;justify-items:center;padding:.8rem 1rem;border-radius:14px;background:var(--surface-tertiary, rgba(255,255,255,.86));border:1px solid var(--border)}
 .stat strong{font-size:1.4rem;font-weight:800}
 .stat span{color:var(--muted);font-size:.9rem}
 @media (max-width:980px){.hero-inner{grid-template-columns:1fr}.hero-art{order:-1;min-height:220px}}
 
 /* ------------------- Trust bar ------------------- */
-.trustbar{padding:10px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:color-mix(in oklab,var(--surface-secondary) 40%,transparent)}
+.trustbar{padding:10px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:color-mix(in oklab,var(--surface-secondary, rgba(255,255,255,.95)) 40%,transparent)}
 .trust-inner{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
 .trust-inner .kicker{color:var(--muted);letter-spacing:.12em;text-transform:uppercase;font-weight:800;font-size:.8rem}
 .trust-inner ul{display:flex;gap:14px 22px;flex-wrap:wrap;list-style:none;padding:0;margin:0}
@@ -75,7 +60,7 @@
 @media (max-width:640px){.cards-4{grid-template-columns:1fr}}
 .card{
   border-radius:var(--radius-xl);border:1px solid var(--border);
-  background:var(--surface-primary);padding:clamp(14px,2vw,18px);box-shadow:var(--shadow-sm);
+  background:var(--surface-primary, rgba(255,255,255,.9));padding:clamp(14px,2vw,18px);box-shadow:var(--shadow-sm);
   transition:transform .3s cubic-bezier(.4,0,.2,1),box-shadow .3s cubic-bezier(.4,0,.2,1),border-color .3s cubic-bezier(.4,0,.2,1)
 }
 .card:hover{transform:translateY(-6px) scale(1.01);box-shadow:var(--shadow-strong);border-color:var(--primary)}
@@ -86,7 +71,7 @@
 
 /* ------------------- Process ------------------- */
 .steps{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}
-.steps li{display:grid;gap:6px;justify-items:center;text-align:center;padding:12px;border-radius:var(--radius-lg);border:1px solid var(--border);background:var(--surface-secondary);transition:transform .3s cubic-bezier(.4,0,.2,1)}
+.steps li{display:grid;gap:6px;justify-items:center;text-align:center;padding:12px;border-radius:var(--radius-lg);border:1px solid var(--border);background:var(--surface-secondary, rgba(255,255,255,.95));transition:transform .3s cubic-bezier(.4,0,.2,1)}
 .steps li:hover{transform:translateY(-2px)}
 .steps li span{width:36px;height:36px;border-radius:999px;display:grid;place-items:center;font-weight:800;background:var(--primary);color:#fff}
 .steps li em{color:var(--muted);font-style:normal;font-size:.9rem}
@@ -94,7 +79,7 @@
 
 /* ------------------- Cases ------------------- */
 .case-scroller{display:grid;grid-auto-flow:column;grid-auto-columns:min(340px,88vw);gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:8px}
-.case-scroller .case{scroll-snap-align:start;padding:14px;border-radius:var(--radius);border:1px solid var(--border);background:var(--surface-secondary)}
+.case-scroller .case{scroll-snap-align:start;padding:14px;border-radius:var(--radius);border:1px solid var(--border);background:var(--surface-secondary, rgba(255,255,255,.95))}
 .case header{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin-bottom:6px}
 .case header span{color:var(--muted);font-size:.9rem}
 .case-controls{display:flex;gap:8px;justify-content:center;margin-top:10px}
@@ -102,18 +87,18 @@
 /* ------------------- Intake form ------------------- */
 .intake form{
   border:1px solid var(--border);border-radius:var(--radius-2xl);
-  background:var(--surface-elevated);padding:clamp(16px,2.4vw,24px);
+  background:var(--surface-elevated, rgba(255,255,255,.98));padding:clamp(16px,2.4vw,24px);
   box-shadow:var(--shadow)
 }
 
 /* Progress bar */
-.progress{height:8px;background:var(--surface-tertiary);border-radius:999px;overflow:hidden;margin-bottom:14px}
+.progress{height:8px;background:var(--surface-tertiary, rgba(255,255,255,.8));border-radius:999px;overflow:hidden;margin-bottom:14px}
 .progress .bar{height:100%;background:linear-gradient(90deg,var(--primary),var(--accent));width:0}
 
 /* Fieldset block */
 .step{
   border:1px solid var(--border);border-radius:var(--radius-xl);
-  background:var(--surface-primary);
+  background:var(--surface-primary, rgba(255,255,255,.9));
   padding:1rem;
   display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:10px;
   box-shadow:var(--shadow-sm)
@@ -121,18 +106,14 @@
 .step + .step{margin-top:12px}
 .step legend{
   grid-column:1 / -1;font-weight:800;margin:0 0 4px;
-  font-size:clamp(1.125rem,1rem + .3vw,1.25rem);color:var(--text-1)
+  font-size:clamp(1.125rem,1rem + .625vw,1.25rem);color:var(--text-1)
 }
 
 /* Controls */
 .step label{display:grid;gap:6px}
 .step input,.step select,.step textarea{
-  min-height:44px;
-  padding:.7rem .9rem;
-  border-radius:var(--radius);
-  border:1px solid var(--border);
-  background:var(--surface-secondary);
-  color:var(--text-1);
+  min-height:44px; padding:.7rem .9rem; border-radius:var(--radius);
+  border:1px solid var(--border); background:var(--surface-secondary, rgba(255,255,255,.95)); color:var(--text-1);
   transition:border-color .3s cubic-bezier(.4,0,.2,1),box-shadow .3s cubic-bezier(.4,0,.2,1),background .3s cubic-bezier(.4,0,.2,1);
   outline:none;
 }
@@ -142,20 +123,18 @@
   -webkit-appearance:none; -moz-appearance:none; appearance:none;
   padding-right:2.75rem;
   background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24'><path d='M6 9l6 6 6-6' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/></svg>");
-  background-repeat:no-repeat;
-  background-position:right .8rem center;
-  background-size:18px;
+  background-repeat:no-repeat; background-position:right .8rem center; background-size:18px;
   color:var(--text-1);
 }
 .step select::-ms-expand{display:none}
 
-/* Numeric spinners */
+/* Number input */
 .step input[type=number]::-webkit-outer-spin-button,
 .step input[type=number]::-webkit-inner-spin-button{ -webkit-appearance: none; margin:0 }
 .step input[type=number]{ -moz-appearance:textfield }
 
 /* States */
-.step input:hover,.step select:hover,.step textarea:hover{ background:var(--surface-tertiary) }
+.step input:hover,.step select:hover,.step textarea:hover{ background:var(--surface-tertiary, rgba(255,255,255,.8)) }
 .step input:focus,.step select:focus,.step textarea:focus{
   border-color:var(--ring);
   box-shadow:0 0 0 4px color-mix(in oklab,var(--ring) 28%,transparent)
@@ -171,24 +150,21 @@
 .form-msg{min-height:1.2em;color:var(--danger);margin-top:6px;font-weight:600}
 
 /* After intake */
-.after-intake .thanks{padding:18px;border-radius:var(--radius-xl);border:1px solid var(--border);background:var(--surface-primary)}
+.after-intake .thanks{padding:18px;border-radius:var(--radius-xl);border:1px solid var(--border);background:var(--surface-primary, rgba(255,255,255,.9))}
 .after-intake .stack{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px}
 
 /* ------------------- FAQ ------------------- */
 .faq-grid{display:grid;gap:12px;grid-template-columns:repeat(2,minmax(0,1fr))}
-.faq details{border:1px solid var(--border);border-radius:var(--radius-lg);background:var(--surface-secondary);padding:10px 12px}
+.faq details{border:1px solid var(--border);border-radius:var(--radius-lg);background:var(--surface-secondary, rgba(255,255,255,.95));padding:10px 12px}
 .faq summary{cursor:pointer;font-weight:700}
 .faq p{color:var(--text-2);margin:.5rem 0 0}
 @media (max-width:900px){.faq-grid{grid-template-columns:1fr}}
 
 /* ------------------- Footer CTA ------------------- */
-.footer-cta{background:linear-gradient(180deg,color-mix(in oklab,var(--surface-tertiary) 45%,transparent),transparent),var(--bg);border-top:1px solid var(--border)}
+.footer-cta{background:linear-gradient(180deg,color-mix(in oklab,var(--surface-tertiary, rgba(255,255,255,.8)) 45%,transparent),transparent),var(--bg);border-top:1px solid var(--border)}
 .cta-inner{text-align:center}
 .cta-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:8px}
 
-/* ------------------- Reveal ------------------- */
+/* ------------------- Reveal (hooks in main) ------------------- */
 .reveal{opacity:0;transform:translateY(8px);transition:opacity .3s cubic-bezier(.4,0,.2,1),transform .3s cubic-bezier(.4,0,.2,1)}
 .reveal.in-view{opacity:1;transform:none}
-
-/* Button variant used here */
-.btn.ghost{ background:transparent; color:var(--text-2); border:1px solid var(--border); }

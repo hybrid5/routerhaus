@@ -5,17 +5,18 @@
    ========================================================== */
 
 /* ------------------- Tokens & Theming ------------------- */
-/* We alias to site-wide tokens when present, then fall back to sensible defaults. */
 :root{
   /* Brand (LIGHT → match dark-mode purples exactly) */
   --primary-h: 234.433; --primary-s: 100%; --primary-l: 80.98%;
   --_primary-fallback: hsl(var(--primary-h) var(--primary-s) var(--primary-l)); /* #9ea7ff */
-  --primary: var(--rh-primary, var(--primary, var(--_primary-fallback)));
+  /* FIX: no self-reference */
+  --primary: var(--rh-primary, var(--_primary-fallback));
   --primary-rgb: 158 167 255;
 
   --accent-h: 300; --accent-s: 100%; --accent-l: 80.2%;
   --_accent-fallback: hsl(var(--accent-h) var(--accent-s) var(--accent-l)); /* #ff9aff */
-  --accent: var(--rh-accent, var(--accent, var(--_accent-fallback)));
+  /* FIX: no self-reference */
+  --accent: var(--rh-accent, var(--_accent-fallback));
   --accent-rgb: 255 154 255;
 
   /* Status */
@@ -32,12 +33,12 @@
   --text-2xl: clamp(1.5rem,1.3rem + 1vw,2rem);
   --text-3xl: clamp(2rem,1.7rem + 1.5vw,3rem);
 
-  /* Surfaces (light defaults; alias to site tokens when available) */
-  --bg: var(--rh-bg, var(--bg, #f8fafc));
-  --bg-elev: var(--rh-bg-elev, var(--bg-elev, #ffffff));
-  --text-1: var(--rh-text-1, var(--text-primary, #0a0f1e));
-  --text-2: var(--rh-text-2, var(--text-secondary, var(--text-muted, #3a4361)));
-  --muted:  var(--rh-muted, var(--muted, #6d7694));
+  /* Surfaces (light defaults) — FIX: no self-references */
+  --bg: var(--rh-bg, #f8fafc);
+  --bg-elev: var(--rh-bg-elev, #ffffff);
+  --text-1: var(--rh-text-1, #0a0f1e);
+  --text-2: var(--rh-text-2, #3a4361);
+  --muted:  var(--rh-muted, #6d7694);
 
   --surface-primary: var(--rh-surface-primary, rgba(255,255,255,.9));
   --surface-secondary: var(--rh-surface-secondary, rgba(255,255,255,.95));
@@ -50,7 +51,7 @@
   --glass-tint: rgba(255,255,255,.05);
   --glass-blur: 20px; --glass-sat: 140%;
 
-  /* Borders/Rings (alias to site border-color when present) */
+  /* Borders/Rings */
   --border: var(--border-color, rgba(0,0,0,.12));
   --border-strong: rgba(0,0,0,.2);
   --ring: color-mix(in oklab, var(--primary) 40%, transparent);
@@ -83,12 +84,12 @@
   scroll-behavior: smooth;
 }
 
-/* Dark theme (pref sets) — falls back if site doesn't supply its own variables */
+/* Dark theme */
 html[data-theme="dark"]{
-  --bg: var(--rh-bg-dark, var(--bg-dark, #0a0e16));
-  --bg-elev: var(--rh-bg-elev-dark, var(--bg-elev-dark, #0f1419));
-  --text-1: var(--rh-text-1-dark, var(--text-primary, #f0f4f8));
-  --text-2: var(--rh-text-2-dark, var(--text-secondary, #cbd5e0));
+  --bg: var(--rh-bg-dark, #0a0e16);
+  --bg-elev: var(--rh-bg-elev-dark, #0f1419);
+  --text-1: var(--rh-text-1-dark, #f0f4f8);
+  --text-2: var(--rh-text-2-dark, #cbd5e0);
   --muted:  var(--rh-muted-dark,  #a0aec0);
 
   --surface-primary: rgba(15,20,25,.8);
@@ -117,7 +118,7 @@ html[data-theme="dark"]{
 *::after{ box-sizing: border-box; }
 html, body{ height:100%; margin:0; }
 
-/* Light-mode accent boost so colors are clearly present */
+/* Light-mode accent boost */
 html:not([data-theme="dark"]) body{
   background:
     radial-gradient(ellipse 1400px 900px at 70% -10%, color-mix(in oklab, var(--accent) 12%, transparent), transparent 70%),
@@ -125,7 +126,7 @@ html:not([data-theme="dark"]) body{
     var(--bg);
 }
 body{
-  /* default (dark mode or if overridden above) */
+  /* default (dark or if overridden above) */
   background:
     radial-gradient(ellipse 1400px 900px at 70% -10%, color-mix(in oklab, var(--accent) 8%, transparent), transparent 70%),
     radial-gradient(ellipse 800px 600px at 30% 110%, color-mix(in oklab, var(--primary) 6%, transparent), transparent 70%),
@@ -141,7 +142,7 @@ body{
 img{ max-width:100%; display:block; height:auto; }
 a{ color: inherit; text-decoration: none; }
 
-/* Ambient background (can be disabled by removing .ambient-bg or adding .no-ambient to body) */
+/* Ambient background */
 .ambient-bg{ position:fixed; inset:0; pointer-events:none; z-index:-1; }
 .bg-orb{ position:absolute; border-radius:50%; filter:blur(100px); opacity:var(--orb-opacity); animation:float 25s ease-in-out infinite; }
 .orb-1{ width:600px; height:600px; background:radial-gradient(circle,var(--primary) 0%,transparent 70%); top:-15%; right:-15%; }
@@ -157,7 +158,7 @@ a{ color: inherit; text-decoration: none; }
   padding: clamp(12px, 2vw, 24px);
 }
 
-/* Buttons & chips (shared look) */
+/* Buttons & chips */
 .btn{
   display:inline-flex; align-items:center; justify-content:center; gap:var(--space-2);
   border-radius: var(--radius); padding: var(--space-3) var(--space-4);
@@ -184,12 +185,15 @@ a{ color: inherit; text-decoration: none; }
 .page-header{ margin-bottom: var(--space-6); }
 .head-wrap{ margin-bottom: var(--space-3); }
 
-/* h1.page-title → match About's .grad style (purple gradient text) */
+/* H1 + brand gradient (aligns with About) */
 .page-title{
   margin:0 0 var(--space-1);
   font-size: var(--text-3xl);
   font-weight:900;
   letter-spacing:-.01em;
+  color: var(--text-1); /* FIX: solid text; gradient is applied to .grad span only */
+}
+.grad{
   background: linear-gradient(90deg, var(--accent), var(--primary));
   -webkit-background-clip: text; background-clip: text;
   -webkit-text-fill-color: transparent; color: transparent;
@@ -218,6 +222,18 @@ a{ color: inherit; text-decoration: none; }
 }
 #searchInput::placeholder{ color: var(--muted); }
 #searchInput:focus{ border-color: var(--ring); box-shadow: 0 0 0 4px color-mix(in oklab, var(--ring) 25%, transparent); outline:none; }
+
+/* Toolbar group (sort & page size) — NEW */
+.toolbar-group{ display:flex; gap: var(--space-3); align-items:center; flex-wrap:wrap; }
+.sort, .pagesize{ display:flex; align-items:center; gap: var(--space-2); }
+.sort label, .pagesize label{ color: var(--text-2); font-weight:600; }
+.sort select, .pagesize select{
+  appearance:none; background: var(--surface-secondary); border:2px solid var(--border);
+  border-radius: var(--radius); padding: .5rem .75rem; color: var(--text-1);
+}
+.sort select:focus, .pagesize select:focus{
+  border-color: var(--ring); outline:none; box-shadow: 0 0 0 4px color-mix(in oklab, var(--ring) 25%, transparent);
+}
 
 /* Tag bar */
 .tags-bar{ margin-top: var(--space-1); }
@@ -339,7 +355,8 @@ a{ color: inherit; text-decoration: none; }
 .modal{
   width:min(95vw, 900px); max-height:95vh; margin:auto; padding:0; border:none; border-radius: var(--radius-2xl);
   background: var(--surface-elevated); color: var(--text-1); box-shadow: var(--shadow-strong); border:1px solid var(--border-strong);
-  overflow:hidden; position:fixed; top:50%; left:50%; transform: translate(-50%,-50%); z-index:160;
+  overflow:hidden; position:fixed; top:50%; left:50%; transform: translate(-50%,-50%);
+  z-index:1200; /* FIX: above sidebar overlay (999) */
 }
 .modal::backdrop{ background: rgba(0,0,0,.75); backdrop-filter: blur(8px); }
 .modal .modal-content{ display:grid; grid-template-rows: auto 1fr auto; height:100%; max-height:95vh; min-height:600px; }

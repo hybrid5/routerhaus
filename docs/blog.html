@@ -17,8 +17,9 @@
     (() => {
       const root = document.documentElement;
       const media = matchMedia('(prefers-color-scheme: dark)');
-      const apply = () => root.setAttribute('data-theme', media.matches ? 'dark' : 'light');
-      apply(); media.addEventListener('change', apply);
+      const saved = localStorage.getItem('rh-theme');
+      const apply = () => root.setAttribute('data-theme', saved || (media.matches ? 'dark' : 'light'));
+      apply(); media.addEventListener('change', () => { if (!localStorage.getItem('rh-theme')) apply(); });
     })();
   </script>
 
@@ -40,7 +41,7 @@
     <!-- ===== Page header ===== -->
     <header class="page-header">
       <div class="head-wrap">
-        <h1 class="page-title">The RouterHaus Journal</h1>
+        <h1 class="page-title">The <span class="grad">RouterHaus</span> Journal</h1>
         <p class="page-sub">Guides, reviews, and networking deep-dives — written for real homes and real teams.</p>
       </div>
 
@@ -206,6 +207,8 @@
   </dialog>
 
   <!-- Scripts -->
+  <script defer src="scripts.js"></script>
+  <script defer src="assets/js/header.js"></script>
   <script defer src="assets/js/blog.js"></script>
 </body>
 </html>

@@ -2,7 +2,7 @@
      RouterHaus v2 — index.html
      =========================== -->
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -15,7 +15,7 @@
   <link rel="stylesheet" href="main.css" />
   <link rel="stylesheet" href="assets/css/home.css" />
 
-  <!-- Theme sync -->
+  <!-- Theme sync (matches other pages) -->
   <script>
     (() => {
       const root = document.documentElement;
@@ -32,7 +32,7 @@
   <!-- Header partial mounts BEFORE main to avoid CLS -->
   <div id="header-placeholder" data-partial="header.html"></div>
 
-  <main>
+  <main class="home">
     <!-- ===== HERO ===== -->
     <section class="hero index-hero">
       <div class="container hero-grid">
@@ -44,7 +44,7 @@
             <a href="kits.html?quiz=1" class="btn primary">Start Recommendation</a>
             <a href="consult.html" class="btn ghost">Talk to an Engineer</a>
           </div>
-          <ul class="stat-pills">
+          <ul class="stat-pills" aria-label="Highlights">
             <li><i class="fa-solid fa-list-check" aria-hidden="true"></i> 3-step kit finder</li>
             <li><i class="fa-solid fa-gauge-high" aria-hidden="true"></i> Multi-gig ready</li>
             <li><i class="fa-solid fa-sitemap" aria-hidden="true"></i> Mesh for whole-home</li>
@@ -54,10 +54,10 @@
         <aside class="hero-card glass reveal">
           <h3>What best describes you?</h3>
           <div class="persona-chips">
-            <button class="chip" data-qpick="apt"><i class="fa-solid fa-city" aria-hidden="true"></i> Apartment / Condo</button>
-            <button class="chip" data-qpick="large"><i class="fa-solid fa-house-chimney" aria-hidden="true"></i> Large Home</button>
-            <button class="chip" data-qpick="wfh"><i class="fa-solid fa-briefcase" aria-hidden="true"></i> Work from Home</button>
-            <button class="chip" data-qpick="gaming"><i class="fa-solid fa-gamepad" aria-hidden="true"></i> Gaming</button>
+            <button class="chip" data-qpick="apt" type="button"><i class="fa-solid fa-city" aria-hidden="true"></i> Apartment / Condo</button>
+            <button class="chip" data-qpick="large" type="button"><i class="fa-solid fa-house-chimney" aria-hidden="true"></i> Large Home</button>
+            <button class="chip" data-qpick="wfh" type="button"><i class="fa-solid fa-briefcase" aria-hidden="true"></i> Work from Home</button>
+            <button class="chip" data-qpick="gaming" type="button"><i class="fa-solid fa-gamepad" aria-hidden="true"></i> Gaming</button>
           </div>
           <p class="mini subtle"><i class="fa-regular fa-lightbulb" aria-hidden="true"></i> We’ll pre-apply the right filters — tweak anytime.</p>
         </aside>
@@ -67,9 +67,10 @@
     <!-- ===== TRUST ===== -->
     <section class="trust">
       <div class="container">
-        <div class="trust-head reveal">
-          <span class="eyebrow">Trusted designs</span>
-        </div>
+        <header class="section-head reveal">
+          <h2>Trusted by pros & power users</h2>
+          <p class="subtle">We build with proven vendors and sane defaults.</p>
+        </header>
         <div class="trust-logos reveal" aria-label="Vendors we work with">
           <span class="pill">UniFi</span>
           <span class="pill">Aruba</span>
@@ -115,13 +116,13 @@
     <section class="product-grid">
       <div class="container">
         <header class="section-head reveal">
-          <h2>Great Consumer Picks</h2>
+          <h2>Great consumer picks</h2>
           <p class="subtle">Fast, reliable, and simple to manage.</p>
         </header>
 
         <div class="product-row">
           <article class="product glass reveal">
-            <div class="product-media">
+            <div class="product-media" role="img" aria-label="TP-Link Deco BE25">
               <img src="Deco-BE25.png" alt="TP-Link Deco BE25" />
             </div>
             <h4>TP-Link Deco BE25</h4>
@@ -131,7 +132,7 @@
           </article>
 
           <article class="product glass reveal">
-            <div class="product-media">
+            <div class="product-media" role="img" aria-label="Google Nest Wi-Fi Pro 3-pack">
               <img src="google-nest-wi-fi.png" alt="Google Nest Wi-Fi Pro 3-pack" />
             </div>
             <h4>Google Nest Wi-Fi Pro (3-pack)</h4>
@@ -141,7 +142,7 @@
           </article>
 
           <article class="product glass reveal">
-            <div class="product-media">
+            <div class="product-media" role="img" aria-label="ASUS ROG GT-BE98 Pro">
               <img src="ASUS-BE98.png" alt="ASUS ROG GT-BE98 Pro" />
             </div>
             <h4>ASUS ROG GT-BE98 Pro</h4>
@@ -178,7 +179,7 @@
             <p>Yes. We can coordinate on-site installation, validation, and handover. Remote staging and controller setup are also available.</p>
           </div>
 
-        <div class="accordion-item reveal">
+          <div class="accordion-item reveal">
             <h4>Will the quiz work for office spaces?</h4><span aria-hidden="true">+</span>
             <p>It’s a great start for sizing and features. For multi-tenant or multi-AP scenarios, book a consult and we’ll design the topology.</p>
           </div>

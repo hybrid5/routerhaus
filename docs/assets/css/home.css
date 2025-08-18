@@ -20,9 +20,9 @@ section{ padding: clamp(28px, 4vw, 72px) 0; } /* reduced to avoid excess whitesp
   --card: var(--rh-card, rgba(0,0,0,0.04));          /* light card tint */
   --surface: var(--rh-surface, rgba(0,0,0,0.025));
   --border: var(--rh-border, rgba(0,0,0,0.14));
-  /* LIGHT MODE → PURPLE FORWARD */
-  --primary: var(--rh-primary, #7c3aed);             /* violet-600 */
-  --accent:  var(--rh-accent,  #c084fc);             /* violet-400 */
+  /* LIGHT MODE → EXACT dark-mode brand colors */
+  --primary: var(--rh-primary, #9ea7ff);             /* match main.css dark --primary */
+  --accent:  var(--rh-accent,  #ff9aff);             /* match main.css dark --accent */
   --radius: 16px; --radius-lg: 22px;
   --shadow-sm: 0 6px 20px rgba(16,24,40,.08);
   --shadow-md: 0 18px 50px rgba(16,24,40,.12);

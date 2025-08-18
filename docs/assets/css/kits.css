@@ -5,18 +5,18 @@
 
 /* ------------------- Enhanced Design Tokens ------------------- */
 :root {
-  /* Modern Color System */
-  --primary-h: 240;
+  /* Modern Color System (LIGHT MODE → EXACT dark-mode brand colors) */
+  --primary-h: 234.433;
   --primary-s: 100%;
-  --primary-l: 70%;
+  --primary-l: 80.98%;
   --primary: hsl(var(--primary-h) var(--primary-s) var(--primary-l));
-  --primary-rgb: 123 123 255;
+  --primary-rgb: 158 167 255;   /* #9ea7ff */
 
-  --accent-h: 210;
+  --accent-h: 300;
   --accent-s: 100%;
-  --accent-l: 65%;
+  --accent-l: 80.2%;
   --accent: hsl(var(--accent-h) var(--accent-s) var(--accent-l));
-  --accent-rgb: 94 160 255;
+  --accent-rgb: 255 154 255;    /* #ff9aff */
 
   /* Semantic colors */
   --success: #10b981;
@@ -539,7 +539,7 @@ details.facet[open] .chev{ transform: rotate(180deg); color: var(--primary); }
 /* ------------------- Compare ------------------- */
 .compare-sticky{
   position:fixed; bottom: var(--space-6); left:50%; transform: translateX(-50%);
-  z-index:120; background: linear-gradient(135deg, var(--success), #0ea5e9); color:#fff; border:none;
+  z-index:120; background: linear-gradient(135deg, var(--success), var(--accent)); color:#fff; border:none;
   border-radius: var(--radius-full); padding: var(--space-3) var(--space-6); font-weight:600; box-shadow: var(--shadow-strong);
   transition: all var(--duration-normal) var(--easing-elastic); cursor:pointer; font-size: var(--text-sm);
 }

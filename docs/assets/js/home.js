@@ -1,19 +1,23 @@
 /* ============================
    RouterHaus – home.js
-   Aligned with other pages
+   Stable, aligned with other pages; safe partial mounting
 ============================ */
 (() => {
   "use strict";
   const $ = (s, r = document) => r.querySelector(s);
   const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
 
-  /* ---- Partials (header/footer) ---- */
+  /* ---- Partials (idempotent) ---- */
   async function mountPartial(target){
     const path = target?.dataset?.partial;
-    if(!path) return;
+    if(!path || (target?.children?.length ?? 0) > 0) return;
     try{
       const res = await fetch(path, { cache: 'no-store' });
-      if(res.ok) target.innerHTML = await res.text();
+      if(res.ok){
+        const html = await res.text();
+        // Only set if still empty (avoid racing with global scripts.js)
+        if ((target?.children?.length ?? 0) === 0) target.innerHTML = html;
+      }
     }catch{}
   }
 
@@ -21,14 +25,12 @@
   function wireQuickChips() {
     const chips = $$(".persona-chips .chip");
     if (!chips.length) return;
-
     const map = {
       apt: "coverage=Apartment%2FSmall&recos=1",
       large: "coverage=Large%2FMulti-floor&mesh=Mesh-ready&recos=1",
       wfh: "use=Work%20from%20Home&recos=1",
       gaming: "use=Gaming&wan=2.5G&recos=1",
     };
-
     chips.forEach((btn) => {
       btn.addEventListener("click", () => {
         const key = btn.dataset.qpick;
@@ -42,7 +44,6 @@
   function revealify() {
     const els = $$(".reveal");
     if (!els.length || !("IntersectionObserver" in window)) return;
-
     const io = new IntersectionObserver(
       (entries) => {
         entries.forEach((en) => {
@@ -57,17 +58,17 @@
     els.forEach((el) => io.observe(el));
   }
 
-  /* ---- FAQ accordion ---- */
+  /* ---- FAQ accordion (no HTML changes needed) ---- */
   function wireAccordion(){
     $$(".accordion-item").forEach(item=>{
       item.addEventListener("click", (e)=>{
-        if (getSelection()?.toString()) return; // avoid toggling when selecting text
+        if (getSelection()?.toString()) return;
         item.classList.toggle("open");
       });
     });
   }
 
-  /* ---- Optional: slight tilt on product cards ---- */
+  /* ---- Subtle tilt on product cards (perf-safe) ---- */
   function tiltCards() {
     const cards = $$(".product");
     if (!cards.length) return;
@@ -82,8 +83,7 @@
         cancelAnimationFrame(rAF);
         rAF = requestAnimationFrame(() => {
           card.style.transform =
-            `perspective(800px) rotateX(${(-dy * 6).toFixed(2)}deg) ` +
-            `rotateY(${(dx * 6).toFixed(2)}deg) translateY(-6px)`;
+            `perspective(800px) rotateX(${(-dy * 5).toFixed(2)}deg) rotateY(${(dx * 5).toFixed(2)}deg) translateY(-6px)`;
         });
       };
       const reset = () => {
@@ -102,7 +102,7 @@
       mountPartial($("#header-placeholder")),
       mountPartial($("#footer-placeholder")),
     ]);
-    document.dispatchEvent(new CustomEvent("partials:loaded"));
+    // If your global scripts.js already mounts partials, the above is a no-op.
 
     wireQuickChips();
     revealify();

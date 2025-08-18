@@ -1,5 +1,6 @@
+/* filename: /css/main.css */
 /* ===============================
-   RouterHaus — main.css (integrated & responsive)
+   RouterHaus — main.css (integrated & responsive, post-audit)
    =============================== */
 
 /* ---- Reset / base ---- */
@@ -12,6 +13,7 @@ button, input, select, textarea { font: inherit; }
 html { scroll-behavior: smooth; }
 a { color: inherit; text-decoration: none; }
 a:hover { color: var(--nav-hover); }
+::selection{ background: color-mix(in oklab, var(--primary) 30%, transparent); color: var(--text-primary); }
 
 /* ---- Design tokens ---- */
 :root{
@@ -97,6 +99,9 @@ html, body{
   padding-left:1rem; /* responsive gutter */
   padding-right:1rem;
 }
+/* Optional container variants for page layouts */
+.container.is-wide { width: min(1280px, calc(100% - 2rem)); }
+.container.is-narrow { width: min(1080px, calc(100% - 2rem)); }
 
 /* ---- Glass surface ---- */
 .glass{
@@ -106,6 +111,15 @@ html, body{
   backdrop-filter: blur(14px) saturate(160%);
   border-radius:var(--radius-lg);
   box-shadow:var(--shadow-sm);
+}
+/* stronger variant when needed by pages */
+.glass--strong{
+  background:var(--card);
+  border:var(--card-border);
+  -webkit-backdrop-filter: blur(20px) saturate(140%);
+  backdrop-filter: blur(20px) saturate(140%);
+  border-radius:var(--radius-lg);
+  box-shadow:var(--shadow);
 }
 
 /* ---- Navbar ---- */
@@ -151,9 +165,36 @@ html[data-theme="dark"] .navbar{
 }
 .btn:hover{ transform:translateY(-2px); filter:brightness(1.05); }
 .btn-secondary{
-  border:2px solid var(--primary); color:var(--primary); background:transparent;
+  border:2px solid var(--primary); color:var(--secondary); background:transparent; /* improved AA */
 }
 .btn-secondary:hover{ background: color-mix(in oklab, var(--primary) 10%, transparent); }
+
+/* Ghost/supplemental variants used by page CSS */
+.btn.ghost{ background:transparent; color:var(--text-muted); border:1px solid var(--border-color); }
+.btn.small{ padding:.55rem .8rem; border-radius:12px; font-size:.9rem; }
+.btn.tiny{ padding:.4rem .6rem; border-radius:10px; font-size:.8rem; }
+
+/* Icon button (shared) */
+.icon-btn{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:40px;height:40px;border-radius:var(--radius);
+  border:1px solid var(--border-color); background:var(--card);
+  color:var(--text-muted); transition:var(--transition);
+}
+.icon-btn:hover{ background:var(--surface); color:var(--text-primary); box-shadow:var(--shadow-sm); transform:translateY(-1px); }
+
+/* ---- Chips (shared) ---- */
+.chips{ display:flex; flex-wrap:wrap; gap:.5rem; }
+.chip{
+  display:inline-flex; align-items:center; gap:.35rem;
+  padding:.5rem .8rem; border-radius:999px;
+  border:1px solid var(--border-color);
+  background: color-mix(in oklab, var(--card) 88%, transparent);
+  color: var(--text-primary); font-weight:700; line-height:1;
+  transition: transform .18s ease, box-shadow .18s ease, background-color .18s ease, border-color .18s ease;
+}
+.chip:hover{ transform: translateY(-2px); box-shadow: var(--shadow-sm); }
+.chip .count{ opacity:.8; font-weight:600; }
 
 /* ---- Mobile nav trigger ---- */
 .hamburger{
@@ -239,9 +280,5 @@ footer{ text-align:center; background:var(--footer-bg); padding:2rem 1rem; font-
   .btn, .btn-secondary{ padding:.68rem 1.05rem; }
 }
 
-/* ---- Logo underline fix ---- */
-.navbar .logo,
-.navbar .logo:link,
-.navbar .logo:visited,
-.navbar .logo:hover,
-.navbar .logo:focus{ text-decoration:none; }
+/* ---- Logo underline fix (simplified) ---- */
+.navbar .logo { text-decoration:none; }

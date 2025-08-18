@@ -33,7 +33,7 @@
     <span class="bg-orb orb-3"></span>
   </div>
 
-  <!-- Header / Footer partials (aligned paths) -->
+  <!-- Header partial -->
   <div id="header-placeholder" data-partial="header.html"></div>
 
   <main class="container blog-layout">
@@ -128,6 +128,7 @@
     </aside>
   </main>
 
+  <!-- Footer partial (single instance) -->
   <div id="footer-placeholder" data-partial="footer.html"></div>
 
   <!-- ===== Templates ===== -->
@@ -205,7 +206,8 @@
     </div>
   </dialog>
 
-  <!-- Scripts -->
+  <!-- Scripts: global wiring first, then page logic -->
+  <script defer src="scripts.js"></script>
   <script defer src="assets/js/blog.js"></script>
 </body>
 </html>

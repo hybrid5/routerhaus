@@ -1,0 +1,19 @@
+/* Minimal legal-page polish (inherits tokens from main.css) */
+.legal { padding: 3rem 0 4rem; }
+.legal-head h1 { font-size: var(--fs-800); margin-bottom: .25rem; }
+.legal-head .effective { color: var(--text-muted); margin-bottom: 1rem; }
+.legal .subtle { color: var(--text-muted); }
+
+.legal h2 { margin-top: 2.2rem; margin-bottom: .6rem; font-size: var(--fs-700); }
+.legal h3 { margin-top: 1.2rem; margin-bottom: .4rem; font-size: var(--fs-600); }
+.legal p { margin: .4rem 0 .9rem; }
+.legal ul { margin: .3rem 0 1rem 1.25rem; }
+.legal ul.bullets { list-style: disc; }
+.legal li { margin: .3rem 0; }
+
+.legal a { color: var(--primary); }
+.legal a:hover { text-decoration: underline; }
+
+@media (max-width: 680px){
+  .legal { padding: 2.2rem 0 3rem; }
+}

@@ -14,9 +14,9 @@
   --border: var(--rh-border, rgba(0,0,0,.14));
 
   /* LIGHT MODE → EXACT same brand colors as main.css dark mode */
-  --primary: var(--rh-primary, #9ea7ff);  /* main.css dark --primary */
-  --accent:  var(--rh-accent,  #ff9aff);  /* main.css dark --accent */
-  --secondary: var(--rh-secondary, #9cb6ff); /* optional parity */
+  --primary: var(--rh-primary, #9ea7ff);   /* main.css dark --primary */
+  --accent:  var(--rh-accent,  #ff9aff);   /* main.css dark --accent */
+  --secondary: var(--rh-secondary, #9cb6ff);
 
   --radius: 16px; --radius-lg: 22px;
   --shadow-soft: 0 6px 20px rgba(16,24,40,.08);
@@ -34,6 +34,27 @@ html[data-theme="dark"]{
   --shadow-soft: 0 10px 24px rgba(0,0,0,.35);
   --shadow: 0 26px 70px rgba(0,0,0,.45);
 }
+
+/* ===== Buttons (parity with home.css) ===== */
+.btn{
+  border-radius:14px; padding:.72rem 1rem; font-weight:800;
+  border:1px solid var(--border);
+  background: color-mix(in oklab, var(--surface-secondary) 92%, transparent);
+  color:var(--text-1); cursor:pointer;
+  transition: transform .22s cubic-bezier(.22,.61,.36,1),
+              box-shadow .22s cubic-bezier(.22,.61,.36,1),
+              background .22s cubic-bezier(.22,.61,.36,1),
+              border-color .22s cubic-bezier(.22,.61,.36,1);
+  box-shadow: var(--shadow-soft);
+}
+.btn:hover{ transform:translateY(-2px); box-shadow: var(--shadow); }
+.btn.primary{
+  background: linear-gradient(135deg, var(--primary),
+             color-mix(in oklab, var(--accent) 80%, var(--primary)));
+  color:#fff;
+  border-color: color-mix(in oklab, var(--primary) 60%, transparent);
+}
+.btn.ghost{ background: transparent; color: var(--text-1); }
 
 /* Section rhythm & typography */
 .about-page section { padding: clamp(36px, 7vw, 88px) 0; }

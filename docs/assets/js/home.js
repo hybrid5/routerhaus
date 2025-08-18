@@ -7,6 +7,16 @@
   const $ = (s, r = document) => r.querySelector(s);
   const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
 
+  /* ---- Partials (header/footer) ---- */
+  async function mountPartial(target){
+    const path = target?.dataset?.partial;
+    if(!path) return;
+    try{
+      const res = await fetch(path, { cache: 'no-store' });
+      if(res.ok) target.innerHTML = await res.text();
+    }catch{}
+  }
+
   /* ---- Persona quick chips → route to kits with mapped filters ---- */
   function wireQuickChips() {
     const chips = $$(".persona-chips .chip");
@@ -29,7 +39,7 @@
     });
   }
 
-  /* ---- Reveal animations on scroll (aligns with .reveal/.in-view in CSS) ---- */
+  /* ---- Reveal animations on scroll ---- */
   function revealify() {
     const els = $$(".reveal");
     if (!els.length || !("IntersectionObserver" in window)) return;
@@ -48,9 +58,20 @@
     els.forEach((el) => io.observe(el));
   }
 
-  /* ---- Optional: slight tilt on value/product cards ---- */
+  /* ---- FAQ accordion ---- */
+  function wireAccordion(){
+    $$(".accordion-item").forEach(item=>{
+      item.addEventListener("click", (e)=>{
+        // avoid toggling when selecting text
+        if (getSelection()?.toString()) return;
+        item.classList.toggle("open");
+      });
+    });
+  }
+
+  /* ---- Optional: slight tilt on product cards ---- */
   function tiltCards() {
-    const cards = $$(".value-card, .product");
+    const cards = $$(".product");
     if (!cards.length) return;
     cards.forEach((card) => {
       let rAF = 0;
@@ -77,17 +98,17 @@
     });
   }
 
-  /* ---- Hooks after header/footer partials (if needed later) ---- */
-  function wireHeaderHooks() {
-    // Example: const quizBtn = document.getElementById('openQuiz');
-  }
-
   /* ---- Init ---- */
-  document.addEventListener("DOMContentLoaded", () => {
+  document.addEventListener("DOMContentLoaded", async () => {
+    await Promise.all([
+      mountPartial($("#header-placeholder")),
+      mountPartial($("#footer-placeholder")),
+    ]);
+    document.dispatchEvent(new CustomEvent("partials:loaded"));
+
     wireQuickChips();
     revealify();
+    wireAccordion();
     tiltCards();
   });
-
-  document.addEventListener("partials:loaded", wireHeaderHooks);
 })();

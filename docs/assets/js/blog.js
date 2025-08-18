@@ -4,7 +4,7 @@
  * - Sort: newest/popular/reading time
  * - Pagination + URL sync
  * - Featured hero, quick preview modal, newsletter (LS demo)
- * - Reuses Kits patterns; zero new emojis beyond search icon already shown
+ * - Partials + reveal animations (aligned with other pages)
  */
 
 (() => {
@@ -75,14 +75,14 @@
     posts: [],
     filtered: [],
     tags: new Set((urlQS.get('tags') || '').split(',').filter(Boolean)),
-    tagList: [],               // ordered list of tag strings
+    tagList: [],
     sort: urlQS.get('sort') || 'newest',
     page: Math.max(1, Number(urlQS.get('page')) || 1),
     pageSize: Number(urlQS.get('ps')) || 12,
     search: (urlQS.get('q') || '').trim().toLowerCase(),
   };
 
-  // ---------- Partials (optional) ----------
+  // ---------- Partials ----------
   const mountPartial = async (target) => {
     const path = target?.dataset?.partial;
     if (!path) return;
@@ -91,6 +91,14 @@
       if (res.ok) target.innerHTML = await res.text();
     } catch {}
   };
+
+  // ---------- Reveal animations ----------
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){ e.target.classList.add('in-view'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -10% 0px' });
+  const revealify = () => $$('.reveal').forEach(n => io.observe(n));
 
   // ---------- Data ----------
   const FALLBACK_POSTS = [
@@ -190,13 +198,10 @@
 
   function renderTagsBar(counts, filteredBase) {
     el.tagsBar.innerHTML = '';
-    const baseSet = new Set(filteredBase); // posts visible before applying tag itself
+    const base = filteredBase;
 
     state.tagList.forEach(tag => {
-      const count = counts.get(tag) || 0;
-
-      // compute "what if I add this tag" count
-      const nextCount = filteredBase.filter(p => p.tags.includes(tag)).length;
+      const nextCount = base.filter(p => p.tags.includes(tag)).length;
 
       const btn = document.createElement('button');
       btn.className = 'chip';
@@ -242,13 +247,8 @@
 
   function applyFilters() {
     const withSearch = state.posts.filter(p => passesSearch(p, state.search));
-
-    // compute tag-only counts relative to search
     const filteredBase = withSearch.slice();
-
-    // apply tags (AND semantics across different tags)
     const withTags = [...state.tags].reduce((arr, tag) => arr.filter(p => p.tags.includes(tag)), filteredBase);
-
     state.filtered = withTags;
     return { filteredBase, tagCounts: collectTags(withSearch) };
   }
@@ -334,7 +334,7 @@
     if (!f) { el.featuredHero.innerHTML=''; el.featuredHero.style.display='none'; return; }
     el.featuredHero.style.display='';
     el.featuredHero.innerHTML = `
-      <div class="hero-wrap">
+      <div class="hero-wrap reveal">
         <div class="hero-text">
           <div class="hero-meta">
             <strong>${f.author}</strong><span class="dot">•</span><time>${fmtDate(f.date)}</time><span class="dot">•</span><span>${f.minutes} min read</span>
@@ -362,6 +362,7 @@
       });
     });
     el.featuredHero.querySelector('[data-preview]')?.addEventListener('click', () => openPreview(f));
+    revealify();
   }
 
   function renderActiveChips() {
@@ -370,7 +371,8 @@
     el.activeChips.style.display='';
     for (const t of state.tags) {
       const btn = document.createElement('button');
-      btn.type='button'; btn.className='chip'; btn.setAttribute('role','listitem');
+      btn.type='button'; btn.className='chip';
+      btn.setAttribute('role','listitem');
       btn.setAttribute('aria-label', `Remove tag: ${t}`);
       btn.textContent = `${t} ✕`;
       btn.addEventListener('click', () => { state.tags.delete(t); state.page=1; onStateChanged({}); });
@@ -383,11 +385,11 @@
     const frag = document.createDocumentFragment();
     for (const p of items) frag.appendChild(renderCard(p));
     el.resultsGrid.appendChild(frag);
+    revealify();
   }
 
   function renderCard(p) {
     const node = el.postCardTpl.content.cloneNode(true);
-    const art = node.querySelector('.post-card');
 
     const aCover = node.querySelector('.cover');
     const img = node.querySelector('img');
@@ -523,42 +525,31 @@
 
     wireToolbar();
     renderFeatured();
-    // initial
     onStateChanged({ initial:true });
 
-    // Focus search if q present
     if (state.search) el.searchInput?.focus();
   }
 
   function onStateChanged(opts) {
-    // Filter
     const { filteredBase, tagCounts } = applyFilters();
 
-    // Sort
     (comparators[state.sort] || comparators.newest) && state.filtered.sort(comparators[state.sort] || comparators.newest);
 
-    // Counts + disabled tag buttons
     renderTagsBar(tagCounts, filteredBase);
 
-    // Match count
     const total = state.filtered.length;
     const all = state.posts.length;
     el.matchCount.textContent = `${total} match${total===1?'':'es'} / ${all}`;
 
-    // Active chips
     renderActiveChips();
 
-    // Results
     const pageItems = paginate();
     renderResults(pageItems);
 
-    // Empty state
     el.emptyState.classList.toggle('hide', total > 0);
 
-    // Quick chips for empty state
     renderEmptyChips();
 
-    // URL
     syncUrl();
 
     if (opts?.scrollToTop) window.scrollTo({ top:0, behavior:'smooth' });

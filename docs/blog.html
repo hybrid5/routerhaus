@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="main.css" />
   <link rel="stylesheet" href="assets/css/blog.css" />
 
-  <!-- Theme sync -->
+  <!-- Theme sync (matches other pages) -->
   <meta name="color-scheme" content="light dark" />
   <script>
     (() => {
@@ -26,14 +26,14 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
 <body>
-  <!-- Ambient background -->
+  <!-- Ambient background (subtle like Kits) -->
   <div class="ambient-bg" aria-hidden="true">
     <span class="bg-orb orb-1"></span>
     <span class="bg-orb orb-2"></span>
     <span class="bg-orb orb-3"></span>
   </div>
 
-  <!-- Header / Footer partials -->
+  <!-- Header / Footer partials (aligned paths) -->
   <div id="header-placeholder" data-partial="header.html"></div>
 
   <main class="container blog-layout">
@@ -44,7 +44,7 @@
         <p class="page-sub">Guides, reviews, and networking deep-dives — written for real homes and real teams.</p>
       </div>
 
-      <!-- Command bar -->
+      <!-- Command bar: search + sort + page size + tags rail -->
       <section class="command-bar" aria-label="Blog controls">
         <div class="search-container">
           <div class="search-wrapper">
@@ -77,15 +77,15 @@
           </div>
         </div>
 
-        <!-- Live tag chip filter rail -->
+        <!-- Live tag chip filter rail (populated by JS) -->
         <div id="tagsBar" class="chips tags-bar" aria-label="Filter by tag"></div>
       </section>
     </header>
 
-    <!-- Featured -->
+    <!-- Featured hero (auto-filled from dataset) -->
     <section id="featuredHero" class="blog-hero" aria-label="Featured article"></section>
 
-    <!-- Active filters + count -->
+    <!-- Active filters chips + result count -->
     <div class="active-row">
       <div id="activeChips" class="active-chips" role="list" aria-label="Active filters"></div>
       <div class="match-count">
@@ -96,7 +96,7 @@
     <!-- Pagination (top) -->
     <nav id="paginationTop" class="pagination" aria-label="Pagination (top)"></nav>
 
-    <!-- Grid -->
+    <!-- Article grid -->
     <section aria-live="polite">
       <div id="skeletonGrid" class="article-grid skeletons" aria-hidden="true"></div>
       <div id="postResults" class="article-grid" role="list"></div>
@@ -113,7 +113,7 @@
     <!-- Pagination (bottom) -->
     <nav id="paginationBottom" class="pagination" aria-label="Pagination (bottom)"></nav>
 
-    <!-- Newsletter -->
+    <!-- Newsletter callout -->
     <aside class="newsletter glass">
       <div class="nlc">
         <h2>Stay in the loop</h2>
@@ -130,15 +130,82 @@
 
   <div id="footer-placeholder" data-partial="footer.html"></div>
 
-  <!-- Templates -->
-  <template id="postCardTpl">…(unchanged from your last message)…</template>
-  <template id="skeletonTpl">…(unchanged)…</template>
+  <!-- ===== Templates ===== -->
+  <template id="postCardTpl">
+    <article class="post-card reveal" role="listitem">
+      <a class="cover" href="#" aria-label="">
+        <img alt="" loading="lazy" />
+        <div class="badge-row">
+          <span class="badge featured-badge" hidden>Featured</span>
+        </div>
+      </a>
+
+      <header class="post-head">
+        <h3 class="post-title">
+          <a class="title-link" href="#"></a>
+        </h3>
+        <div class="meta">
+          <span class="author"></span>
+          <span class="dot">•</span>
+          <time class="date"></time>
+          <span class="dot">•</span>
+          <span class="read"></span>
+          <span class="dot views-dot" hidden>•</span>
+          <span class="views" hidden></span>
+        </div>
+      </header>
+
+      <div class="chips line tags"></div>
+
+      <p class="excerpt"></p>
+
+      <div class="ctaRow">
+        <a class="btn" href="#" target="_self" rel="noopener">Read</a>
+        <button class="btn ghost previewBtn" type="button">Quick preview</button>
+      </div>
+    </article>
+  </template>
+
+  <template id="skeletonTpl">
+    <div class="post-card skeleton">
+      <div class="cover shimmer"></div>
+      <div class="post-head">
+        <div class="s1 shimmer"></div>
+        <div class="s2 shimmer"></div>
+      </div>
+      <div class="s3 shimmer"></div>
+      <div class="s3 shimmer"></div>
+      <div class="s4 shimmer"></div>
+    </div>
+  </template>
 
   <!-- Preview Modal -->
-  <dialog id="postPreviewModal" class="modal">…(unchanged)…</dialog>
+  <dialog id="postPreviewModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="modal-title-group">
+          <span class="modal-icon" aria-hidden="true"><i class="fa-solid fa-star"></i></span>
+          <h2 id="previewTitle">Preview</h2>
+        </div>
+        <button class="modal-close" id="previewClose" type="button" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
+      </div>
 
-  <!-- Scripts: use ONLY the global header wiring + blog.js -->
-  <script defer src="scripts.js"></script>
+      <div class="preview-body">
+        <div class="preview-meta">
+          <span id="previewMeta"></span>
+        </div>
+        <div id="previewCover" class="preview-cover"></div>
+        <article id="previewBody" class="preview-article"></article>
+      </div>
+
+      <div class="modal-actions">
+        <div></div>
+        <a id="previewReadLink" class="btn primary" href="#">Go to full article</a>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- Scripts -->
   <script defer src="assets/js/blog.js"></script>
 </body>
 </html>

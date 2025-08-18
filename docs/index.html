@@ -1,8 +1,9 @@
 <!-- ===========================
      RouterHaus v2 — index.html
+     (Home) — polished & unified with site system
      =========================== -->
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -10,12 +11,12 @@
   <meta name="color-scheme" content="light dark" />
   <title>RouterHaus</title>
 
-  <!-- Fonts & Styles -->
+  <!-- Fonts & Global -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="main.css" />
   <link rel="stylesheet" href="assets/css/home.css" />
 
-  <!-- Theme sync (matches other pages) -->
+  <!-- Theme sync (same pattern used on other pages) -->
   <script>
     (() => {
       const root = document.documentElement;
@@ -29,7 +30,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
 <body>
-  <!-- Header partial mounts BEFORE main to avoid CLS -->
+  <!-- Header partial -->
   <div id="header-placeholder" data-partial="header.html"></div>
 
   <main class="home">
@@ -179,7 +180,7 @@
             <p>Yes. We can coordinate on-site installation, validation, and handover. Remote staging and controller setup are also available.</p>
           </div>
 
-          <div class="accordion-item reveal">
+        <div class="accordion-item reveal">
             <h4>Will the quiz work for office spaces?</h4><span aria-hidden="true">+</span>
             <p>It’s a great start for sizing and features. For multi-tenant or multi-AP scenarios, book a consult and we’ll design the topology.</p>
           </div>

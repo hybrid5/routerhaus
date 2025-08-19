@@ -218,6 +218,7 @@ img{max-width:100%;height:auto;display:block;}
 .step{
   border:1px solid var(--border);border-radius:var(--radius-xl);
   background:var(--surface-primary);
+  padding-block-start: calc(var(--space-4) + .2rem);
   padding:var(--space-4);
   display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:10px;
   box-shadow:var(--shadow-sm)

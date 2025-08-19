@@ -1,0 +1,7 @@
+# docs/_config.yml
+url: https://hybrid5.github.io
+baseurl: /routerhaus5
+
+plugins:
+  - jekyll-sitemap
+  - jekyll-seo-tag

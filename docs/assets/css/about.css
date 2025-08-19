@@ -12,8 +12,12 @@
   --surface-primary: rgba(255,255,255,.9);
   --surface-secondary: rgba(255,255,255,.95);
   --border: var(--rh-border, rgba(0,0,0,.14));
-  --primary: var(--rh-primary, #7b7bff);
-  --accent: var(--rh-accent, #5ea0ff);
+
+  /* LIGHT MODE → EXACT same brand colors as main.css dark mode */
+  --primary: var(--rh-primary, #9ea7ff);   /* main.css dark --primary */
+  --accent:  var(--rh-accent,  #ff9aff);   /* main.css dark --accent */
+  --secondary: var(--rh-secondary, #9cb6ff);
+
   --radius: 16px; --radius-lg: 22px;
   --shadow-soft: 0 6px 20px rgba(16,24,40,.08);
   --shadow: 0 18px 50px rgba(16,24,40,.12);
@@ -30,6 +34,27 @@ html[data-theme="dark"]{
   --shadow-soft: 0 10px 24px rgba(0,0,0,.35);
   --shadow: 0 26px 70px rgba(0,0,0,.45);
 }
+
+/* ===== Buttons (parity with home.css) ===== */
+.btn{
+  border-radius:14px; padding:.72rem 1rem; font-weight:800;
+  border:1px solid var(--border);
+  background: color-mix(in oklab, var(--surface-secondary) 92%, transparent);
+  color:var(--text-1); cursor:pointer;
+  transition: transform .22s cubic-bezier(.22,.61,.36,1),
+              box-shadow .22s cubic-bezier(.22,.61,.36,1),
+              background .22s cubic-bezier(.22,.61,.36,1),
+              border-color .22s cubic-bezier(.22,.61,.36,1);
+  box-shadow: var(--shadow-soft);
+}
+.btn:hover{ transform:translateY(-2px); box-shadow: var(--shadow); }
+.btn.primary{
+  background: linear-gradient(135deg, var(--primary),
+             color-mix(in oklab, var(--accent) 80%, var(--primary)));
+  color:#fff;
+  border-color: color-mix(in oklab, var(--primary) 60%, transparent);
+}
+.btn.ghost{ background: transparent; color: var(--text-1); }
 
 /* Section rhythm & typography */
 .about-page section { padding: clamp(36px, 7vw, 88px) 0; }
@@ -188,6 +213,13 @@ html[data-theme="dark"]{
 .about-page .accordion-item.open span{ transform: rotate(45deg); }
 .about-page .accordion-item p{ color: var(--text-2); margin: .55rem 0 0; display: none; }
 .about-page .accordion-item.open p{ display: block; }
+
+/* ===== Footer CTA ===== */
+.footer-cta{ background: linear-gradient(180deg,color-mix(in oklab, var(--surface-tertiary) 45%, transparent),transparent),var(--bg);border-top: 1px solid var(--border);}
+.footer-cta .cta-inner{ text-align:center; }
+.footer-cta .cta-actions,
+.footer-cta .hero-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:8px;}
+.footer-cta .cta-inner p{color: inherit;margin: revert;}
 
 /* ===== Utilities shared with site ===== */
 .glass{ background: color-mix(in oklab, var(--card) 86%, transparent); backdrop-filter: blur(16px) saturate(140%); }

@@ -20,8 +20,9 @@ section{ padding: clamp(28px, 4vw, 72px) 0; } /* reduced to avoid excess whitesp
   --card: var(--rh-card, rgba(0,0,0,0.04));          /* light card tint */
   --surface: var(--rh-surface, rgba(0,0,0,0.025));
   --border: var(--rh-border, rgba(0,0,0,0.14));
-  --primary: var(--rh-primary, #7b7bff);
-  --accent: var(--rh-accent, #5ea0ff);
+  /* LIGHT MODE → EXACT dark-mode brand colors */
+  --primary: var(--rh-primary, #9ea7ff);             /* match main.css dark --primary */
+  --accent:  var(--rh-accent,  #ff9aff);             /* match main.css dark --accent */
   --radius: 16px; --radius-lg: 22px;
   --shadow-sm: 0 6px 20px rgba(16,24,40,.08);
   --shadow-md: 0 18px 50px rgba(16,24,40,.12);
@@ -187,10 +188,12 @@ html[data-theme="dark"] .index-hero{
 .accordion-item p{ color: var(--text-2); margin:.55rem 0 0; display:none; }
 .accordion-item.open p{ display:block; }
 
-/* ===== CTA ===== */
-.footer-cta{ background: color-mix(in oklab, var(--card) 90%, transparent); border-top:1px solid var(--border); }
-.cta-inner{ text-align:center; }
-.cta-inner p{ color: var(--text-2); margin:0 0 1rem; }
+/* ===== Footer CTA ===== */
+.footer-cta{ background: linear-gradient(180deg,color-mix(in oklab, var(--surface-tertiary) 45%, transparent),transparent),var(--bg);border-top: 1px solid var(--border);}
+.footer-cta .cta-inner{ text-align:center; }
+.footer-cta .cta-actions,
+.footer-cta .hero-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:8px;}
+.footer-cta .cta-inner p{color: inherit;margin: revert;}
 
 /* ===== Glass helper (used for hero card / products) ===== */
 .glass{ background: color-mix(in oklab, var(--card) 86%, transparent); backdrop-filter: blur(16px) saturate(140%); }

@@ -5,12 +5,13 @@
 
 /* ------------------- Design tokens (from kits.css) ------------------- */
 :root{
-  --primary-h:240; --primary-s:100%; --primary-l:70%;
+  /* Light mode → use EXACT dark-mode brand purples */
+  --primary-h:234.433; --primary-s:100%; --primary-l:80.98%;
   --primary:hsl(var(--primary-h) var(--primary-s) var(--primary-l));
-  --primary-rgb:123 123 255;
+  --primary-rgb:158 167 255; /* #9ea7ff */
 
-  --accent-h:210; --accent-s:100%; --accent-l:65%;
-  --accent:hsl(var(--accent-h) var(--accent-s) var(--accent-l));
+  --accent-h:300; --accent-s:100%; --accent-l:80.2%;
+  --accent:hsl(var(--accent-h) var(--accent-s) var(--accent-l)); /* #ff9aff */
 
   --success:#10b981; --warning:#f59e0b; --danger:#ef4444; --info:#3b82f6;
 
@@ -109,6 +110,7 @@ img{max-width:100%;height:auto;display:block;}
 ::-webkit-scrollbar-thumb:hover{background:color-mix(in oklab,var(--muted) 70%,transparent)}
 .glass{background:var(--glass-bg);backdrop-filter:blur(20px) saturate(140%);border:1px solid var(--glass-border)}
 @supports not (backdrop-filter:blur(20px)){.glass{background:var(--surface-primary)}}
+.grad{ background: linear-gradient(90deg, var(--accent), var(--primary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
 
 /* ------------------- Buttons (kits-aligned) ------------------- */
 .btn{

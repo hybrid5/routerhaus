@@ -1,0 +1,46 @@
+/* assets/css/privacy.css
+   Legal page polish (US-only policy) — inherits tokens from main.css
+*/
+
+/* Layout & headings */
+.legal { padding: 3rem 0 4rem; }
+.legal-head h1 { font-size: var(--fs-800); margin-bottom: .25rem; }
+.legal-head .effective { color: var(--text-muted); margin-bottom: .5rem; }
+.legal .subtle { color: var(--text-muted); }
+.legal .mini { font-size: .875rem; color: var(--text-muted); }
+
+/* Typography blocks */
+.legal h2 { margin-top: 2.2rem; margin-bottom: .6rem; font-size: var(--fs-700); }
+.legal h3 { margin-top: 1.2rem; margin-bottom: .4rem; font-size: var(--fs-600); }
+.legal p { margin: .4rem 0 .9rem; max-width: 75ch; }
+.legal ul { margin: .3rem 0 1rem 1.25rem; }
+.legal ul.bullets { list-style: disc; }
+.legal li { margin: .3rem 0; }
+
+/* Links */
+.legal a { color: var(--primary); }
+.legal a:hover { text-decoration: underline; }
+
+/* Tables */
+.table-wrap { overflow-x: auto; border-radius: var(--radius); }
+.legal table { width: 100%; border-collapse: collapse; min-width: 760px; }
+.legal th,
+.legal td {
+  border: 1px solid color-mix(in oklab, var(--text-muted) 18%, transparent);
+  padding: .65rem .75rem;
+  text-align: left;
+  vertical-align: top;
+}
+.legal thead th {
+  background: color-mix(in oklab, var(--footer-bg) 70%, transparent);
+  font-weight: 700;
+}
+.legal tbody tr:nth-child(even) {
+  background: color-mix(in oklab, var(--footer-bg) 55%, transparent);
+}
+
+/* Mobile */
+@media (max-width: 680px){
+  .legal { padding: 2.2rem 0 3rem; }
+  .legal table { min-width: 640px; }
+}

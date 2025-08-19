@@ -42,81 +42,65 @@
     byId('caseNext')?.addEventListener('click', () => scroller.scrollBy({ left:  360, behavior: 'smooth' }));
   }
 
-  // ----- Intake form (multi-step) -----
-  function wireIntake() {
-    const form = byId('intakeForm');
-    if (!form) return;
+// ----- Intake form (single-page, validate all) -----
+function wireIntake() {
+  const form = byId('intakeForm');
+  if (!form) return;
 
-    const steps = $$('.step', form);
-    const progressBar = byId('progressBar');
-    const progressWrap = progressBar?.parentElement;
-    const msg = byId('formMsg');
-    const nextBtn = byId('nextStep');
-    const prevBtn = byId('prevStep');
-    const submitBtn = byId('submitIntake');
-    const after = byId('afterIntake');
-    const downloadBrief = byId('downloadBrief');
-    const mailtoLink = byId('mailtoLink');
+  const steps = $$('.step', form);
+  const msg = byId('formMsg');
+  const after = byId('afterIntake');
+  const downloadBrief = byId('downloadBrief');
+  const mailtoLink = byId('mailtoLink');
 
-    let idx = 0;
+  // Show all steps (remove wizard)
+  steps.forEach(s => s.hidden = false);
 
-    const setStep = (i, opts = { focus: true }) => {
-      idx = Math.max(0, Math.min(steps.length - 1, i));
-      steps.forEach((s, j) => { s.hidden = j !== idx; });
-      prevBtn.disabled = idx === 0;
-      nextBtn.hidden = idx === steps.length - 1;
-      submitBtn.hidden = idx !== steps.length - 1;
+  // Hide progress & nav; force submit button visible
+  form.querySelector('.progress')?.style && (form.querySelector('.progress').style.display = 'none');
+  byId('prevStep')?.remove();
+  byId('nextStep')?.remove();
+  const submitBtn = byId('submitIntake');
+  if (submitBtn) { submitBtn.hidden = false; submitBtn.type = 'submit'; }
 
-      const pct = Math.round(((idx + 1) / steps.length) * 100);
-      progressBar.style.width = pct + '%';
-      progressWrap?.setAttribute('aria-valuenow', String(pct));
-      msg.textContent = '';
+  // Validate entire form
+  const validateAll = () => {
+    msg.textContent = '';
+    // clear previous errors
+    $$('[data-error="1"]', form).forEach(n => n.removeAttribute('data-error'));
 
-      if (opts.focus) {
-        const first = steps[idx].querySelector('input,select,textarea');
-        try {
-          first?.focus({ preventScroll: true });
-        } catch {
-          first?.focus();
-        }
+    const required = $$('input[required],select[required],textarea[required]', form);
+    let firstBad = null;
+
+    for (const el of required) {
+      const val = String(el.value || '').trim();
+      const invalid = !val || (el.type === 'email' && !/^\S+@\S+\.\S+$/.test(val));
+      if (invalid) {
+        el.setAttribute('data-error', '1');
+        if (!firstBad) firstBad = el;
       }
-    };
+    }
 
-    const validateStep = () => {
-      msg.textContent = '';
-      // clear previous errors
-      $$('[data-error="1"]', steps[idx]).forEach(n => n.removeAttribute('data-error'));
-      const required = $$('input[required],select[required],textarea[required]', steps[idx]);
-      for (const el of required) {
-        const val = String(el.value || '').trim();
-        const invalid = !val || (el.type === 'email' && !/^\S+@\S+\.\S+$/.test(val));
-        if (invalid) {
-          el.setAttribute('data-error', '1');
-          msg.textContent = 'Please complete the required fields.';
-          try { el.focus({ preventScroll: true }); } catch { el.focus(); }
-          return false;
-        }
-      }
-      return true;
-    };
+    if (firstBad) {
+      msg.textContent = 'Please complete the required fields.';
+      try { firstBad.focus({ preventScroll: true }); } catch { firstBad.focus(); }
+      firstBad.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      return false;
+    }
+    return true;
+  };
 
-    nextBtn.addEventListener('click', () => {
-      if (!validateStep()) return;
-      setStep(idx + 1);
-    });
-    prevBtn.addEventListener('click', () => setStep(idx - 1));
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    if (!validateAll()) return;
 
-    form.addEventListener('submit', (e) => {
-      e.preventDefault();
-      if (!validateStep()) return;
+    const data = Object.fromEntries(new FormData(form).entries());
 
-      const data = Object.fromEntries(new FormData(form).entries());
+    // Persist locally
+    try { localStorage.setItem('rh.consult.intake', JSON.stringify({ ...data, ts: new Date().toISOString() })); } catch {}
 
-      // Persist locally
-      try { localStorage.setItem('rh.consult.intake', JSON.stringify({ ...data, ts: new Date().toISOString() })); } catch {}
-
-      // Build human summary
-      const summary =
+    // Build human summary
+    const summary =
 `RouterHaus Consult Intake
 ———————————————
 Property: ${data.propertyType || '-'}
@@ -131,36 +115,32 @@ Notes:
 ${(data.notes || '').trim() || '(none)'}
 `;
 
-      // Download brief (JSON)
-      const blob = new Blob([JSON.stringify({ ...data, summary }, null, 2)], { type: 'application/json' });
-      const url = URL.createObjectURL(blob);
-      downloadBrief.href = url;
-      downloadBrief.download = `routerhaus-consult-${(data.name || 'intake').toLowerCase().replace(/\W+/g,'-')}.json`;
+    // Download brief (JSON)
+    const blob = new Blob([JSON.stringify({ ...data, summary }, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    downloadBrief.href = url;
+    downloadBrief.download = `routerhaus-consult-${(data.name || 'intake').toLowerCase().replace(/\W+/g,'-')}.json`;
 
-      // Mailto (easy handoff)
-      const to = 'consult@routerhaus.com';
-      const subject = encodeURIComponent('Consult request');
-      const body = encodeURIComponent(summary);
-      mailtoLink.href = `mailto:${to}?subject=${subject}&body=${body}`;
+    // Mailto handoff
+    const to = 'admin@routerhaus.com';
+    const subject = encodeURIComponent('Consult request');
+    const body = encodeURIComponent(summary);
+    mailtoLink.href = `mailto:${to}?subject=${subject}&body=${body}`;
 
-      form.hidden = true;
-      after.hidden = false;
-      after.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    });
+    form.hidden = true;
+    after.hidden = false;
+    after.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
 
-    // Open from hero/footer buttons
-    $$('.js-open-intake').forEach((b) =>
-      b.addEventListener('click', () => {
-        form.hidden = false;
-        after.hidden = true;
-        setStep(0, { focus: true });
-        document.querySelector('.intake')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      })
-    );
-
-    // Initial step WITHOUT scrolling/focusing (prevents jumping to intake)
-    setStep(0, { focus: false });
-  }
+  // Open from hero/footer buttons
+  $$('.js-open-intake').forEach((b) =>
+    b.addEventListener('click', () => {
+      form.hidden = false;
+      after.hidden = true;
+      document.querySelector('.intake')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    })
+  );
+}
 
   // Capture UTM tags (if present) to localStorage for later CRM imports
   function storeUTMs() {

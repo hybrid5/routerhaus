@@ -48,7 +48,7 @@
     const a = byId('mailtoMain');
     btn?.addEventListener('click', async ()=>{
       try{
-        await navigator.clipboard.writeText(a?.textContent?.trim() || 'support@routerhaus.com');
+        await navigator.clipboard.writeText(a?.textContent?.trim() || 'admin@routerhaus.com');
         btn.textContent = 'Copied!';
         setTimeout(()=> btn.textContent = 'Copy address', 1200);
       }catch{}

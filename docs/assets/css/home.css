@@ -188,10 +188,12 @@ html[data-theme="dark"] .index-hero{
 .accordion-item p{ color: var(--text-2); margin:.55rem 0 0; display:none; }
 .accordion-item.open p{ display:block; }
 
-/* ===== CTA ===== */
-.footer-cta{ background: color-mix(in oklab, var(--card) 90%, transparent); border-top:1px solid var(--border); }
-.cta-inner{ text-align:center; }
-.cta-inner p{ color: var(--text-2); margin:0 0 1rem; }
+/* ===== Footer CTA ===== */
+.footer-cta{ background: linear-gradient(180deg,color-mix(in oklab, var(--surface-tertiary) 45%, transparent),transparent),var(--bg);border-top: 1px solid var(--border);}
+.footer-cta .cta-inner{ text-align:center; }
+.footer-cta .cta-actions,
+.footer-cta .hero-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:8px;}
+.footer-cta .cta-inner p{color: inherit;margin: revert;}
 
 /* ===== Glass helper (used for hero card / products) ===== */
 .glass{ background: color-mix(in oklab, var(--card) 86%, transparent); backdrop-filter: blur(16px) saturate(140%); }

@@ -216,23 +216,27 @@ img{max-width:100%;height:auto;display:block;}
 
 /* Fieldset block: clean card look + legend offset fix */
 .step{
+  /* knobs for legend positioning */
+  --legend-top: .5rem;       /* distance from fieldset top to legend text */
+  --legend-gap: 1rem;        /* extra space between legend and first row */
+
   border:1px solid var(--border);border-radius:var(--radius-xl);
   background:var(--surface-primary);
-  position:relative;                            /* allow absolute legend */
-  padding:var(--space-4);                       /* base padding */
-  padding-top:calc(var(--space-4) + 1rem);      /* room for legend text */
+  position:relative;
+  padding:var(--space-4);
+  padding-top:calc(var(--space-4) + var(--legend-top) + var(--legend-gap));
   display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:10px;
   box-shadow:var(--shadow-sm)
 }
 .step + .step{margin-top:12px}
 
-/* Legend: anchored visually inside the card, not glued to the top edge */
+/* Legend: anchored visually inside the card */
 .step > legend{
   position:absolute;
-  top:.5rem;
+  top:var(--legend-top);
   left:var(--space-4);
   margin:0;
-  padding:0 .25rem;                             /* optional: covers border neatly */
+  padding:0 .25rem;                 /* covers top border neatly */
   background:var(--surface-primary);
   font-weight:800;font-size:var(--text-lg);line-height:1.2;color:var(--text-1);
   z-index:1;

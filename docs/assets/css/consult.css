@@ -204,69 +204,37 @@ img{max-width:100%;height:auto;display:block;}
 .case header span{color:var(--muted);font-size:.9rem}
 .case-controls{display:flex;gap:8px;justify-content:center;margin-top:10px}
 
-/* ------------------- Intake form — CLEANED (no progress, cranked shadow glow, required markers) ------------------- */
+/* ------------------- Intake form — CLEANED (no progress, glow, required markers) ------------------- */
 .intake form{
   position: relative;
-  isolation:isolate;                          /* keep glow behind content */
   border:1px solid var(--border);
   border-radius:var(--radius-2xl);
   background:var(--surface-elevated);
   padding:clamp(16px,2.4vw,24px);
-  box-shadow:
-    var(--shadow),
-    0 28px 90px rgba(var(--primary-rgb), .30),
-    0 0 180px rgba(var(--primary-rgb), .28);
-
-  /* Glow knobs */
-  --glow-strength: 1;                         /* 0–1 */
-  --glow-blur: 88px;                          /* softness */
-  --glow-spread: 56px;                        /* halo size */
-  --glow-core: color-mix(in oklab, var(--primary) 70%, white 30%);
-  --glow-bloom: color-mix(in oklab, var(--accent) 55%, black 10%);
+  box-shadow:var(--shadow);
 }
 
-/* Shadow-style halo (centered), no corner blobs */
+/* Gradient glow behind the form (moderate) */
 .intake form::before{
   content:"";
   position:absolute;
-  inset: calc(-1 * var(--glow-spread));
-  border-radius: calc(var(--radius-2xl) + var(--glow-spread));
+  inset:-14px -18px -18px;
+  border-radius: calc(var(--radius-2xl) + 16px);
   background:
-    radial-gradient(165% 200% at 50% 60%, var(--glow-core) 0%, transparent 62%),
-    radial-gradient(220% 260% at 50% 60%, var(--glow-bloom) 0%, transparent 78%);
-  filter: blur(var(--glow-blur)) saturate(130%) brightness(1.1);
-  opacity: var(--glow-strength);
+    radial-gradient(60% 45% at 25% 0%,  color-mix(in oklab,var(--primary) 30%, transparent), transparent 70%),
+    radial-gradient(70% 55% at 85% 100%, color-mix(in oklab,var(--accent) 25%, transparent),  transparent 75%);
+  filter: blur(28px);
+  opacity:.7;
   z-index:-1;
   pointer-events:none;
 }
 
-/* Optional rim for extra punch (still shadowy, not blotchy) */
-.intake form::after{
-  content:"";
-  position:absolute;
-  inset:-8px;
-  border-radius: calc(var(--radius-2xl) + 8px);
-  background: radial-gradient(140% 170% at 50% 60%,
-    color-mix(in oklab, var(--primary) 40%, transparent) 0 38%,
-    transparent 60%);
-  filter: blur(48px);
-  opacity:.55;
-  mix-blend-mode:screen;
-  z-index:-1;
-}
-
-html[data-theme="dark"] .intake form{
-  --glow-blur: 96px;
-  --glow-core: color-mix(in oklab, var(--primary) 75%, white 25%);
-  --glow-bloom: color-mix(in oklab, var(--accent) 65%, black 0%);
-}
-
-/* Progress hidden (UI simplified to single-submit) */
+/* Hide progress entirely */
 .progress{ display:none !important; }
 
 /* Fieldset block: clean card look + legend offset fix */
 .step{
-  /* knobs for legend spacing */
+  /* knobs for legend positioning */
   --legend-top: .5rem;       /* distance from fieldset top to legend text */
   --legend-gap: 1rem;        /* extra space between legend and first row */
 
@@ -276,7 +244,7 @@ html[data-theme="dark"] .intake form{
   padding:var(--space-4);
   padding-top:calc(var(--space-4) + var(--legend-top) + var(--legend-gap));
   display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:10px;
-  box-shadow:var(--shadow-sm)
+  box-shadow:var(--shadow-sm);
 }
 .step + .step{margin-top:12px}
 

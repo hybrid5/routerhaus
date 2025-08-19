@@ -223,14 +223,22 @@ img{max-width:100%;height:auto;display:block;}
   box-shadow:var(--shadow-sm)
 }
 .step + .step{margin-top:12px}
+/* Legends: add vertical breathing room and consistent block layout */
 .step legend{
   grid-column: 1 / -1;
+  display: block;                 /* ensure margins/padding apply consistently */
   font-weight: 800;
   font-size: var(--text-lg);
   color: var(--text-1);
-  padding-block: .35rem .6rem;
-  margin: 2px 0 8px;
-  line-height: 1.2;
+  line-height: 1.25;
+  padding: .25rem 0 .4rem;        /* space inside the legend */
+  margin: 0 0 .6rem;              /* separation from the first row of fields */
+}
+/* creates space ABOVE the legend text inside the border (cross-browser) */
+.step legend::before{
+  content: "";
+  display: block;
+  height: .3rem;
 }
 
 /* Controls */

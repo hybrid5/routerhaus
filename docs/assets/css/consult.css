@@ -224,8 +224,13 @@ img{max-width:100%;height:auto;display:block;}
 }
 .step + .step{margin-top:12px}
 .step legend{
-  grid-column:1 / -1;font-weight:800;margin:0 0 4px;
-  font-size:var(--text-lg);color:var(--text-1)
+  grid-column: 1 / -1;
+  font-weight: 800;
+  font-size: var(--text-lg);
+  color: var(--text-1);
+  padding-block: .35rem .6rem;
+  margin: 2px 0 8px;
+  line-height: 1.2;
 }
 
 /* Controls */

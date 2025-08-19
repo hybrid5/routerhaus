@@ -214,6 +214,13 @@ html[data-theme="dark"]{
 .about-page .accordion-item p{ color: var(--text-2); margin: .55rem 0 0; display: none; }
 .about-page .accordion-item.open p{ display: block; }
 
+/* ===== Footer CTA ===== */
+.footer-cta{ background: linear-gradient(180deg,color-mix(in oklab, var(--surface-tertiary) 45%, transparent),transparent),var(--bg);border-top: 1px solid var(--border);}
+.footer-cta .cta-inner{ text-align:center; }
+.footer-cta .cta-actions,
+.footer-cta .hero-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:8px;}
+.footer-cta .cta-inner p{color: inherit;margin: revert;}
+
 /* ===== Utilities shared with site ===== */
 .glass{ background: color-mix(in oklab, var(--card) 86%, transparent); backdrop-filter: blur(16px) saturate(140%); }
 .reveal{ opacity:0; transform: translateY(8px); transition: opacity .22s cubic-bezier(.22,.61,.36,1), transform .22s cubic-bezier(.22,.61,.36,1); }

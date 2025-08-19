@@ -324,6 +324,19 @@ html[data-theme="dark"] .navbar{
 .accordion-item p{ display:none; color:var(--text-muted); margin:.55rem 0 0; }
 .accordion-item.open p{ display:block; }
 
+/* ---- Desktop-only footer brand centering ---- */
+@media (min-width: 901px){
+  .footer-grid{ grid-template-columns: 1.6fr 1fr 1fr 1fr; } /* slightly narrower first column */
+  .footer-brand{
+    justify-self: center;     /* center the brand block within its column */
+    text-align: center;
+    max-width: 46ch;
+    margin-inline: auto;
+  }
+  .footer-brand .logo{ margin-inline: auto; }
+  .footer-brand p{ margin-inline: auto; }
+}
+
 /* ---- Responsive tweaks ---- */
 @media (max-width: 992px){
   .navbar{ padding:.8rem 1rem; }

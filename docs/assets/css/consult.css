@@ -203,16 +203,33 @@ img{max-width:100%;height:auto;display:block;}
 .case header span{color:var(--muted);font-size:.9rem}
 .case-controls{display:flex;gap:8px;justify-content:center;margin-top:10px}
 
-/* ------------------- Intake form — CLEANED ------------------- */
+/* ------------------- Intake form — CLEANED (no progress, glow, required markers) ------------------- */
 .intake form{
-  border:1px solid var(--border);border-radius:var(--radius-2xl);
-  background:var(--surface-elevated);padding:clamp(16px,2.4vw,24px);
-  box-shadow:var(--shadow)
+  position: relative;
+  border:1px solid var(--border);
+  border-radius:var(--radius-2xl);
+  background:var(--surface-elevated);
+  padding:clamp(16px,2.4vw,24px);
+  box-shadow:var(--shadow);
 }
 
-/* Progress bar (thicker, rounded) */
-.progress{height:8px;background:var(--surface-tertiary);border-radius:999px;overflow:hidden;margin-bottom:14px}
-.progress .bar{height:100%;background:linear-gradient(90deg,var(--primary),var(--accent));width:0}
+/* Gradient glow behind the form */
+.intake form::before{
+  content:"";
+  position:absolute;
+  inset:-14px -18px -18px;
+  border-radius: calc(var(--radius-2xl) + 16px);
+  background:
+    radial-gradient(60% 45% at 25% 0%,  color-mix(in oklab,var(--primary) 30%, transparent), transparent 70%),
+    radial-gradient(70% 55% at 85% 100%, color-mix(in oklab,var(--accent) 25%, transparent),  transparent 75%);
+  filter: blur(28px);
+  opacity:.7;
+  z-index:-1;
+  pointer-events:none;
+}
+
+/* Hide progress entirely */
+.progress{ display:none !important; }
 
 /* Fieldset block: clean card look + legend offset fix */
 .step{
@@ -226,7 +243,7 @@ img{max-width:100%;height:auto;display:block;}
   padding:var(--space-4);
   padding-top:calc(var(--space-4) + var(--legend-top) + var(--legend-gap));
   display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:10px;
-  box-shadow:var(--shadow-sm)
+  box-shadow:var(--shadow-sm);
 }
 .step + .step{margin-top:12px}
 
@@ -255,6 +272,17 @@ img{max-width:100%;height:auto;display:block;}
   outline:none;
 }
 
+/* Required markers and error emphasis */
+.step label:has(> [required]) > span::after{
+  content:" *"; color:var(--danger); font-weight:800;
+}
+.step [data-error="1"]{
+  border-color:var(--danger);
+  box-shadow:0 0 0 3px rgba(239,68,68,.15);
+  background: color-mix(in oklab, var(--danger) 4%, var(--surface-secondary));
+}
+.step label:has([data-error="1"]) > span{ color:var(--danger); }
+
 /* Remove skeuomorphic bevels; custom chevron */
 .step select{
   -webkit-appearance:none; -moz-appearance:none; appearance:none;
@@ -278,14 +306,17 @@ img{max-width:100%;height:auto;display:block;}
   border-color:var(--ring);
   box-shadow:0 0 0 4px color-mix(in oklab,var(--ring) 28%,transparent)
 }
-.step [data-error="1"]{ border-color:var(--danger); box-shadow:0 0 0 3px rgba(239,68,68,.15) }
 .step ::placeholder{ color:color-mix(in oklab,var(--muted) 90%,transparent) }
 
 .step textarea{min-height:120px;resize:vertical}
 @media (max-width:800px){.step{grid-template-columns:1fr}}
 
-/* Actions */
+/* Actions: hide Back/Next; keep submit visible and right-aligned */
+#prevStep,#nextStep{ display:none !important; }
+#submitIntake{ display:inline-flex; } /* JS also ensures it's not @hidden */
 .step-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:16px}
+
+/* Form message */
 .form-msg{min-height:1.2em;color:var(--danger);margin-top:6px;font-weight:600}
 
 /* After intake */

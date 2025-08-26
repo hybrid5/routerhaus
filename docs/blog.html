@@ -22,6 +22,18 @@
     })();
   </script>
 
+  <!-- Blog data/config -->
+  <script>
+    // Configure where posts + index live. Adjust paths if you move things.
+    window.RH_CONFIG = {
+      blogJsonUrl: 'assets/blog/blog.json',
+      blogPostBase: 'assets/blog',                 // where .html posts live
+      postSelector: 'article, main article, .post, #post', // selector to extract preview/body
+      // Optional: override card/hero link behavior (default opens the HTML post)
+      openPostsInNewTab: false
+    };
+  </script>
+
   <!-- Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
@@ -201,7 +213,7 @@
 
       <div class="modal-actions">
         <div></div>
-        <a id="previewReadLink" class="btn primary" href="#">Go to full article</a>
+        <a id="previewReadLink" class="btn primary" href="#" target="_self">Go to full article</a>
       </div>
     </div>
   </dialog>

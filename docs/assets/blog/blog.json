@@ -1,0 +1,23 @@
+[
+  {
+    "slug": "wifi-7-vs-6e",
+    "title": "Wi-Fi 7 vs 6E: What Actually Changes at Home?",
+    "author": "John M.",
+    "date": "2025-08-20",
+    "tags": ["Wi-Fi 7", "How-To", "Buying Guide"],
+    "excerpt": "Plain-English: what you’ll feel day-to-day, what you won’t, and when to upgrade.",
+    "cover": "assets/blog/img/wifi7-hero.jpg",
+    "featured": true,
+    "views": 12345
+  },
+  {
+    "slug": "mesh-playbook",
+    "title": "The Mesh Playbook: Fix Dead Zones Without Rewiring",
+    "author": "RouterHaus",
+    "date": "2025-07-30",
+    "tags": ["Mesh", "Troubleshooting"],
+    "excerpt": "Three practical layouts for townhomes, ranches, and apartments.",
+    "cover": "assets/blog/img/mesh-playbook.jpg",
+    "views": 9800
+  }
+]

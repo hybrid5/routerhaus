@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Why Range Still Matters: Beating Dead Zones in Modern Homes (2025)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Dead zones are a coverage problem, not just a speed problem. Learn how walls, layout, and materials kill Wi-Fi, and use practical placement, mesh, and wiring tactics to restore whole-home coverage.">
+  <meta name="keywords" content="dead zones, Wi-Fi range, Wi-Fi coverage, Wi-Fi 7, 6 GHz, 5 GHz, 2.4 GHz, mesh Wi-Fi, wired backhaul, MoCA, Ethernet, router placement, DFS, channel width, attenuation, home Wi-Fi improvements">
+  <link rel="canonical" href="https://routerhaus.com/assets/blog/why-range-matters-dead-zones.html">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="../../main.css">
+  <link rel="stylesheet" href="../../assets/css/blog.css">
+  <link rel="stylesheet" href="../../assets/css/post.css">
+
+  <!-- Theme sync -->
+  <meta name="color-scheme" content="light dark">
+  <script>
+    (() => {
+      const root = document.documentElement;
+      const m = matchMedia('(prefers-color-scheme: dark)');
+      const apply = () => root.setAttribute('data-theme', m.matches ? 'dark' : 'light');
+      apply(); m.addEventListener('change', apply);
+    })();
+  </script>
+
+  <!-- Open Graph / Twitter -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Why Range Still Matters: Beating Dead Zones in Modern Homes (2025)">
+  <meta property="og:description" content="A pragmatic guide to fixing dead zones with placement, mesh, and smart backhaul—so every room gets reliable Wi-Fi.">
+  <meta property="og:image" content="https://routerhaus.com/assets/blog/img/why-range-hero.jpg">
+  <meta property="og:url" content="https://routerhaus.com/assets/blog/why-range-matters-dead-zones.html">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Why Range Still Matters: Beating Dead Zones in Modern Homes (2025)">
+  <meta name="twitter:description" content="Dead zones are a coverage problem. Here’s how to fix them fast and correctly.">
+  <meta name="twitter:image" content="https://routerhaus.com/assets/blog/img/why-range-hero.jpg">
+
+  <!-- Icons (optional) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+  <!-- Article JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"Article",
+    "headline":"Why Range Still Matters: Beating Dead Zones in Modern Homes (2025)",
+    "description":"Dead zones are a coverage problem, not just a speed problem. Learn how walls, layout, and materials kill Wi-Fi, and use practical placement, mesh, and wiring tactics to restore whole-home coverage.",
+    "author":{"@type":"Person","name":"RouterHaus"},
+    "publisher":{"@type":"Organization","name":"RouterHaus","logo":{"@type":"ImageObject","url":"https://routerhaus.com/assets/img/logo-og.png"}},
+    "image":"https://routerhaus.com/assets/blog/img/why-range-hero.jpg",
+    "datePublished":"2025-08-26",
+    "dateModified":"2025-08-26",
+    "mainEntityOfPage":{"@type":"WebPage","@id":"https://routerhaus.com/assets/blog/why-range-matters-dead-zones.html"},
+    "keywords":"dead zones, Wi-Fi range, mesh Wi-Fi, 6 GHz, 5 GHz, 2.4 GHz, channel width, wired backhaul"
+  }
+  </script>
+</head>
+<body>
+  <!-- Header -->
+  <div id="header-placeholder" data-partial="../../header.html"></div>
+
+  <main class="post-shell">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="../../index.html">Home</a> › <a href="../../blog.html">Journal</a> › Why Range Still Matters
+    </nav>
+
+    <header class="post-hero">
+      <p class="post-meta">By RouterHaus • Aug 26, 2025 • ~9 min read</p>
+      <h1>Why Range Still Matters: Beating Dead Zones in Modern Homes</h1>
+      <figure class="post-cover">
+        <img src="../img/why-range-hero.jpg" alt="Home floorplan with Wi-Fi coverage gradients and mesh node placement">
+        <figcaption>Speed specs don’t fix coverage. Correct placement and the right topology do.</figcaption>
+      </figure>
+    </header>
+
+    <!-- TOC -->
+    <aside class="toc">
+      <strong>On this page</strong>
+      <ul>
+        <li><a href="#tldr">TL;DR</a></li>
+        <li><a href="#symptoms">Symptoms: how dead zones show up</a></li>
+        <li><a href="#physics">Range &amp; attenuation 101</a></li>
+        <li><a href="#audit">5-minute home coverage audit</a></li>
+        <li><a href="#fixes">Fixes that work (ordered by impact)</a></li>
+        <li><a href="#channels">Channels &amp; widths that help range</a></li>
+        <li><a href="#testing">Test &amp; tune: quick method</a></li>
+        <li><a href="#faq">FAQ</a></li>
+      </ul>
+    </aside>
+
+    <article id="post" class="post-body">
+      <h2 id="tldr">TL;DR — range is coverage. Fix coverage first, then chase speed.</h2>
+      <ul>
+        <li><strong>Placement beats power:</strong> Central, high, unobstructed placement helps more than max transmit power.</li>
+        <li><strong>6&nbsp;GHz is fast, not far:</strong> Amazing for same/adjacent rooms; rely on 5&nbsp;GHz for distance, 2.4&nbsp;GHz for IoT reach.</li>
+        <li><strong>Mesh with wired backhaul</strong> is the gold standard for bigger or complex homes.</li>
+        <li><strong>One SSID, WPA3, band steering</strong> for clean roaming; avoid mixing random extenders.</li>
+      </ul>
+
+      <div class="callout info">
+        <div class="icon"><i class="fa-solid fa-signal"></i></div>
+        <div>
+          <strong>Rule:</strong> If a room needs reliable Wi-Fi, put a radio near that room or wire it. Range isn’t a number in a spec sheet—it’s about <em>where</em> the radios are.
+        </div>
+      </div>
+
+      <h2 id="symptoms">Symptoms: how dead zones show up</h2>
+      <ul>
+        <li>Video calls stutter only in certain rooms or at certain angles.</li>
+        <li>Streaming apps drop to SD or rebuffer on one side of the house.</li>
+        <li>Smart devices (cams/doorbells) go offline or delay notifications.</li>
+        <li>Speed tests swing wildly when you move 10–15&nbsp;ft or close a door.</li>
+      </ul>
+
+      <h2 id="physics">Range &amp; attenuation 101</h2>
+      <p>Different bands trade reach for capacity. Construction materials add loss (“attenuation”). Numbers below are <em>typical ranges</em>—treat them as guidance, not absolutes.</p>
+      <table>
+        <thead>
+          <tr><th>Band</th><th>Strengths</th><th>Limitations</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>2.4&nbsp;GHz</strong></td>
+            <td>Longest reach, good wall penetration; fine for IoT</td>
+            <td>Congested, low capacity; not ideal for 4K streams/calls</td>
+          </tr>
+          <tr>
+            <td><strong>5&nbsp;GHz</strong></td>
+            <td>Balanced reach/capacity; good for whole-home with a few walls</td>
+            <td>Falls off through heavy materials; DFS channels can move under radar events</td>
+          </tr>
+          <tr>
+            <td><strong>6&nbsp;GHz</strong></td>
+            <td>Highest capacity (Wi-Fi&nbsp;7: 320&nbsp;MHz), low latency</td>
+            <td>Shortest reach; best in same/adjacent rooms</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <table>
+        <thead><tr><th>Material</th><th>Typical impact on Wi-Fi</th></tr></thead>
+        <tbody>
+          <tr><td>Drywall/wood interior wall</td><td>Low–moderate loss per wall</td></tr>
+          <tr><td>Brick/concrete</td><td>High loss; multiple walls can kill 5/6&nbsp;GHz</td></tr>
+          <tr><td>Tile/bathroom + mirrors</td><td>High reflection/absorption; frequent dead zones</td></tr>
+          <tr><td>Metal appliances/ducts</td><td>Severe reflection/shadowing; avoid placing routers nearby</td></tr>
+          <tr><td>Low-E/foil-backed insulation</td><td>Very high loss; plan mesh nodes around these</td></tr>
+        </tbody>
+      </table>
+
+      <h2 id="audit">5-minute home coverage audit</h2>
+      <ol>
+        <li><strong>Mark usage rooms:</strong> office, TV room, bedrooms, workshop.</li>
+        <li><strong>Map walls/floors:</strong> note concrete/brick, tile baths, metal closets.</li>
+        <li><strong>Stand where you use Wi-Fi:</strong> run a quick speed/latency test (or note bars/dBm).</li>
+        <li><strong>Draw the weak spots:</strong> anywhere signal falls &lt;≈ −67&nbsp;dBm or latency spikes.</li>
+        <li><strong>Check wiring options:</strong> can you run Ethernet/MoCA between likely node spots?</li>
+      </ol>
+
+      <h2 id="fixes">Fixes that work (ordered by impact)</h2>
+      <ol>
+        <li><strong>Move the router</strong> to a central, high, open location. Avoid cabinets, TV backs, aquariums, and corners.</li>
+        <li><strong>Go mesh for size/complexity:</strong> 2–3 nodes for multi-story or &gt;1,800&nbsp;sf. Prefer <strong>wired backhaul</strong> (Ethernet or MoCA).</li>
+        <li><strong>Tune node spacing:</strong> ~30–40&nbsp;ft line-of-sight; reduce through heavy walls/floors. Aim for −55 to −65&nbsp;dBm between nodes.</li>
+        <li><strong>Wire priority rooms:</strong> desk and media center on Ethernet; frees Wi-Fi airtime and stabilizes uplink.</li>
+        <li><strong>Keep one SSID + WPA3:</strong> let band steering roam clients between 2.4/5/6&nbsp;GHz. Separate SSIDs only for troubleshooting.</li>
+        <li><strong>Retire extenders:</strong> Half-duplex repeaters usually cut throughput and add latency. Replace with proper mesh/APs.</li>
+        <li><strong>Update firmware</strong> to improve 6&nbsp;GHz/MLO performance and roaming.</li>
+      </ol>
+
+      <div class="callout success">
+        <div class="icon"><i class="fa-solid fa-network-wired"></i></div>
+        <div>
+          <strong>Pro tip:</strong> If you can wire only <em>one</em> run, wire between the two most distant mesh nodes. It frees the air for client traffic everywhere.
+        </div>
+      </div>
+
+      <h2 id="channels">Channels &amp; widths that help range</h2>
+      <ul>
+        <li><strong>6&nbsp;GHz:</strong> Leave enabled. Enjoy 320/160&nbsp;MHz in rooms near a node; great for modern phones/laptops.</li>
+        <li><strong>5&nbsp;GHz:</strong> If crowded, try <strong>80&nbsp;MHz</strong> (often more stable through walls than 160&nbsp;MHz). DFS can help, but the router may shift channels occasionally.</li>
+        <li><strong>2.4&nbsp;GHz:</strong> Keep for IoT and far corners; use channels 1/6/11 to avoid overlap.</li>
+        <li><strong>Transmit power myths:</strong> Max power can worsen roaming and create “hears-you but you can’t-reply” issues. Balanced power with good placement is better.</li>
+      </ul>
+
+      <h2 id="testing">Test &amp; tune: quick method</h2>
+      <ol>
+        <li>Place router/nodes; update firmware; enable 6&nbsp;GHz and WPA3.</li>
+        <li>Walk your marked rooms and run a short speed + latency test (or note signal level).</li>
+        <li>Move nodes 5–10&nbsp;ft or adjust height; re-test. Look for jitter improvements as much as raw Mbps.</li>
+        <li>Wire the desk/media center if tests still show spikes during uploads/streams.</li>
+        <li>Lock in changes; set a monthly reminder to check updates and re-test two problem rooms.</li>
+      </ol>
+
+      <hr>
+
+      <div class="post-share"><!-- filled by post.js --></div>
+
+      <div class="post-tags">
+        <span class="chip">Coverage</span>
+        <span class="chip">Dead Zones</span>
+        <span class="chip">Mesh</span>
+        <span class="chip">6&nbsp;GHz</span>
+        <span class="chip">Wi-Fi 7</span>
+      </div>
+
+      <div class="author-card">
+        <img src="../img/author-routerhaus.png" alt="RouterHaus">
+        <div>
+          <div class="name">RouterHaus Editorial</div>
+          <div class="bio">We test real networks in real homes so you buy once and get it right—no jargon, no fluff.</div>
+        </div>
+      </div>
+
+      <nav class="post-nav" aria-label="Post navigation">
+        <a href="./work-from-home-network.html">
+          <div class="meta">Previous</div>
+          <div class="title">How to Build a Rock-Solid Work-From-Home Network</div>
+        </a>
+        <a href="./many-devices-bandwidth.html">
+          <div class="meta">Next</div>
+          <div class="title">Too Many Devices? How Bandwidth Splits in a 50-Device Home</div>
+        </a>
+      </nav>
+    </article>
+
+    <!-- Newsletter -->
+    <aside class="newsletter glass">
+      <div class="nlc">
+        <h2>Stay in the loop</h2>
+        <p>Monthly digest of the best router picks, Wi-Fi tips, and home network tactics. No spam.</p>
+        <form id="newsletterForm" class="nl-form" novalidate>
+          <label for="nlEmail" class="sr-only">Email</label>
+          <input id="nlEmail" type="email" placeholder="you@example.com" required />
+          <button class="btn primary" type="submit">Subscribe</button>
+          <small id="nlMsg" role="status" aria-live="polite"></small>
+        </form>
+      </div>
+    </aside>
+  </main>
+
+  <!-- Footer -->
+  <div id="footer-placeholder" data-partial="../../footer.html"></div>
+
+  <!-- FAQ JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"FAQPage",
+    "mainEntity":[
+      {
+        "@type":"Question",
+        "name":"Why do I have dead zones even with a fast router?",
+        "acceptedAnswer":{"@type":"Answer","text":"Because dead zones are a coverage and placement issue. Walls, floors, and materials attenuate signal. Move the router centrally or add mesh nodes—preferably with wired backhaul."}
+      },
+      {
+        "@type":"Question",
+        "name":"Is 6 GHz worse at range than 5 GHz?",
+        "acceptedAnswer":{"@type":"Answer","text":"Yes. 6 GHz offers higher capacity but shorter reach. Use it for same or adjacent rooms and rely on 5 GHz for distance and 2.4 GHz for IoT or far corners."}
+      },
+      {
+        "@type":"Question",
+        "name":"Will turning transmit power to maximum fix range?",
+        "acceptedAnswer":{"@type":"Answer","text":"Not necessarily. Max power can hurt roaming and lead to asymmetry (AP hears you, your device can’t reply). Placement and node count matter more."}
+      },
+      {
+        "@type":"Question",
+        "name":"Are cheap range extenders a good fix?",
+        "acceptedAnswer":{"@type":"Answer","text":"Usually no. They often halve throughput and increase latency. A true mesh system or additional access points with wired backhaul is the better fix."}
+      }
+    ]
+  }
+  </script>
+
+  <!-- Scripts -->
+  <script defer src="../../scripts.js"></script>
+  <script defer src="../../assets/js/post.js"></script>
+</body>
+</html>

@@ -8,10 +8,10 @@
   <meta name="keywords" content="iPhone Wi-Fi 7, 320MHz, Multi-Link Operation, MLO, Wi-Fi 7 router, iPhone upgrade, Apple ProRes, AirDrop, iCloud backup, 6 GHz Wi-Fi, home network, mesh Wi-Fi, 2.5G WAN">
   <link rel="canonical" href="https://routerhaus.com/assets/blog/iphone-wifi7-upgrade.html">
 
-  <!-- Styles (from docs/assets/blog/...) -->
-  <link rel="stylesheet" href="/main.css">
-  <link rel="stylesheet" href="/assets/css/blog.css">
-  <link rel="stylesheet" href="/assets/css/post.css">
+  <!-- Styles (RELATIVE from docs/assets/blog/...) -->
+  <link rel="stylesheet" href="../../main.css">
+  <link rel="stylesheet" href="../css/blog.css">
+  <link rel="stylesheet" href="../css/post.css">
 
   <!-- Theme sync -->
   <meta name="color-scheme" content="light dark">
@@ -57,19 +57,19 @@
 </head>
 <body>
   <!-- Header (site chrome) -->
-  <!-- Use absolute-from-site-root for reliability on nested pages -->
-  <div id="header-placeholder" data-partial="/header.html"></div>
+  <!-- RELATIVE so it works under subpaths; loader will also try root variants -->
+  <div id="header-placeholder" data-partial="../../header.html"></div>
 
   <main class="post-shell">
     <nav class="breadcrumb" aria-label="Breadcrumb">
-      <a href="/index.html">Home</a> › <a href="/blog.html">Journal</a> › Why Your New iPhone Deserves a Wi-Fi 7 Router
+      <a href="../../index.html">Home</a> › <a href="../../blog.html">Journal</a> › Why Your New iPhone Deserves a Wi-Fi 7 Router
     </nav>
 
     <header class="post-hero">
       <p class="post-meta">By RouterHaus • Aug 26, 2025 • ~8 min read</p>
       <h1>Why Your New iPhone Deserves a Wi-Fi&nbsp;7 Router (and 320 MHz Channels)</h1>
       <figure class="post-cover">
-        <img src="/assets/blog/img/iphone-wifi7-hero.jpg" alt="New iPhone next to a Wi-Fi 7 router indicating 6 GHz and 320 MHz">
+        <img src="../img/iphone-wifi7-hero.jpg" alt="New iPhone next to a Wi-Fi 7 router indicating 6 GHz and 320 MHz">
         <figcaption>New iPhones include Wi-Fi&nbsp;7 radios. To feel the speed, your home needs a Wi-Fi&nbsp;7 router with 6 GHz and 320 MHz channels.</figcaption>
       </figure>
     </header>
@@ -215,11 +215,11 @@
       </div>
 
       <nav class="post-nav" aria-label="Post navigation">
-        <a href="/assets/blog/mesh-vs-single-router-2025.html">
+        <a href="./mesh-vs-single-router-2025.html">
           <div class="meta">Previous</div>
           <div class="title">Mesh vs. Single Router (2025): Which Actually Fits Your Home?</div>
         </a>
-        <a href="/kits.html">
+        <a href="../../kits.html">
           <div class="meta">Next</div>
           <div class="title">See Our Wi-Fi 7 Router Picks &amp; Kits</div>
         </a>
@@ -242,7 +242,7 @@
   </main>
 
   <!-- Footer -->
-  <div id="footer-placeholder" data-partial="/footer.html"></div>
+  <div id="footer-placeholder" data-partial="../../footer.html"></div>
 
   <!-- FAQ JSON-LD -->
   <script type="application/ld+json">
@@ -274,22 +274,39 @@
   }
   </script>
 
-  <!-- Scripts -->
-  <script defer src="/scripts.js"></script>
-  <script defer src="/assets/js/post.js"></script>
+  <!-- Scripts (RELATIVE) -->
+  <script defer src="../../scripts.js"></script>
+  <script defer src="../js/post.js"></script>
 
-  <!-- Fallback partial loader (runs only if scripts.js didn't fill them) -->
+  <!-- Robust partial loader: tries relative → site-root → domain-root -->
   <script>
     (async () => {
-      for (const el of document.querySelectorAll('[data-partial]')) {
-        if (el.children.length) continue;
-        try {
-          const url = el.dataset.partial;
-          const res = await fetch(url, { cache: 'no-store' });
-          if (res.ok) el.innerHTML = await res.text();
-        } catch (e) {
-          console.warn('Partial load failed:', el.dataset.partial, e);
+      const siteRoot = (location.pathname.includes('/assets/')
+        ? location.pathname.split('/assets/')[0] + '/'
+        : '/');
+
+      async function tryFetch(urls){
+        for (const u of urls){
+          try {
+            const r = await fetch(u, { cache: 'no-store' });
+            if (r.ok) return await r.text();
+          } catch {}
         }
+        return null;
+      }
+
+      for (const host of document.querySelectorAll('[data-partial]')) {
+        if (host.children.length) continue;
+        const requested = host.dataset.partial;             // e.g., ../../header.html
+        const file = requested.split('/').pop();            // header.html
+        const candidates = [
+          requested,                    // ../../header.html (relative, best for subpaths)
+          siteRoot + file,              // /docs/header.html (repo/site root)
+          '/' + file                    // /header.html (domain root)
+        ];
+        const html = await tryFetch(candidates);
+        if (html) host.innerHTML = html;
+        else console.warn('Partial load failed for', candidates);
       }
     })();
   </script>

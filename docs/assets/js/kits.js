@@ -39,7 +39,7 @@
     page: Math.max(1, Number(urlQS.get('page')) || 1),
     pageSize: Number(urlQS.get('ps')) || 12,
     compare: new Set(LS.get('rh.compare', [])),
-    showRecos: (urlQS.get('recos') ?? '1') !== '0',
+    showRecos: (urlQS.get('recos') ?? '0') !== '0',
     search: (urlQS.get('q') || '').trim().toLowerCase(),
     quiz: null,                      // latest quiz answers (object) or null
   };

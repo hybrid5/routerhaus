@@ -241,19 +241,13 @@ html[data-theme="dark"] .navbar{
 }
 .product{ border-radius:var(--radius-lg); box-shadow:var(--shadow-sm); }
 
-/* === Footer (global, consistent across pages) === */
+/* === Footer (condensed, consistent across pages) === */
 .footer {
   background: var(--footer-bg);
   border-top: var(--card-border);
   padding: 3rem 0 2rem;
   -webkit-backdrop-filter: blur(24px) saturate(150%);
   backdrop-filter: blur(24px) saturate(150%);
-}
-
-.footer .container {
-  max-width: 1280px;
-  margin-inline: auto;
-  padding-inline: clamp(16px, 3vw, 28px);
 }
 
 .footer-grid {
@@ -264,22 +258,32 @@ html[data-theme="dark"] .navbar{
   margin-bottom: 1.75rem;
 }
 
-.footer-brand .logo {
+.footer-brand {
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  align-items: center;   /* center logo + text horizontally */
+  text-align: center;    /* center text block */
+}
+
+.footer-brand .logo {
   font-size: clamp(1.6rem, 1.1rem + 1.6vw, 2.1rem);
   font-weight: 800;
-  letter-spacing: -0.015em;   /* tighten kerning */
-  white-space: nowrap;        /* prevent split across lines */
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0;                 /* remove extra gap between words */
+  letter-spacing: -0.015em; /* subtle tighten so it reads as one word */
 }
+
 .footer-brand .logo span {
-  margin-left: .02em;         /* micro-kern to avoid visual split */
+  margin-left: .02em;      /* micro-kern to avoid visual split */
 }
+
 .footer-brand p {
   color: var(--text-muted);
   line-height: 1.6;
   max-width: 46ch;
 }
+
 .footer-brand .tm {
   font-size: .75em;
   margin-left: .25rem;
@@ -293,14 +297,17 @@ html[data-theme="dark"] .navbar{
   color: var(--text-primary);
   margin-bottom: .75rem;
 }
+
 .footer-section ul {
   list-style: none;
   margin: 0;
   padding: 0;
 }
+
 .footer-section li {
   margin-bottom: .5rem;
 }
+
 .footer-section a {
   color: var(--text-muted);
   font-size: var(--fs-500);
@@ -308,9 +315,11 @@ html[data-theme="dark"] .navbar{
   position: relative;
   transition: color .18s ease;
 }
+
 .footer-section a:hover {
   color: var(--primary);
 }
+
 .footer-section a:hover::after {
   content: "";
   position: absolute;

@@ -365,3 +365,37 @@ html[data-theme="dark"] .navbar{
 .navbar .logo:visited,
 .navbar .logo:hover,
 .navbar .logo:focus{ text-decoration:none; }
+
+/* ===== Footer hardening (load LAST) ===== */
+footer .footer-grid{
+  display:grid;
+  gap:2.5rem;
+  align-items:start;
+}
+
+@media (min-width:901px){
+  footer .footer-grid{
+    grid-template-columns: 1.6fr 1fr 1fr 1fr !important; /* lock desktop columns */
+  }
+}
+@media (max-width:900px){
+  footer .footer-grid{ grid-template-columns: 1fr 1fr; }
+}
+@media (max-width:680px){
+  footer .footer-grid{ grid-template-columns: 1fr; }
+}
+
+footer .footer-brand{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  text-align:center;
+  max-width:46ch;
+  margin-inline:auto;
+  margin-top:-35px;
+  place-self:start center; /* grid-safe centering */
+}
+footer .footer-brand .logo,
+footer .footer-brand p{
+  margin-inline:auto;
+}

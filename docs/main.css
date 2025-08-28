@@ -91,11 +91,10 @@ html, body{
   line-height:1.5;
   transition:background-color .25s,color .25s;
 }
-.container{
-  width:min(1120px, calc(100% - 2rem));
-  margin-inline:auto;
-  padding-left:1rem; /* responsive gutter */
-  padding-right:1rem;
+.container {
+  max-width: 1280px;
+  margin-inline: auto;
+  padding: clamp(16px, 3vw, 28px);
 }
 
 /* ---- Glass surface ---- */

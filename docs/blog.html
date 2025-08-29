@@ -5,6 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content="RouterHaus Journal — Guides, reviews, and networking deep-dives." />
   <title>RouterHaus Journal · Blog</title>
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#6f7dff">
 
   <!-- Fonts & Global Styles -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet" />
@@ -20,6 +26,18 @@
       const apply = () => root.setAttribute('data-theme', media.matches ? 'dark' : 'light');
       apply(); media.addEventListener('change', apply);
     })();
+  </script>
+
+  <!-- Blog data/config -->
+  <script>
+    // Configure where posts + index live. Adjust paths if you move things.
+    window.RH_CONFIG = {
+      blogJsonUrl: 'assets/blog/blog.json',
+      blogPostBase: 'assets/blog',                 // where .html posts live
+      postSelector: 'article, main article, .post, #post', // selector to extract preview/body
+      // Optional: override card/hero link behavior (default opens the HTML post)
+      openPostsInNewTab: false
+    };
   </script>
 
   <!-- Icons -->
@@ -201,7 +219,7 @@
 
       <div class="modal-actions">
         <div></div>
-        <a id="previewReadLink" class="btn primary" href="#">Go to full article</a>
+        <a id="previewReadLink" class="btn primary" href="#" target="_self">Go to full article</a>
       </div>
     </div>
   </dialog>

@@ -1,4 +1,5 @@
-/* RouterHaus Journal — Next-gen Blog (no partial mounting; relies on scripts.js) */
+/* RouterHaus Journal — HTML-post aware blog */
+// No partial mounting changes required; scripts.js handles header/footer.
 (() => {
   // ---------- Small utils ----------
   const $  = (s, r=document) => r.querySelector(s);
@@ -7,16 +8,26 @@
   const clamp = (n,a,b) => Math.max(a, Math.min(b, n));
   const nopunct = (s) => String(s||'').toLowerCase().replace(/[\W_]+/g, '');
   const collator = new Intl.Collator(undefined, { numeric:true, sensitivity:'base' });
-  const fmtDate = (dStr) => {
-    try { return new Intl.DateTimeFormat(undefined, { year:'numeric', month:'short', day:'2-digit' }).format(new Date(dStr)); }
-    catch { return dStr || ''; }
-  };
+  const fmtDate = (dStr) => { try {
+    return new Intl.DateTimeFormat(undefined, { year:'numeric', month:'short', day:'2-digit' }).format(new Date(dStr));
+  } catch { return dStr || ''; } };
   const debounce = (fn, d=200) => { let t; return (...a)=>{ clearTimeout(t); t=setTimeout(()=>fn(...a), d); }; };
+
   const LS = {
     get: (k, d=null) => { try { return JSON.parse(localStorage.getItem(k)) ?? d; } catch { return d; } },
     set: (k, v) => localStorage.setItem(k, JSON.stringify(v)),
     del: (k) => localStorage.removeItem(k),
   };
+
+  // Config
+  const CFG = Object.assign({
+    blogJsonUrl: 'assets/blog/blog.json',
+    blogPostBase: 'assets/blog',
+    postSelector: 'article, main article, .post, #post',
+    openPostsInNewTab: false
+  }, window.RH_CONFIG || {});
+
+  const postUrl = (slug) => `${CFG.blogPostBase.replace(/\/$/,'')}/${slug}.html`;
 
   // ---------- Elements ----------
   const el = {
@@ -61,6 +72,7 @@
     page: Math.max(1, Number(urlQS.get('page')) || 1),
     pageSize: Number(urlQS.get('ps')) || 12,
     search: (urlQS.get('q') || '').trim().toLowerCase(),
+    contentIndexed: false,  // set true after we lazily index HTML bodies
   };
 
   // ---------- Reveal ----------
@@ -73,21 +85,14 @@
 
   // ---------- Data ----------
   const FALLBACK_POSTS = [
-    { id:'p1', title:'Wi-Fi 7 vs 6E: What Actually Changes at Home?', slug:'wifi-7-vs-6e', author:'N. Patel', date:'2025-02-10',
+    { id:'p1', title:'Wi-Fi 7 vs 6E: What Actually Changes at Home?', slug:'wifi-7-vs-6e', author:'RouterHaus', date:'2025-02-10',
       tags:['Wi-Fi 7','How-To','Buying Guide'], excerpt:'A plain-English breakdown of Wi-Fi 7 and whether you’ll feel the difference on your phone, console, and smart home.',
-      content:'<p>Wi-Fi 7 adds wider channels (320 MHz), multi-link operation, and lower latency…</p>', cover:'https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1400&auto=format&fit=crop', minutes:7, featured:true, views:12840 },
-    { id:'p2', title:'The Mesh Playbook: Fix Dead Zones Without Rewiring', slug:'mesh-playbook', author:'A. Rios', date:'2025-01-28',
-      tags:['Mesh','Troubleshooting'], excerpt:'We map out three practical placements for townhomes, ranch houses, and apartments that kill dead zones.',
-      content:'<p>Mesh isn’t magic — placement is…</p>', cover:'https://images.unsplash.com/photo-1518779578993-ec3579fee39f?q=80&w=1400&auto=format&fit=crop', minutes:6, featured:false, views:9320 },
-    { id:'p3', title:'2.5G WAN on a Budget: Real Options Under $200', slug:'two-point-five-g-wan-budget', author:'K. Lee', date:'2024-12-16',
-      tags:['Buying Guide','2.5G','Value'], excerpt:'If you’ve got multigig fiber but a sane budget, these are the boxes that actually deliver ≥2 Gbps.',
-      content:'<p>We gathered routers and gateways…</p>', cover:'https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?q=80&w=1400&auto=format&fit=crop', minutes:5, featured:false, views:15420 },
+      cover:'https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1400&auto=format&fit=crop', minutes:7, featured:true, views:12840 },
   ];
 
-  const getJsonUrl = () => (window.RH_CONFIG?.blogJsonUrl || 'blog.json');
-  const fetchPosts = async () => {
+  const fetchPostsIndex = async () => {
     try {
-      const res = await fetch(getJsonUrl(), { cache: 'no-store' });
+      const res = await fetch(CFG.blogJsonUrl, { cache: 'no-store' });
       if (!res.ok) throw new Error('bad status');
       const arr = await res.json();
       if (!Array.isArray(arr) || !arr.length) return FALLBACK_POSTS;
@@ -102,17 +107,60 @@
     o.id = o.id || `bp_${idx}_${(o.slug || o.title || 'post').replace(/\W+/g,'').slice(0,18)}`;
     o.title = String(o.title || 'Untitled').trim();
     o.slug = String(o.slug || o.id);
+    o.url  = o.url || postUrl(o.slug);
     o.author = o.author || 'RouterHaus';
     o.date = o.date || new Date().toISOString().slice(0,10);
     o.tags = Array.isArray(o.tags) ? o.tags.filter(Boolean) : [];
     o.excerpt = o.excerpt || '';
-    o.content = o.content || '';
     o.cover = typeof o.cover === 'string' ? o.cover : '';
-    o.minutes = Number.isFinite(Number(o.minutes)) ? Number(o.minutes) : Math.max(3, Math.round((o.content || o.excerpt).split(/\s+/).length / 200));
+    o.minutes = Number.isFinite(Number(o.minutes)) ? Number(o.minutes) : undefined; // we can compute later
     o.featured = !!o.featured;
     o.views = Number.isFinite(Number(o.views)) ? Number(o.views) : 0;
+
+    // placeholders for lazy content indexing
+    o._contentHtml = '';
+    o._contentText = '';
     return o;
   }
+
+  // Fetch and extract a post’s HTML -> {html,text,minutes?}
+  async function fetchPostBody(p) {
+    if (p._contentHtml) return p;
+    try {
+      const res = await fetch(p.url, { cache: 'no-store' });
+      if (!res.ok) throw new Error('bad status');
+      const html = await res.text();
+      const doc = new DOMParser().parseFromString(html, 'text/html');
+      const container = doc.querySelector(CFG.postSelector) || doc.body;
+      const sanitized = sanitizeForPreview(container.cloneNode(true));
+      const text = extractText(sanitized);
+      p._contentHtml = sanitized.innerHTML;
+      p._contentText = text;
+      if (!p.minutes) p.minutes = Math.max(3, Math.round(text.split(/\s+/).filter(Boolean).length / 200));
+    } catch {
+      // fallback to excerpt only
+      p._contentHtml ||= `<p>${escapeHtml(p.excerpt || '')}</p>`;
+      p._contentText ||= String(p.excerpt || '');
+      if (!p.minutes) p.minutes = Math.max(3, Math.round(p._contentText.split(/\s+/).filter(Boolean).length / 200));
+    }
+    return p;
+  }
+
+  // Lazy index all posts’ text content (for search-in-content)
+  async function ensureContentIndexed() {
+    if (state.contentIndexed) return;
+    await Promise.all(state.posts.map(fetchPostBody));
+    state.contentIndexed = true;
+  }
+
+  // Strip scripts/iframes/styles for safe preview, keep basic formatting
+  function sanitizeForPreview(node) {
+    node.querySelectorAll('script, style, iframe, object, embed, link').forEach(n => n.remove());
+    // Make links open in new tab for preview
+    node.querySelectorAll('a[href]').forEach(a => { a.setAttribute('target','_blank'); a.setAttribute('rel','noopener'); });
+    return node;
+  }
+  function extractText(node){ return node.textContent || ''; }
 
   // ---------- URL sync ----------
   const syncUrl = () => {
@@ -160,7 +208,9 @@
   // ---------- Filtering ----------
   function passesSearch(p, term) {
     if (!term) return true;
-    const hayRaw = [p.title, p.author, p.excerpt, p.content, ...(p.tags || [])].join(' ').toLowerCase();
+    const hayBasic = [p.title, p.author, p.excerpt, ...(p.tags || [])].join(' ').toLowerCase();
+    const hayContent = (state.contentIndexed ? p._contentText : '').toLowerCase();
+    const hayRaw = `${hayBasic} ${hayContent}`;
     const hayComp = nopunct(hayRaw);
     const tokens = term.split(/\s+/).filter(Boolean);
     for (const t of tokens) {
@@ -253,19 +303,21 @@
     const f = state.posts.find(p => p.featured) || state.posts.slice().sort((a,b)=>new Date(b.date)-new Date(a.date))[0];
     if (!f) { el.featuredHero.innerHTML=''; el.featuredHero.style.display='none'; return; }
     el.featuredHero.style.display='';
+    const href = f.url;
+    const target = CFG.openPostsInNewTab ? ' target="_blank" rel="noopener"' : ' target="_self"';
     el.featuredHero.innerHTML = `
       <div class="hero-wrap reveal">
         <div class="hero-text">
           <div class="hero-meta">
-            <strong>${f.author}</strong><span class="dot">•</span><time>${fmtDate(f.date)}</time><span class="dot">•</span><span>${f.minutes} min read</span>
+            <strong>${escapeHtml(f.author)}</strong><span class="dot">•</span><time>${fmtDate(f.date)}</time><span class="dot">•</span><span>${f.minutes ?? ''} ${f.minutes ? 'min read' : ''}</span>
           </div>
-          <h2><a href="./${f.slug || '#'}">${escapeHtml(f.title)}</a></h2>
+          <h2><a href="${escapeAttr(href)}"${target}>${escapeHtml(f.title)}</a></h2>
           <p>${escapeHtml(f.excerpt)}</p>
           <div class="chips hero-tags">
-            ${(f.tags||[]).map(t => `<span class="chip" tabindex="0" role="button" data-tag="${escapeAttr(t)}">${escapeHtml(t)}</span>`).join('')}
+            ${(f.tags||[]).map(t => `<button class="chip" type="button" data-tag="${escapeAttr(t)}">${escapeHtml(t)}</button>`).join('')}
           </div>
           <div class="hero-actions">
-            <a class="btn primary" href="./${f.slug || '#'}">Read the article</a>
+            <a class="btn primary" href="${escapeAttr(href)}"${target}>Read the article</a>
             <button class="btn ghost" type="button" data-preview="${f.id}">Quick preview</button>
           </div>
         </div>
@@ -275,7 +327,7 @@
     $$('.hero-tags .chip', el.featuredHero).forEach(ch => {
       ch.addEventListener('click', () => { const t = ch.dataset.tag; if (t) state.tags.add(t); state.page = 1; onStateChanged({ scrollToTop:true }); });
     });
-    el.featuredHero.querySelector('[data-preview]')?.addEventListener('click', () => openPreview(f));
+    el.featuredHero.querySelector('[data-preview]')?.addEventListener('click', async () => openPreview(await fetchPostBody(f)));
     revealify();
   }
 
@@ -318,39 +370,46 @@
     const readBtn = node.querySelector('.ctaRow a');
     const previewBtn = node.querySelector('.previewBtn');
 
-    aCover.href = `./${p.slug}`; aCover.setAttribute('aria-label', p.title);
+    const href = p.url;
+    const target = CFG.openPostsInNewTab ? '_blank' : '_self';
+
+    aCover.href = href; aCover.setAttribute('aria-label', p.title); aCover.target = target; aCover.rel = 'noopener';
     img.src = p.cover || ''; img.alt = '';
     if (p.featured) featured.hidden = false;
 
-    titleLink.href = `./${p.slug}`; titleLink.textContent = p.title;
+    titleLink.href = href; titleLink.textContent = p.title; titleLink.target = target; titleLink.rel = 'noopener';
     author.textContent = p.author; date.textContent = fmtDate(p.date);
-    read.textContent = `${p.minutes} min read`;
+    if (p.minutes) read.textContent = `${p.minutes} min read`;
 
     if (p.views > 0) { views.textContent = `${p.views.toLocaleString()} views`; views.hidden = false; viewsDot.hidden = false; }
 
     excerpt.textContent = p.excerpt;
     tags.innerHTML = '';
     (p.tags || []).forEach(t => {
-      const chip = document.createElement('span');
-      chip.className = 'chip'; chip.textContent = t; chip.tabIndex = 0; chip.role = 'button';
+      const chip = document.createElement('button');
+      chip.className = 'chip'; chip.type = 'button'; chip.textContent = t;
       chip.addEventListener('click', () => { state.tags.add(t); state.page=1; onStateChanged({}); });
       tags.appendChild(chip);
     });
 
-    readBtn.href = `./${p.slug}`;
-    previewBtn.addEventListener('click', () => openPreview(p));
+    readBtn.href = href; readBtn.target = target; readBtn.rel = 'noopener';
+    previewBtn.addEventListener('click', async () => openPreview(await fetchPostBody(p)));
+    // Light prefetch on hover for snappy preview
+    [aCover, titleLink, previewBtn].forEach(elm => elm.addEventListener('mouseenter', () => { fetchPostBody(p); }));
 
     return node;
   }
 
   // ---------- Preview Modal ----------
-  function openPreview(p) {
+  async function openPreview(p) {
     if (!el.previewModal) return;
+    await fetchPostBody(p);
     el.previewTitle.textContent = p.title;
-    el.previewMeta.textContent = `${p.author} • ${fmtDate(p.date)} • ${p.minutes} min read`;
+    el.previewMeta.textContent = `${p.author} • ${fmtDate(p.date)}${p.minutes ? ` • ${p.minutes} min read` : ''}`;
     el.previewCover.innerHTML = p.cover ? `<img src="${escapeAttr(p.cover)}" alt="">` : '';
-    el.previewBody.innerHTML = p.content || `<p>${escapeHtml(p.excerpt)}</p>`;
-    el.previewReadLink.href = `./${p.slug}`;
+    el.previewBody.innerHTML = p._contentHtml || `<p>${escapeHtml(p.excerpt)}</p>`;
+    el.previewReadLink.href = p.url;
+    el.previewReadLink.target = CFG.openPostsInNewTab ? '_blank' : '_self';
     try { if (typeof el.previewModal.showModal === 'function') el.previewModal.showModal(); else el.previewModal.setAttribute('open',''); }
     catch { el.previewModal.setAttribute('open',''); }
   }
@@ -375,7 +434,12 @@
     }
     if (el.searchInput) {
       el.searchInput.value = state.search;
-      const apply = () => { state.search = (el.searchInput.value||'').trim().toLowerCase(); state.page=1; onStateChanged({ scrollToTop:true }); };
+      const apply = async () => {
+        state.search = (el.searchInput.value||'').trim().toLowerCase();
+        state.page=1;
+        if (state.search.length >= 3 && !state.contentIndexed) await ensureContentIndexed();
+        onStateChanged({ scrollToTop:true });
+      };
       const onType = debounce(apply, 220);
       el.searchInput.addEventListener('input', onType);
       el.searchInput.addEventListener('keydown', (e) => {
@@ -397,7 +461,9 @@
   async function init(){
     renderSkeletons(12);
     try {
-      state.posts = (await fetchPosts()).map(normalizePost);
+      state.posts = (await fetchPostsIndex()).map(normalizePost);
+      // Compute minutes quickly for any that already have _contentText (none yet) or have an explicit minutes
+      // (we compute precisely when preview is fetched)
       hideSkeletons();
     } catch {
       hideSkeletons();

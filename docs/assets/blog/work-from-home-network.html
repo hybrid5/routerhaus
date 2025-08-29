@@ -1,0 +1,313 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>How to Build a Rock-Solid Work-From-Home Network (2025)</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A pragmatic, step-by-step guide to a reliable home network for video calls, large file transfers, and low-latency work. Covers Wi-Fi 7 routers, mesh, QoS, VLANs/guest Wi-Fi, VPN, and security hardening.">
+  <meta name="keywords" content="work from home network, WFH network, Wi-Fi 7, QoS, VLAN, guest Wi-Fi, VPN, 2.5G WAN, mesh Wi-Fi, low latency, jitter, video conferencing, Zoom, Teams, FaceTime, Apple, Mac, iPhone, router setup, home office">
+  <link rel="canonical" href="https://routerhaus.com/assets/blog/work-from-home-network.html">
+  <link rel="icon" href="/favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#6f7dff">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="../../main.css">
+  <link rel="stylesheet" href="../../assets/css/blog.css">
+  <link rel="stylesheet" href="../../assets/css/post.css">
+
+  <!-- Theme sync -->
+  <meta name="color-scheme" content="light dark">
+  <script>
+    (() => {
+      const root = document.documentElement;
+      const m = matchMedia('(prefers-color-scheme: dark)');
+      const apply = () => root.setAttribute('data-theme', m.matches ? 'dark' : 'light');
+      apply(); m.addEventListener('change', apply);
+    })();
+  </script>
+
+  <!-- Open Graph / Twitter -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="How to Build a Rock-Solid Work-From-Home Network (2025)">
+  <meta property="og:description" content="A pragmatic, step-by-step guide to home network reliability: Wi-Fi 7, mesh, QoS, VLANs, VPN, and security.">
+  <meta property="og:image" content="https://routerhaus.com/assets/blog/img/wfh-network-hero.jpg">
+  <meta property="og:url" content="https://routerhaus.com/assets/blog/work-from-home-network.html">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="How to Build a Rock-Solid Work-From-Home Network (2025)">
+  <meta name="twitter:description" content="Blueprint for low-latency calls and dependable throughput—without enterprise complexity.">
+  <meta name="twitter:image" content="https://routerhaus.com/assets/blog/img/wfh-network-hero.jpg">
+
+  <!-- Icons (optional) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+  <!-- Article JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"Article",
+    "headline":"How to Build a Rock-Solid Work-From-Home Network (2025)",
+    "description":"A pragmatic, step-by-step guide to a reliable home network for video calls, large file transfers, and low-latency work. Covers Wi-Fi 7, mesh, QoS, VLANs/guest Wi-Fi, VPN, and security.",
+    "author":{"@type":"Person","name":"RouterHaus"},
+    "publisher":{"@type":"Organization","name":"RouterHaus","logo":{"@type":"ImageObject","url":"https://routerhaus.com/assets/img/logo-og.png"}},
+    "image":"https://routerhaus.com/assets/blog/img/wfh-network-hero.jpg",
+    "datePublished":"2025-08-26",
+    "dateModified":"2025-08-26",
+    "mainEntityOfPage":{"@type":"WebPage","@id":"https://routerhaus.com/assets/blog/work-from-home-network.html"},
+    "keywords":"WFH network, Wi-Fi 7, QoS, VLAN, guest Wi-Fi, VPN, mesh, 2.5G"
+  }
+  </script>
+</head>
+<body>
+  <!-- Header -->
+  <div id="header-placeholder" data-partial="../../header.html"></div>
+
+  <main class="post-shell">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="../../index.html">Home</a> › <a href="../../blog.html">Journal</a> › Rock-Solid Work-From-Home Network
+    </nav>
+
+    <header class="post-hero">
+      <p class="post-meta">By RouterHaus • Aug 26, 2025 • ~12 min read</p>
+      <h1>How to Build a Rock-Solid Work-From-Home Network (2025)</h1>
+      <figure class="post-cover">
+        <img src="../img/wfh-network-hero.jpg" alt="Home office with Wi-Fi 7 router, wired desk, and mesh node">
+        <figcaption>Design for latency and stability first—then add speed. Your calls and uploads will thank you.</figcaption>
+      </figure>
+    </header>
+
+    <!-- TOC -->
+    <aside class="toc">
+      <strong>On this page</strong>
+      <ul>
+        <li><a href="#tldr">TL;DR</a></li>
+        <li><a href="#principles">Principles that make WFH stable</a></li>
+        <li><a href="#blueprint">Network blueprint (apartment, ranch, multi-story)</a></li>
+        <li><a href="#hardware">Hardware picks & specs that matter</a></li>
+        <li><a href="#qos">QoS for calls & uploads (simple and effective)</a></li>
+        <li><a href="#security">Security: guest Wi-Fi, VLANs, DNS, updates</a></li>
+        <li><a href="#vpn">VPN options that won’t hurt latency</a></li>
+        <li><a href="#wired">When and how to wire (cheap wins)</a></li>
+        <li><a href="#checklist">Setup checklist (15 minutes)</a></li>
+        <li><a href="#troubleshoot">Troubleshooting playbook</a></li>
+        <li><a href="#faq">FAQ</a></li>
+      </ul>
+    </aside>
+
+    <article id="post" class="post-body">
+      <h2 id="tldr">TL;DR — prioritize latency, coverage, and contention control</h2>
+      <ul>
+        <li><strong>Wi-Fi 7 router or mesh</strong> (6&nbsp;GHz + 320&nbsp;MHz, MLO) for low-jitter local links.</li>
+        <li><strong>Ethernet where it counts:</strong> desk, stationary Macs/PCs, media center.</li>
+        <li><strong>QoS</strong> to protect video calls and uploads from random device storms.</li>
+        <li><strong>Guest SSID / VLAN</strong> to quarantine IoT so it can’t hog airtime or add attack surface.</li>
+        <li><strong>Keep firmware updated</strong>; enable WPA3; one SSID with band steering unless testing.</li>
+      </ul>
+
+      <div class="callout info">
+        <div class="icon"><i class="fa-solid fa-bolt"></i></div>
+        <div>
+          <strong>Rule of thumb:</strong> If a cable can reach, use it. Wi-Fi is for mobility; Ethernet is for certainty.
+        </div>
+      </div>
+
+      <h2 id="principles">Principles that make WFH stable</h2>
+      <ol>
+        <li><strong>Coverage before speed:</strong> Dead zones create retries and bufferbloat. Fix placement/mesh first.</li>
+        <li><strong>Minimize contention:</strong> Too many devices on one radio = jitter. Use 6&nbsp;GHz for modern clients; leave 2.4&nbsp;GHz to IoT.</li>
+        <li><strong>Shape traffic, don’t throttle life:</strong> Basic QoS (work > streaming > bulk) solves 80% of problems.</li>
+        <li><strong>Harden the edge:</strong> WPA3, automatic updates, and isolating untrusted gadgets prevent weird outages.</li>
+        <li><strong>Measure & iterate:</strong> Test each room you actually work in; move nodes 5–10&nbsp;ft and re-test.</li>
+      </ol>
+
+      <h2 id="blueprint">Network blueprint (choose your layout)</h2>
+      <table>
+        <thead><tr><th>Home type</th><th>Topology</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>Apartment/condo (600–1,200&nbsp;sf)</td>
+            <td><strong>Single Wi-Fi 7 router</strong> centrally placed</td>
+            <td>Desk on Ethernet via 2.5G LAN if possible. Keep 6&nbsp;GHz on for laptops/phones.</td>
+          </tr>
+          <tr>
+            <td>Ranch (1,600–2,200&nbsp;sf) or L-shape</td>
+            <td><strong>Wi-Fi 7 mesh (2 nodes)</strong></td>
+            <td>Prefer wired backhaul (Ethernet/MoCA). If wireless, give nodes line-of-sight ~30–40&nbsp;ft.</td>
+          </tr>
+          <tr>
+            <td>Multi-story (2,000–3,000&nbsp;sf)</td>
+            <td><strong>Wi-Fi 7 mesh (2–3 nodes)</strong></td>
+            <td>Align nodes vertically near stairs/landing. Wire at least one hop if possible.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h2 id="hardware">Hardware picks & specs that matter</h2>
+      <ul>
+        <li><strong>Wi-Fi 7 with 6&nbsp;GHz + 320&nbsp;MHz</strong> and <strong>MLO</strong> for resilient, low-latency links.</li>
+        <li><strong>2.5G WAN/LAN</strong> (or 10G) so the LAN isn’t the cap, even on 1G ISPs.</li>
+        <li><strong>Mesh-ready</strong> with wired backhaul support; tri/quad-band if wireless backhaul is your only option.</li>
+        <li><strong>WPA3</strong>, automatic updates, and simple QoS in the UI (work profile or application priority).</li>
+        <li><strong>Optional switch</strong>: a silent 2.5G or 1G managed switch for desks, printers, NAS.</li>
+      </ul>
+
+      <div class="callout success">
+        <div class="icon"><i class="fa-solid fa-network-wired"></i></div>
+        <div>
+          <strong>Cheap win:</strong> A $15 USB-C-to-Ethernet dongle on your laptop removes Wi-Fi from the equation during critical calls.
+        </div>
+      </div>
+
+      <h2 id="qos">QoS for calls & uploads (simple and effective)</h2>
+      <p>Most modern routers let you prioritize apps/devices without touching arcane DSCP tables. Use this minimal setup:</p>
+      <ol>
+        <li><strong>Turn on Smart/Adaptive QoS.</strong> Select a “Work” or “Gaming/Real-time” profile if available.</li>
+        <li><strong>Pin your work devices</strong> (laptop, phone) as high priority by MAC address.</li>
+        <li><strong>Cap bulk uploads</strong> (cloud backup, file sync) to ~80–90% of upstream to avoid bufferbloat.</li>
+        <li><strong>If offered, enable SQM</strong> (Smart Queue Management) and set your actual ISP up/down speeds.</li>
+      </ol>
+
+      <pre><code># Example: SQM baseline
+downlink_mbps = your_speedtest_down * 0.9
+uplink_mbps   = your_speedtest_up   * 0.85
+# Prioritize conferencing ports/apps if router supports app-aware rules</code></pre>
+
+      <h2 id="security">Security: guest Wi-Fi, VLANs, DNS, updates</h2>
+      <ul>
+        <li><strong>Guest SSID (isolated):</strong> Put untrusted devices (TVs, visitors, IoT) on Guest. Disable LAN access.</li>
+        <li><strong>VLANs (optional advanced):</strong> Create <em>HOME</em>, <em>WORK</em>, and <em>IoT</em> segments; allow WORK → Internet only.</li>
+        <li><strong>DNS filtering:</strong> Use your router’s secure DNS or a resolver with malware blocking.</li>
+        <li><strong>Auto-update firmware.</strong> Reboot schedule optional (weekly) to keep radios fresh.</li>
+        <li><strong>WPA3-Personal</strong>; avoid WEP/WPA/WPA2-only modes.</li>
+      </ul>
+
+      <h2 id="vpn">VPN options that won’t hurt latency</h2>
+      <ul>
+        <li><strong>Work VPN client on your laptop</strong> (best for split-tunnel control and least impact on other home devices).</li>
+        <li><strong>Router-level VPN</strong> only if your entire office segment needs egress via the tunnel. Pick modern protocols (WireGuard/modern IPSec).</li>
+        <li><strong>Benchmark:</strong> Test with and without VPN during off-hours; if latency spikes, use split-tunneling for calls.</li>
+      </ul>
+
+      <h2 id="wired">When and how to wire (cheap wins)</h2>
+      <ul>
+        <li><strong>Desk first:</strong> One cable from router/mesh node to a small switch on your desk → PC, dock, phone charger, printer.</li>
+        <li><strong>Media center:</strong> Wire TV/console/Apple TV to stop them congesting Wi-Fi during meetings.</li>
+        <li><strong>Backhaul:</strong> If you can wire just one run, wire between the two most distant nodes.</li>
+        <li><strong>No Ethernet?</strong> Use <strong>MoCA</strong> over coax; fall back to quality powerline only if no coax exists.</li>
+      </ul>
+
+      <h2 id="checklist">Setup checklist (15 minutes)</h2>
+      <ol>
+        <li>Place router/node <strong>central & high</strong>; avoid cabinets/TV backs.</li>
+        <li>Enable <strong>6&nbsp;GHz</strong>; keep a single SSID with band steering (unless troubleshooting).</li>
+        <li>Set <strong>WPA3</strong>, update firmware, enable auto-updates.</li>
+        <li>Turn on <strong>QoS/SQM</strong> and prioritize your work devices.</li>
+        <li>Create a <strong>Guest SSID</strong> for IoT/visitors; block LAN access.</li>
+        <li>Wire your <strong>desk and media center</strong> if possible.</li>
+        <li>Test <strong>speed + latency</strong> in your office, kitchen, bedroom; adjust node placement 5–10 ft if needed.</li>
+      </ol>
+
+      <div class="callout warn">
+        <div class="icon"><i class="fa-solid fa-triangle-exclamation"></i></div>
+        <div>
+          <strong>Two killers of call quality:</strong> weak signal (≤ −70&nbsp;dBm at desk) and saturated uplink (cloud backups).
+          Fix with better placement or wiring and a small upload cap via QoS.
+        </div>
+      </div>
+
+      <h2 id="troubleshoot">Troubleshooting playbook</h2>
+      <ul>
+        <li><strong>Spiky video?</strong> Check signal at desk (Wi-Fi analyzer). If weak, move node closer or wire the desk.</li>
+        <li><strong>Robot voice on calls?</strong> Your upstream is pegged. Cap backup/sync apps to 80–90% and enable SQM.</li>
+        <li><strong>Random drops?</strong> Update firmware; remove old range extenders; ensure single SSID w/ steering.</li>
+        <li><strong>Mesh underperforming?</strong> Nodes too far/blocked. Shorten distance or add one wired hop.</li>
+      </ul>
+
+      <hr>
+
+      <div class="post-share"><!-- filled by post.js --></div>
+
+      <div class="post-tags">
+        <span class="chip">WFH</span>
+        <span class="chip">Wi-Fi 7</span>
+        <span class="chip">QoS</span>
+        <span class="chip">Mesh</span>
+        <span class="chip">Security</span>
+      </div>
+
+      <div class="author-card">
+        <img src="../img/author-routerhaus.png" alt="RouterHaus">
+        <div>
+          <div class="name">RouterHaus Editorial</div>
+          <div class="bio">We test real networks in real homes so you buy once and get it right—no jargon, no fluff.</div>
+        </div>
+      </div>
+
+      <nav class="post-nav" aria-label="Post navigation">
+        <a href="./mesh-vs-single-router-2025.html">
+          <div class="meta">Previous</div>
+          <div class="title">Mesh vs. Single Router (2025): Which Actually Fits Your Home?</div>
+        </a>
+        <a href="./why-range-matters-dead-zones.html">
+          <div class="meta">Next</div>
+          <div class="title">Why Range Still Matters: Beating Dead Zones in Modern Homes</div>
+        </a>
+      </nav>
+    </article>
+
+    <!-- Newsletter -->
+    <aside class="newsletter glass">
+      <div class="nlc">
+        <h2>Stay in the loop</h2>
+        <p>Monthly digest of the best router picks, Wi-Fi tips, and home network tactics. No spam.</p>
+        <form id="newsletterForm" class="nl-form" novalidate>
+          <label for="nlEmail" class="sr-only">Email</label>
+          <input id="nlEmail" type="email" placeholder="you@example.com" required />
+          <button class="btn primary" type="submit">Subscribe</button>
+          <small id="nlMsg" role="status" aria-live="polite"></small>
+        </form>
+      </div>
+    </aside>
+  </main>
+
+  <!-- Footer -->
+  <div id="footer-placeholder" data-partial="../../footer.html"></div>
+
+  <!-- FAQ JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"FAQPage",
+    "mainEntity":[
+      {
+        "@type":"Question",
+        "name":"Do I need Wi-Fi 7 for work from home?",
+        "acceptedAnswer":{"@type":"Answer","text":"Not strictly, but Wi-Fi 7’s 6 GHz, 320 MHz channels, and MLO reduce latency and improve stability for calls and large file transfers—especially in dense environments."}
+      },
+      {
+        "@type":"Question",
+        "name":"Is mesh always better than a single router?",
+        "acceptedAnswer":{"@type":"Answer","text":"No. In small single-level apartments, one well-placed Wi-Fi 7 router is simpler and faster. Mesh is ideal for larger or multi-story homes and tough construction."}
+      },
+      {
+        "@type":"Question",
+        "name":"What’s the fastest reliability upgrade?",
+        "acceptedAnswer":{"@type":"Answer","text":"Run Ethernet to your desk (or use MoCA over coax) and enable basic QoS/SQM so uploads don’t wreck call quality."}
+      },
+      {
+        "@type":"Question",
+        "name":"Should I separate SSIDs per band?",
+        "acceptedAnswer":{"@type":"Answer","text":"Use a single SSID with band steering. Split SSIDs only for troubleshooting or special cases."}
+      }
+    ]
+  }
+  </script>
+
+  <!-- Scripts -->
+  <script defer src="../../scripts.js"></script>
+  <script defer src="../../assets/js/post.js"></script>
+</body>
+</html>

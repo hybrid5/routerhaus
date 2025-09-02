@@ -439,184 +439,7 @@ html[data-theme="dark"] .post-body pre{
   isolation: isolate;
 }
 
-/* Header */
-.post-body h2#bottleneck ~ table thead th{
-  padding: .95rem 1rem;
-  background: linear-gradient(135deg,
-    color-mix(in oklab, var(--primary) 14%, transparent),
-    color-mix(in oklab, var(--accent) 12%, transparent)
-  );
-  color: var(--text-primary);
-  text-transform: uppercase;
-  letter-spacing: .03em;
-  font-weight: 800;
-  border-bottom: 1px solid var(--bt-sep);
-  white-space: normal; line-height: 1.2;
-}
-
-/* Cells */
-.post-body h2#bottleneck ~ table td{
-  padding: 1rem;
-  vertical-align: middle;
-  color: var(--text-primary);
-  border-bottom: 1px solid var(--bt-sep);
-  line-height: 1.35;
-}
-
-/* Zebra + hover */
-.post-body h2#bottleneck ~ table tbody tr:nth-child(odd) td{
-  background: color-mix(in oklab, var(--text-muted) 6%, transparent);
-}
-.post-body h2#bottleneck ~ table tbody tr:hover td{
-  background: color-mix(in oklab, var(--primary) 9%, transparent);
-}
-
-/* Emphasize Wi-Fi 7 row */
-.post-body h2#bottleneck ~ table tbody tr:last-child td{
-  background: color-mix(in oklab, var(--accent) 8%, transparent);
-  font-weight: 650;
-}
-.post-body h2#bottleneck ~ table tbody tr:last-child td:first-child{
-  position: relative;
-}
-.post-body h2#bottleneck ~ table tbody tr:last-child td:first-child::before{
-  content:""; position:absolute; inset:0 auto 0 0; width:5px; border-radius:0 2px 2px 0;
-  background: var(--bt-rail);
-}
-
-/* Col 1: stronger label */
-.post-body h2#bottleneck ~ table td:nth-child(1){
-  font-weight: 800; letter-spacing:.005em;
-}
-
-/* Col 3: 6 GHz support icons (✖︎ / – / ✓) */
-.post-body h2#bottleneck ~ table td:nth-child(3){ padding-left: 2rem; position: relative; }
-.post-body h2#bottleneck ~ table td:nth-child(3)::before{
-  content:""; position:absolute; left:.75rem; top:50%; transform:translateY(-50%);
-  width:16px; height:16px; -webkit-mask-size:contain; mask-size:contain; -webkit-mask-repeat:no-repeat; mask-repeat:no-repeat;
-}
-/* Row 1: No */
-.post-body h2#bottleneck ~ table tbody tr:nth-child(1) td:nth-child(3)::before{
-  background:#ef4444;
-  -webkit-mask-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="%23000" d="M18.3 5.71L12 12.01L5.7 5.7L4.29 7.11L10.59 13.41L4.29 19.71L5.7 21.12L12 14.82L18.3 21.12L19.71 19.71L13.41 13.41L19.71 7.11z"/></svg>');
-  mask-image:   url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="%23000" d="M18.3 5.71L12 12.01L5.7 5.7L4.29 7.11L10.59 13.41L4.29 19.71L5.7 21.12L12 14.82L18.3 21.12L19.71 19.71L13.41 13.41L19.71 7.11z"/></svg>');
-}
-/* Row 2: 6E only */
-.post-body h2#bottleneck ~ table tbody tr:nth-child(2) td:nth-child(3)::before{
-  background:#f59e0b;
-  -webkit-mask-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="%23000" d="M19 13H5v-2h14z"/></svg>');
-  mask-image:   url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="%23000" d="M19 13H5v-2h14z"/></svg>');
-}
-/* Row 3: Yes */
-.post-body h2#bottleneck ~ table tbody tr:nth-child(3) td:nth-child(3)::before{
-  background:#22c55e;
-  -webkit-mask-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="%23000" d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg>');
-  mask-image:   url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="%23000" d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg>');
-}
-
-/* Col 4: throughput meters (anchored to bottom) */
-.post-body h2#bottleneck ~ table td:nth-child(4){
-  position: relative;
-  padding-top: 1rem;
-  padding-bottom: 1.75rem;     /* room for bar */
-}
-.post-body h2#bottleneck ~ table td:nth-child(4)::before{
-  content:""; position:absolute; left:1rem; right:1rem; bottom:.6rem;
-  height:8px; border-radius:999px; background: var(--bt-track);
-}
-.post-body h2#bottleneck ~ table td:nth-child(4)::after{
-  content:""; position:absolute; left:1rem; bottom:.6rem; height:8px; border-radius:999px;
-  width: var(--bar, 0%);
-  background: linear-gradient(90deg, var(--rev-blue), var(--rev-purple));
-  box-shadow: 0 0 0 1px color-mix(in oklab, var(--primary) 25%, transparent) inset;
-}
-/* bar widths per row */
-.post-body h2#bottleneck ~ table tbody tr:nth-child(1) td:nth-child(4){ --bar: 55%; }
-.post-body h2#bottleneck ~ table tbody tr:nth-child(2) td:nth-child(4){ --bar: 78%; }
-.post-body h2#bottleneck ~ table tbody tr:nth-child(3) td:nth-child(4){ --bar: 96%; }
-
-/* Rounded outer corners */
-.post-body h2#bottleneck ~ table thead th:first-child{ border-top-left-radius: var(--bt-radius); }
-.post-body h2#bottleneck ~ table thead th:last-child { border-top-right-radius: var(--bt-radius); }
-.post-body h2#bottleneck ~ table tbody tr:last-child td:first-child{ border-bottom-left-radius: var(--bt-radius); }
-.post-body h2#bottleneck ~ table tbody tr:last-child td:last-child { border-bottom-right-radius: var(--bt-radius); }
-
-/* Footnote under table */
-.post-body h2#bottleneck ~ table + p em{
-  display: inline-block; margin-top: .4rem; color: var(--text-muted); font-size: .95rem;
-}
-
-/* ===== Mobile (≤720px): compact cards with labels ===== */
-@media (max-width: 720px){
-  .post-body h2#bottleneck ~ table,
-  .post-body h2#bottleneck ~ table thead,
-  .post-body h2#bottleneck ~ table tbody,
-  .post-body h2#bottleneck ~ table th,
-  .post-body h2#bottleneck ~ table td,
-  .post-body h2#bottleneck ~ table tr{ display:block; }
-
-  .post-body h2#bottleneck ~ table thead{ display:none; }
-
-  .post-body h2#bottleneck ~ table tr{
-    background: var(--card);
-    border: var(--card-border);
-    border-radius: 18px;
-    padding: .9rem .95rem;
-    margin: .85rem 0;
-    box-shadow: var(--shadow-sm);
-    position: relative;
-    overflow: hidden;
-  }
-  .post-body h2#bottleneck ~ table tr:last-child::before{
-    content:""; position:absolute; inset:0 auto 0 0; width:4px; background: var(--bt-rail);
-  }
-
-  .post-body h2#bottleneck ~ table td{
-    border:0; padding: .55rem 0 .55rem 8.8rem; min-height: 40px;
-  }
-  .post-body h2#bottleneck ~ table td::before,
-  .post-body h2#bottleneck ~ table td::after{ left: .95rem; right: .95rem; }
-
-  /* mobile labels */
-  .post-body h2#bottleneck ~ table td:nth-child(1){ font-weight:800; }
-  .post-body h2#bottleneck ~ table td:nth-child(1)::before{ content:"Generation"; position:absolute; left:.95rem; top:.55rem; color:var(--text-muted); font-weight:700; }
-  .post-body h2#bottleneck ~ table td:nth-child(2)::before{ content:"Max channel width"; position:absolute; left:.95rem; color:var(--text-muted); }
-  .post-body h2#bottleneck ~ table td:nth-child(3)::before{ content:"6 GHz support"; position:absolute; left:.95rem; color:var(--text-muted); }
-  .post-body h2#bottleneck ~ table td:nth-child(4)::before{ content:"Typical throughput"; position:absolute; left:.95rem; color:var(--text-muted); }
-  .post-body h2#bottleneck ~ table td:nth-child(5)::before{ content:"Latency behavior"; position:absolute; left:.95rem; color:var(--text-muted); }
-}
-
-/* Dark-mode meter track contrast */
-html[data-theme="dark"] .post-body h2#bottleneck ~ table td:nth-child(4)::before{
-  background: color-mix(in oklab, var(--text-muted) 28%, transparent);
-}
-/* ==========================================================
-   Bottleneck Comparison — FINAL SECTION (desktop + mobile)
-   Targets the first table after <h2 id="bottleneck">.
-   No HTML changes required.
-   ========================================================== */
-
-.post-body h2#bottleneck ~ table{
-  /* Local tokens */
-  --bt-radius: 20px;
-  --bt-rail: linear-gradient(180deg, var(--rev-blue), var(--rev-purple));
-  --bt-track: color-mix(in oklab, var(--text-muted) 18%, transparent);
-  --bt-sep: color-mix(in oklab, var(--text-muted) 12%, transparent);
-
-  width: 100%;
-  border-collapse: separate; border-spacing: 0;
-  background: var(--card);
-  border: var(--card-border);
-  border-radius: var(--bt-radius);
-  overflow: hidden;
-  -webkit-backdrop-filter: blur(14px) saturate(140%);
-  backdrop-filter: blur(14px) saturate(140%);
-  box-shadow: var(--shadow);
-  font-variant-numeric: tabular-nums;
-  isolation: isolate;
-}
-
-/* Header (non-sticky for reliability across viewports) */
+/* Header (not sticky for reliability) */
 .post-body h2#bottleneck ~ table thead th{
   position: static;
   padding: .95rem 1rem;
@@ -629,7 +452,8 @@ html[data-theme="dark"] .post-body h2#bottleneck ~ table td:nth-child(4)::before
   letter-spacing: .03em;
   font-weight: 800;
   border-bottom: 1px solid var(--bt-sep);
-  white-space: normal; line-height: 1.2;
+  white-space: normal;
+  line-height: 1.2;
 }
 
 /* Cells */
@@ -662,12 +486,12 @@ html[data-theme="dark"] .post-body h2#bottleneck ~ table td:nth-child(4)::before
   background: var(--bt-rail);
 }
 
-/* Col 1: stronger label */
+/* Col 1: strong label */
 .post-body h2#bottleneck ~ table td:nth-child(1){
   font-weight: 800; letter-spacing:.005em;
 }
 
-/* Col 3: 6 GHz support icons (✖︎ / – / ✓) */
+/* Col 3: 6 GHz support icons (✖︎ / – / ✓) — desktop */
 .post-body h2#bottleneck ~ table td:nth-child(3){
   padding-left: 2rem; position: relative;
 }
@@ -679,19 +503,19 @@ html[data-theme="dark"] .post-body h2#bottleneck ~ table td:nth-child(4)::before
 .post-body h2#bottleneck ~ table tbody tr:nth-child(1) td:nth-child(3)::before{
   background:#ef4444;
   -webkit-mask-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="%23000" d="M18.3 5.71L12 12.01L5.7 5.7L4.29 7.11L10.59 13.41L4.29 19.71L5.7 21.12L12 14.82L18.3 21.12L19.71 19.71L13.41 13.41L19.71 7.11z"/></svg>');
-            mask-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="%23000" d="M18.3 5.71L12 12.01L5.7 5.7L4.29 7.11L10.59 13.41L4.29 19.71L5.7 21.12L12 14.82L18.3 21.12L19.71 19.71L13.41 13.41L19.71 7.11z"/></svg>');
+          mask-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="%23000" d="M18.3 5.71L12 12.01L5.7 5.7L4.29 7.11L10.59 13.41L4.29 19.71L5.7 21.12L12 14.82L18.3 21.12L19.71 19.71L13.41 13.41L19.71 7.11z"/></svg>');
 }
 /* Row 2: 6E only */
 .post-body h2#bottleneck ~ table tbody tr:nth-child(2) td:nth-child(3)::before{
   background:#f59e0b;
   -webkit-mask-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="%23000" d="M19 13H5v-2h14z"/></svg>');
-            mask-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="%23000" d="M19 13H5v-2h14z"/></svg>');
+          mask-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="%23000" d="M19 13H5v-2h14z"/></svg>');
 }
 /* Row 3: Yes */
 .post-body h2#bottleneck ~ table tbody tr:nth-child(3) td:nth-child(3)::before{
   background:#22c55e;
   -webkit-mask-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="%23000" d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg>');
-            mask-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="%23000" d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg>');
+          mask-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="%23000" d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg>');
 }
 
 /* Col 4: throughput meters (anchored to bottom) */
@@ -710,7 +534,7 @@ html[data-theme="dark"] .post-body h2#bottleneck ~ table td:nth-child(4)::before
   background: linear-gradient(90deg, var(--rev-blue), var(--rev-purple));
   box-shadow: 0 0 0 1px color-mix(in oklab, var(--primary) 25%, transparent) inset;
 }
-/* Bar widths per row */
+/* bar widths per row */
 .post-body h2#bottleneck ~ table tbody tr:nth-child(1) td:nth-child(4){ --bar: 55%; }
 .post-body h2#bottleneck ~ table tbody tr:nth-child(2) td:nth-child(4){ --bar: 78%; }
 .post-body h2#bottleneck ~ table tbody tr:nth-child(3) td:nth-child(4){ --bar: 96%; }
@@ -721,7 +545,7 @@ html[data-theme="dark"] .post-body h2#bottleneck ~ table td:nth-child(4)::before
 .post-body h2#bottleneck ~ table tbody tr:last-child td:first-child{ border-bottom-left-radius: var(--bt-radius); }
 .post-body h2#bottleneck ~ table tbody tr:last-child td:last-child { border-bottom-right-radius: var(--bt-radius); }
 
-/* Footnote under table */
+/* Footnote */
 .post-body h2#bottleneck ~ table + p em{
   display: inline-block; margin-top: .4rem; color: var(--text-muted); font-size: .95rem;
 }
@@ -748,10 +572,12 @@ html[data-theme="dark"] .post-body h2#bottleneck ~ table td:nth-child(4)::before
     position: relative;
     overflow: hidden;
   }
+  /* Subtle accent on Wi-Fi 7 card */
   .post-body h2#bottleneck ~ table tr:last-child::before{
     content:""; position:absolute; inset:0 auto 0 0; width:4px; background: var(--bt-rail);
   }
 
+  /* Reset cells */
   .post-body h2#bottleneck ~ table td{
     border:0;
     padding: .7rem 0;
@@ -759,8 +585,10 @@ html[data-theme="dark"] .post-body h2#bottleneck ~ table td:nth-child(4)::before
     color: var(--text-primary);
     line-height: 1.35;
   }
+
+  /* Generic labels above each value */
   .post-body h2#bottleneck ~ table td::before{
-    position: static;
+    content: attr(data-label);
     display:block;
     margin: 0 0 .35rem;
     font-size: .78rem;
@@ -769,27 +597,37 @@ html[data-theme="dark"] .post-body h2#bottleneck ~ table td:nth-child(4)::before
     text-transform: uppercase;
     color: var(--text-muted);
   }
-  .post-body h2#bottleneck ~ table td:nth-child(1)::before{ content:"Generation"; }
-  .post-body h2#bottleneck ~ table td:nth-child(2)::before{ content:"Max channel width"; }
-  .post-body h2#bottleneck ~ table td:nth-child(3)::before{ content:"6 GHz support"; }
-  .post-body h2#bottleneck ~ table td:nth-child(4)::before{ content:"Typical throughput"; }
-  .post-body h2#bottleneck ~ table td:nth-child(5)::before{ content:"Latency behavior"; }
+  /* Provide labels via selectors (no HTML changes) */
+  .post-body h2#bottleneck ~ table td:nth-child(1){ --label:"Generation"; }
+  .post-body h2#bottleneck ~ table td:nth-child(2){ --label:"Max channel width"; }
+  .post-body h2#bottleneck ~ table td:nth-child(3){ --label:"6 GHz support"; }
+  .post-body h2#bottleneck ~ table td:nth-child(4){ --label:"Typical throughput"; }
+  .post-body h2#bottleneck ~ table td:nth-child(5){ --label:"Latency behavior"; }
+  .post-body h2#bottleneck ~ table td::before{ content: var(--label); }
 
-  /* Make the Generation value the visual title */
+  /* Make Generation look like a title */
   .post-body h2#bottleneck ~ table td:nth-child(1){
     font-weight: 800;
     font-size: clamp(1.05rem, 0.9rem + 1.2vw, 1.2rem);
   }
 
-  /* 6 GHz support icon inline with text */
+  /* 6 GHz support icon INLINE with text; hide desktop icon */
   .post-body h2#bottleneck ~ table td:nth-child(3){
-    display: flex; align-items: center; gap: .45rem; padding-left: 0;
+    display:flex; align-items:center; gap:.45rem; padding-left:0;
+    position: relative;
   }
-  .post-body h2#bottleneck ~ table td:nth-child(3)::before{ margin-bottom: .25rem; }
+  /* kill the desktop ::before icon on mobile */
+  .post-body h2#bottleneck ~ table td:nth-child(3)::before{
+    content: var(--label);                  /* just the label text above */
+    margin-bottom:.25rem;
+    position: static;
+    width:auto; height:auto;
+    -webkit-mask:none; mask:none; background:none;
+  }
+  /* Add icon via ::after */
   .post-body h2#bottleneck ~ table td:nth-child(3)::after{
     content:""; width:16px; height:16px;
-    -webkit-mask-size:contain; mask-size:contain;
-    -webkit-mask-repeat:no-repeat; mask-repeat:no-repeat;
+    -webkit-mask-size:contain; mask-size:contain; -webkit-mask-repeat:no-repeat; mask-repeat:no-repeat;
     background: currentColor;
   }
   .post-body h2#bottleneck ~ table tbody tr:nth-child(1) td:nth-child(3){ color:#ef4444; }
@@ -808,29 +646,17 @@ html[data-theme="dark"] .post-body h2#bottleneck ~ table td:nth-child(4)::before
             mask-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="%23000" d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg>');
   }
 
-  /* Throughput meter on mobile: label on top, track at bottom */
+  /* Throughput meter: label on top, bar pinned to bottom */
   .post-body h2#bottleneck ~ table td:nth-child(4){
-    position: relative;
     padding-bottom: 2.1rem; /* room for meter */
-    background-image: linear-gradient(var(--bt-track), var(--bt-track));
-    background-repeat: no-repeat;
-    background-size: calc(100% - 1.9rem) 8px;      /* track size */
-    background-position: 1rem calc(100% - .65rem); /* left / bottom */
   }
+  .post-body h2#bottleneck ~ table td:nth-child(4)::before,
   .post-body h2#bottleneck ~ table td:nth-child(4)::after{
-    content:"";
-    position:absolute; left:1rem; bottom:.65rem; height:8px; border-radius:999px;
-    width: var(--bar, 0%);
-    background: linear-gradient(90deg, var(--rev-blue), var(--rev-purple));
-    box-shadow: 0 0 0 1px color-mix(in oklab, var(--primary) 25%, transparent) inset;
+    left:1rem; right:auto;
   }
-  /* same widths as desktop */
-  .post-body h2#bottleneck ~ table tbody tr:nth-child(1) td:nth-child(4){ --bar: 55%; }
-  .post-body h2#bottleneck ~ table tbody tr:nth-child(2) td:nth-child(4){ --bar: 78%; }
-  .post-body h2#bottleneck ~ table tbody tr:nth-child(3) td:nth-child(4){ --bar: 96%; }
 }
 
-/* Dark-mode meter track contrast */
+/* Dark-mode tweak for meter track */
 html[data-theme="dark"] .post-body h2#bottleneck ~ table td:nth-child(4)::before{
   background: color-mix(in oklab, var(--text-muted) 28%, transparent);
 }

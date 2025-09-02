@@ -381,3 +381,36 @@ html[data-theme="dark"] .post-body pre{
   box-shadow: var(--shadow-lg);
 }
 
+/* ===== Desktop: put TOC left of the hero; content flows on right ===== */
+@media (min-width: 1024px){
+  .post-shell{
+    grid-auto-flow: row dense;                /* lets TOC backfill left of hero */
+  }
+
+  /* Breadcrumb stays full-width on top */
+  .breadcrumb{ grid-column: 1 / -1; }
+
+  /* Hero sits in right column */
+  .post-hero{
+    grid-column: 2 / -1;
+  }
+
+  /* TOC occupies left column in same row as hero */
+  .toc{
+    grid-column: 1 / 2;
+    grid-row: auto;
+    display: block;                           /* override earlier hide below 1100px */
+    max-height: calc(100vh - 96px);
+    overflow: auto;
+  }
+
+  /* Article + other blocks flow under hero on the right */
+  .post-body{ grid-column: 2 / -1; }
+  .newsletter{ grid-column: 2 / -1; }
+}
+
+/* (Optional) tighten hero padding a bit since it's sharing the row */
+@media (min-width: 1280px){
+  .post-hero{ padding: clamp(24px, 3.5vw, 44px); }
+}
+

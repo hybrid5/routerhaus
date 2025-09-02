@@ -457,7 +457,7 @@
     <div class="modal-content">
       <header class="modal-header">
         <div class="modal-title-group">
-          <h2 id="quizTitle">Find Your Perfect Router</h2>
+          <h2 id="quizTitle">Help me pick a router</h2>
         </div>
         <button type="button" class="modal-close" aria-label="Close quiz">
           <span aria-hidden="true">&times;</span>
@@ -465,126 +465,132 @@
       </header>
 
       <form id="quizForm" class="quiz-body">
-        <div class="quiz-progress">
-          <div class="progress-bar"><div class="progress-fill"></div></div>
-          <span class="progress-text">Step <span id="quizStep">1</span> of 7</span>
+        <!-- Top progress -->
+        <div class="quiz-progress" role="status" aria-live="polite">
+          <div class="progress-bar"><div class="progress-fill" style="width:14.28%"></div></div>
+          <span class="progress-text">Step <span id="quizStep">1</span> of <span id="quizTotal">7</span></span>
         </div>
 
-        <!-- Home Environment -->
-        <fieldset class="q-group">
-          <legend>What's your home like?</legend>
-          <label>
-            <span>Home size</span>
-            <select id="qCoverage" required>
-              <option value="">Select your home size…</option>
-              <option value="Apartment/Small">Apartment or Small Home (under 1,800 sq ft)</option>
-              <option value="2–3 Bedroom">Medium Home (2–3 bedrooms, up to 3,200 sq ft)</option>
-              <option value="Large/Multi-floor">Large or Multi-Floor Home (over 3,200 sq ft)</option>
-              <option value="">I'm not sure — suggest based on other answers</option>
-            </select>
-          </label>
-          <p id="meshHint" class="hint" aria-live="polite">For larger homes, we recommend mesh systems for seamless coverage.</p>
+        <!-- STEP 1: Home size -->
+        <fieldset class="q-group q-step" data-step="1">
+          <legend>Where will the Wi-Fi be used?</legend>
+          <p class="hint">Size helps us choose single-router vs mesh for even coverage.</p>
+          <div class="speed-grid" role="group" aria-label="Home size">
+            <label class="radio-pill">
+              <input type="radio" name="qCoverage" value="Apartment/Small" />
+              <span>Apartment / Small (under 1,800 sq ft)</span>
+            </label>
+            <label class="radio-pill">
+              <input type="radio" name="qCoverage" value="2–3 Bedroom" />
+              <span>Medium (2–3 bedrooms, up to ~3,200 sq ft)</span>
+            </label>
+            <label class="radio-pill">
+              <input type="radio" name="qCoverage" value="Large/Multi-floor" />
+              <span>Large / Multi-floor (over ~3,200 sq ft)</span>
+            </label>
+            <label class="radio-pill">
+              <input type="radio" name="qCoverage" value="" />
+              <span>I’m not sure</span>
+            </label>
+          </div>
+          <p id="meshHint" class="hint" aria-live="polite"></p>
         </fieldset>
 
-        <!-- Device Load -->
-        <fieldset class="q-group">
-          <legend>How many devices connect to your Wi-Fi?</legend>
-          <label>
-            <span>Number of devices</span>
-            <select id="qDevices" required>
-              <option value="">Select device count…</option>
-              <option value="1–5">1–5 devices</option>
-              <option value="6–15">6–15 devices</option>
-              <option value="16–30">16–30 devices</option>
-              <option value="31–60">31–60 devices</option>
-              <option value="61–100">61–100 devices</option>
-              <option value="100+">100+ devices</option>
-              <option value="">I'm not sure — suggest average</option>
-            </select>
-          </label>
-        </fieldset>
-
-        <!-- Primary Use -->
-        <fieldset class="q-group">
-          <legend>What do you use Wi-Fi for most?</legend>
-          <label>
-            <span>Main use</span>
-            <select id="qUse" required>
-              <option value="">Select primary use…</option>
-              <option value="All-Purpose">Everyday Use</option>
-              <option value="Gaming">Gaming</option>
-              <option value="Work-From-Home">Work from Home</option>
-              <option value="Smart-Home">Smart Home</option>
-              <option value="Family Streaming">Family Streaming</option>
-              <option value="Prosumer">Advanced/Professional</option>
-              <option value="">I'm not sure — mix of everything</option>
-            </select>
-          </label>
-        </fieldset>
-
-        <!-- Internet Access Type -->
-        <fieldset class="q-group">
-          <legend>What type of internet do you have?</legend>
-          <label>
-            <span>Internet type</span>
-            <select id="qAccess">
-              <option value="">No preference / I'm not sure</option>
-              <option value="Cable">Cable</option>
-              <option value="Fiber">Fiber</option>
-              <option value="FixedWireless5G">5G Wireless</option>
-              <option value="Satellite">Satellite</option>
-              <option value="DSL">DSL</option>
-            </select>
-          </label>
-        </fieldset>
-
-        <!-- Internet Speed -->
-        <fieldset class="q-group">
-          <legend>Your Internet Plan Speed</legend>
-          <div class="speed-grid" role="group" aria-label="Internet speed">
-            <label class="radio-pill"><input type="radio" name="qSpeedLabel" value="≤1G"><span>Basic (up to 1 Gbps)</span></label>
-            <label class="radio-pill"><input type="radio" name="qSpeedLabel" value="2.5G"><span>Medium (2.5 Gbps)</span></label>
-            <label class="radio-pill"><input type="radio" name="qSpeedLabel" value="5G"><span>High (5 Gbps)</span></label>
-            <label class="radio-pill"><input type="radio" name="qSpeedLabel" value="10G"><span>Ultra (10+ Gbps)</span></label>
-            <label class="radio-pill"><input type="radio" name="qSpeedLabel" value=""><span>I'm not sure</span></label>
+        <!-- STEP 2: Devices -->
+        <fieldset class="q-group q-step" data-step="2" hidden>
+          <legend>How many devices use Wi-Fi?</legend>
+          <p class="hint">Phones, laptops, tablets, TVs, smart home, consoles, etc.</p>
+          <div class="speed-grid" role="group" aria-label="Number of devices">
+            <label class="radio-pill"><input type="radio" name="qDevices" value="1–5"><span>1–5</span></label>
+            <label class="radio-pill"><input type="radio" name="qDevices" value="6–15"><span>6–15</span></label>
+            <label class="radio-pill"><input type="radio" name="qDevices" value="16–30"><span>16–30</span></label>
+            <label class="radio-pill"><input type="radio" name="qDevices" value="31–60"><span>31–60</span></label>
+            <label class="radio-pill"><input type="radio" name="qDevices" value="61–100"><span>61–100</span></label>
+            <label class="radio-pill"><input type="radio" name="qDevices" value="100+"><span>100+</span></label>
+            <label class="radio-pill"><input type="radio" name="qDevices" value=""><span>I’m not sure</span></label>
           </div>
         </fieldset>
 
-        <!-- Mesh Preference -->
-        <fieldset class="q-group">
-          <legend>Do you want whole-home mesh coverage?</legend>
+        <!-- STEP 3: Primary use -->
+        <fieldset class="q-group q-step" data-step="3" hidden>
+          <legend>What matters most?</legend>
+          <p class="hint">We’ll tune for the thing you care about most. You can still do everything.</p>
+          <div class="speed-grid" role="group" aria-label="Primary use">
+            <label class="radio-pill"><input type="radio" name="qUse" value="All-Purpose"><span>Everyday use</span></label>
+            <label class="radio-pill"><input type="radio" name="qUse" value="Work-From-Home"><span>Work from home</span></label>
+            <label class="radio-pill"><input type="radio" name="qUse" value="Family Streaming"><span>Streaming on multiple TVs</span></label>
+            <label class="radio-pill"><input type="radio" name="qUse" value="Gaming"><span>Gaming (low lag)</span></label>
+            <label class="radio-pill"><input type="radio" name="qUse" value="Smart-Home"><span>Lots of smart devices</span></label>
+            <label class="radio-pill"><input type="radio" name="qUse" value="Prosumer"><span>Advanced / Pro features</span></label>
+            <label class="radio-pill"><input type="radio" name="qUse" value=""><span>I’m not sure</span></label>
+          </div>
+        </fieldset>
+
+        <!-- STEP 4: Mesh preference -->
+        <fieldset class="q-group q-step" data-step="4" hidden>
+          <legend>Do you want whole-home coverage?</legend>
           <div class="mesh-row">
             <label class="auto">
               <input type="checkbox" id="qMeshAuto" checked />
               <span>Auto decide for me (recommended)</span>
             </label>
           </div>
-          <div class="mesh-row">
+          <div class="mesh-row" role="group" aria-label="Mesh preference">
             <label class="radio-pill"><input type="radio" name="qMesh" value="" checked><span>No preference</span></label>
-            <label class="radio-pill"><input type="radio" name="qMesh" value="yes"><span>Require mesh system</span></label>
-            <label class="radio-pill"><input type="radio" name="qMesh" value="no"><span>Single router only</span></label>
+            <label class="radio-pill"><input type="radio" name="qMesh" value="yes"><span>Yes — mesh system</span></label>
+            <label class="radio-pill"><input type="radio" name="qMesh" value="no"><span>No — single router</span></label>
+          </div>
+          <p class="hint">Mesh uses 2–3 smaller units so Wi-Fi stays strong across floors and far rooms.</p>
+        </fieldset>
+
+        <!-- STEP 5: Internet speed -->
+        <fieldset class="q-group q-step" data-step="5" hidden>
+          <legend>How fast is your internet plan?</legend>
+          <p class="hint">If you’re not sure, pick “I’m not sure.” We’ll choose safe options.</p>
+          <div class="speed-grid" role="group" aria-label="Internet plan speed">
+            <label class="radio-pill"><input type="radio" name="qSpeedLabel" value="≤1G"><span>Up to 1 Gbps (most plans)</span></label>
+            <label class="radio-pill"><input type="radio" name="qSpeedLabel" value="2.5G"><span>2.5 Gbps</span></label>
+            <label class="radio-pill"><input type="radio" name="qSpeedLabel" value="5G"><span>5 Gbps</span></label>
+            <label class="radio-pill"><input type="radio" name="qSpeedLabel" value="10G"><span>10+ Gbps</span></label>
+            <label class="radio-pill"><input type="radio" name="qSpeedLabel" value=""><span>I’m not sure</span></label>
           </div>
         </fieldset>
 
-        <!-- Budget -->
-        <fieldset class="q-group">
-          <legend>What's your budget?</legend>
-          <label>
-            <span>Price range</span>
-            <select id="qPrice">
-              <option value="">No preference / Show all</option>
-              <option value="<150">Budget (Under $150)</option>
-              <option value="150–299">Mid-range ($150–299)</option>
-              <option value="300–599">Premium ($300–599)</option>
-              <option value="600+">High-end ($600+)</option>
-            </select>
-          </label>
+        <!-- STEP 6: Internet type -->
+        <fieldset class="q-group q-step" data-step="6" hidden>
+          <legend>What kind of internet do you have?</legend>
+          <div class="speed-grid" role="group" aria-label="Internet type">
+            <label class="radio-pill"><input type="radio" name="qAccess" value=""><span>I’m not sure</span></label>
+            <label class="radio-pill"><input type="radio" name="qAccess" value="Cable"><span>Cable</span></label>
+            <label class="radio-pill"><input type="radio" name="qAccess" value="Fiber"><span>Fiber</span></label>
+            <label class="radio-pill"><input type="radio" name="qAccess" value="FixedWireless5G"><span>5G wireless</span></label>
+            <label class="radio-pill"><input type="radio" name="qAccess" value="Satellite"><span>Satellite</span></label>
+            <label class="radio-pill"><input type="radio" name="qAccess" value="DSL"><span>DSL</span></label>
+          </div>
+        </fieldset>
+
+        <!-- STEP 7: Budget -->
+        <fieldset class="q-group q-step" data-step="7" hidden>
+          <legend>What’s your budget?</legend>
+          <div class="speed-grid" role="group" aria-label="Budget">
+            <label class="radio-pill"><input type="radio" name="qPrice" value=""><span>Show all</span></label>
+            <label class="radio-pill"><input type="radio" name="qPrice" value="<150"><span>Under $150</span></label>
+            <label class="radio-pill"><input type="radio" name="qPrice" value="150–299"><span>$150–299</span></label>
+            <label class="radio-pill"><input type="radio" name="qPrice" value="300–599"><span>$300–599</span></label>
+            <label class="radio-pill"><input type="radio" name="qPrice" value="600+"><span>$600+</span></label>
+          </div>
         </fieldset>
       </form>
 
       <footer class="modal-actions">
-        <button type="button" class="btn ghost" id="quizCancel">Cancel</button>
-        <button type="submit" class="btn primary" form="quizForm">Show My Recommendations</button>
+        <div style="display:flex; gap:.5rem; align-items:center;">
+          <button type="button" class="btn ghost" id="quizCancel">Cancel</button>
+        </div>
+        <div style="display:flex; gap:.5rem; align-items:center;">
+          <button type="button" class="btn" id="quizPrev">Back</button>
+          <button type="button" class="btn primary" id="quizNext">Next</button>
+          <button type="submit" class="btn primary" id="quizSubmit" form="quizForm" style="display:none;">Show My Recommendations</button>
+        </div>
       </footer>
     </div>
   </dialog>

@@ -413,4 +413,155 @@ html[data-theme="dark"] .post-body pre{
 @media (min-width: 1280px){
   .post-hero{ padding: clamp(24px, 3.5vw, 44px); }
 }
+/* ===== Bottleneck Comparison — clean, styled, readable ===== */
+.post-body #bottleneck + table{
+  border-radius: 18px;
+  overflow: hidden;
+  border: var(--card-border);
+  box-shadow: var(--shadow-sm);
+  background: var(--card);
+}
 
+/* Header */
+.post-body #bottleneck + table thead th{
+  background: linear-gradient(135deg,
+    color-mix(in oklab, var(--primary) 18%, transparent),
+    color-mix(in oklab, var(--accent) 18%, transparent)
+  );
+  color: var(--text-primary);
+  font-weight: 800;
+  letter-spacing: .01em;
+  padding: 1rem 1rem;
+  white-space: nowrap;
+}
+
+/* Cells */
+.post-body #bottleneck + table td{
+  position: relative;
+  padding: 1rem 1rem;
+  vertical-align: middle;
+  color: var(--text-primary);
+  border-bottom: 1px solid color-mix(in oklab, var(--text-muted) 14%, transparent);
+}
+
+/* Soft row hover */
+.post-body #bottleneck + table tbody tr:hover td{
+  background: color-mix(in oklab, var(--primary) 8%, transparent);
+}
+
+/* Emphasize Wi-Fi 7 row (last row) with a slim gradient rail */
+.post-body #bottleneck + table tbody tr:last-child td{ background: color-mix(in oklab, var(--accent) 8%, transparent); }
+.post-body #bottleneck + table tbody tr:last-child td:first-child::before{
+  content:""; position:absolute; inset:0 auto 0 0; width:4px; border-radius:2px;
+  background: linear-gradient(180deg, var(--rev-blue), var(--rev-purple));
+}
+
+/* --- Column polish --- */
+/* Col 1: Generation — make bold */
+.post-body #bottleneck + table td:nth-child(1){ font-weight: 800; }
+
+/* Col 3: 6 GHz support — inject icons (No / 6E only / Yes) */
+.post-body #bottleneck + table td:nth-child(3){
+  padding-left: 2rem;
+}
+.post-body #bottleneck + table td:nth-child(3)::before{
+  content:""; position:absolute; left:.75rem; top:50%; transform:translateY(-50%);
+  width:14px; height:14px; -webkit-mask-size:contain; mask-size:contain; -webkit-mask-repeat:no-repeat; mask-repeat:no-repeat;
+}
+/* Row 1 (Wi-Fi 5): No */
+.post-body #bottleneck + table tbody tr:nth-child(1) td:nth-child(3)::before{
+  background:#ef4444;
+  -webkit-mask-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"><path fill="%23000" d="M18.3 5.71L12 12.01L5.7 5.7L4.29 7.11L10.59 13.41L4.29 19.71L5.7 21.12L12 14.82L18.3 21.12L19.71 19.71L13.41 13.41L19.71 7.11z"/></svg>');
+  mask-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"><path fill="%23000" d="M18.3 5.71L12 12.01L5.7 5.7L4.29 7.11L10.59 13.41L4.29 19.71L5.7 21.12L12 14.82L18.3 21.12L19.71 19.71L13.41 13.41L19.71 7.11z"/></svg>');
+}
+/* Row 2 (Wi-Fi 6/6E): 6E only (minus) */
+.post-body #bottleneck + table tbody tr:nth-child(2) td:nth-child(3)::before{
+  background:#f59e0b;
+  -webkit-mask-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"><path fill="%23000" d="M19 13H5v-2h14z"/></svg>');
+  mask-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"><path fill="%23000" d="M19 13H5v-2h14z"/></svg>');
+}
+/* Row 3 (Wi-Fi 7): Yes (check) */
+.post-body #bottleneck + table tbody tr:nth-child(3) td:nth-child(3)::before{
+  background:#22c55e;
+  -webkit-mask-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"><path fill="%23000" d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg>');
+  mask-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"><path fill="%23000" d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg>');
+}
+
+/* Col 4: Typical phone throughput — inline meter behind text */
+.post-body #bottleneck + table td:nth-child(4){
+  padding-top: 1.35rem; /* room for bar */
+}
+.post-body #bottleneck + table td:nth-child(4)::before{
+  content:""; position:absolute; left:1rem; right:1rem; top:.65rem; height:8px; border-radius:999px;
+  background: color-mix(in oklab, var(--text-muted) 18%, transparent);
+}
+.post-body #bottleneck + table td:nth-child(4)::after{
+  content:""; position:absolute; left:1rem; top:.65rem; height:8px; border-radius:999px;
+  width: var(--bar, 0%); background: linear-gradient(90deg, var(--rev-blue), var(--rev-purple));
+  box-shadow: 0 0 0 1px color-mix(in oklab, var(--primary) 25%, transparent) inset;
+}
+/* Per-row bar widths (tune as needed) */
+.post-body #bottleneck + table tbody tr:nth-child(1) td:nth-child(4){ --bar: 55%; } /* 200–500 Mb/s */
+.post-body #bottleneck + table tbody tr:nth-child(2) td:nth-child(4){ --bar: 78%; } /* 400–900 Mb/s */
+.post-body #bottleneck + table tbody tr:nth-child(3) td:nth-child(4){ --bar: 96%; } /* 1 Gb/s+ */
+
+/* Col 5: Latency behavior — make secondary, add subtle pill */
+.post-body #bottleneck + table td:nth-child(5){
+  color: var(--text-muted);
+}
+.post-body #bottleneck + table td:nth-child(5)::before{
+  content:""; position:absolute; left:1rem; top:.9rem; height:6px; width:6px; border-radius:999px;
+  background: color-mix(in oklab, var(--primary) 45%, transparent);
+}
+
+/* Zebra striping (keeps emphasis row intact) */
+.post-body #bottleneck + table tbody tr:nth-child(odd) td{
+  background: color-mix(in oklab, var(--text-muted) 6%, transparent);
+}
+.post-body #bottleneck + table tbody tr:last-child td{
+  background: color-mix(in oklab, var(--accent) 8%, transparent);
+}
+
+/* Footnote just after the table */
+.post-body #bottleneck + table + p em{
+  display: inline-block;
+  margin-top: .35rem;
+  color: var(--text-muted);
+  font-size: .95rem;
+}
+
+/* --- Compact, readable mobile cards for THIS table only --- */
+@media (max-width: 720px){
+  .post-body #bottleneck + table,
+  .post-body #bottleneck + table thead,
+  .post-body #bottleneck + table tbody,
+  .post-body #bottleneck + table th,
+  .post-body #bottleneck + table td,
+  .post-body #bottleneck + table tr{ display:block; }
+  .post-body #bottleneck + table thead{ display:none; }
+  .post-body #bottleneck + table tr{
+    background: var(--card);
+    border: var(--card-border);
+    border-radius: 16px;
+    padding: .75rem .9rem;
+    margin: .75rem 0;
+    box-shadow: var(--shadow-sm);
+  }
+  .post-body #bottleneck + table td{
+    border:0; padding: .6rem 0 .6rem 8.5rem; /* room for labels */
+  }
+  .post-body #bottleneck + table td::after,
+  .post-body #bottleneck + table td::before{ left: .9rem; right: .9rem; } /* align bars in mobile */
+
+  /* Labels per column */
+  .post-body #bottleneck + table td:nth-child(1)::before{ content:"Generation"; position:absolute; left:.9rem; top:.55rem; font-weight:700; color:var(--text-muted); }
+  .post-body #bottleneck + table td:nth-child(2)::before{ content:"Max channel width"; position:absolute; left:.9rem; }
+  .post-body #bottleneck + table td:nth-child(3)::before{ content:"6 GHz support"; position:absolute; left:.9rem; }
+  .post-body #bottleneck + table td:nth-child(4)::before{ content:"Typical throughput"; position:absolute; left:.9rem; }
+  .post-body #bottleneck + table td:nth-child(5)::before{ content:"Latency behavior"; position:absolute; left:.9rem; }
+}
+
+/* Dark mode tweaks for the meter track */
+html[data-theme="dark"] .post-body #bottleneck + table td:nth-child(4)::before{
+  background: color-mix(in oklab, var(--text-muted) 28%, transparent);
+}

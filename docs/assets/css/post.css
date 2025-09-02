@@ -413,124 +413,167 @@ html[data-theme="dark"] .post-body pre{
 @media (min-width: 1280px){
   .post-hero{ padding: clamp(24px, 3.5vw, 44px); }
 }
-/* ===== Bottleneck Comparison — clean, styled, readable ===== */
+/* ==========================================================
+   Bottleneck Comparison — premium styling (no HTML changes)
+   ========================================================== */
 .post-body #bottleneck + table{
-  border-radius: 18px;
-  overflow: hidden;
-  border: var(--card-border);
-  box-shadow: var(--shadow-sm);
+  /* Local tokens */
+  --bt-radius: 22px;
+  --bt-rail-w: 5px;
+  --bt-gap-y: clamp(10px, 1.2vw, 14px);
+  --bt-track: color-mix(in oklab, var(--text-muted) 16%, transparent);
+  --bt-sep: color-mix(in oklab, var(--text-muted) 14%, transparent);
+  --bt-glow: 0 12px 36px color-mix(in oklab, var(--primary) 22%, transparent);
+
+  width:100%;
+  border-collapse: separate; border-spacing:0;
   background: var(--card);
+  border: var(--card-border);
+  border-radius: var(--bt-radius);
+  overflow: hidden;
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+  backdrop-filter: blur(18px) saturate(140%);
+  box-shadow: var(--shadow);
+  font-variant-numeric: tabular-nums;
+  isolation: isolate;
 }
 
-/* Header */
+/* Sticky, glossy header with gradient band */
 .post-body #bottleneck + table thead th{
-  background: linear-gradient(135deg,
-    color-mix(in oklab, var(--primary) 18%, transparent),
-    color-mix(in oklab, var(--accent) 18%, transparent)
-  );
+  position: sticky; top: 64px; z-index: 1; /* aligns under your sticky nav */
+  padding: 1rem 1rem;
+  background:
+    linear-gradient(180deg,
+      color-mix(in oklab, var(--primary) 18%, transparent),
+      color-mix(in oklab, var(--accent) 18%, transparent)
+    );
   color: var(--text-primary);
+  text-transform: uppercase;
+  letter-spacing: .03em;
   font-weight: 800;
-  letter-spacing: .01em;
-  padding: 1rem 1rem;
-  white-space: nowrap;
+  border-bottom: 1px solid var(--bt-sep);
+  box-shadow: inset 0 -1px 0 var(--bt-sep);
 }
 
-/* Cells */
-.post-body #bottleneck + table td{
-  position: relative;
-  padding: 1rem 1rem;
-  vertical-align: middle;
-  color: var(--text-primary);
-  border-bottom: 1px solid color-mix(in oklab, var(--text-muted) 14%, transparent);
-}
+/* Subtle column widths & alignment */
+.post-body #bottleneck + table th:nth-child(1),
+.post-body #bottleneck + table td:nth-child(1){ width: 18ch; }
+.post-body #bottleneck + table th:nth-child(2),
+.post-body #bottleneck + table td:nth-child(2){ min-width: 16ch; }
+.post-body #bottleneck + table th:nth-child(3),
+.post-body #bottleneck + table td:nth-child(3){ width: 12ch; }
+.post-body #bottleneck + table th:nth-child(4),
+.post-body #bottleneck + table td:nth-child(4){ width: 22ch; }
+.post-body #bottleneck + table td{ vertical-align: middle; }
 
-/* Soft row hover */
+/* Rows: soft glass, zebra, hover lift */
+.post-body #bottleneck + table tbody tr{
+  transition: transform .28s var(--rev-curve), box-shadow .28s var(--rev-curve), background-color .28s ease;
+}
+.post-body #bottleneck + table tbody tr:nth-child(odd) td{
+  background: color-mix(in oklab, var(--text-muted) 6%, transparent);
+}
 .post-body #bottleneck + table tbody tr:hover td{
-  background: color-mix(in oklab, var(--primary) 8%, transparent);
+  background: color-mix(in oklab, var(--primary) 10%, transparent);
+  box-shadow: var(--bt-glow) inset;
+}
+.post-body #bottleneck + table td{
+  padding: 1rem 1rem;
+  border-bottom: 1px solid var(--bt-sep);
 }
 
-/* Emphasize Wi-Fi 7 row (last row) with a slim gradient rail */
-.post-body #bottleneck + table tbody tr:last-child td{ background: color-mix(in oklab, var(--accent) 8%, transparent); }
+/* Emphasize Wi-Fi 7 row with gradient rail + slight weight */
+.post-body #bottleneck + table tbody tr:last-child td{
+  background: color-mix(in oklab, var(--accent) 8%, transparent);
+  font-weight: 650;
+}
+.post-body #bottleneck + table tbody tr:last-child td:first-child{
+  position: relative;
+}
 .post-body #bottleneck + table tbody tr:last-child td:first-child::before{
-  content:""; position:absolute; inset:0 auto 0 0; width:4px; border-radius:2px;
+  content:""; position:absolute; inset: 0 auto 0 0;
+  width: var(--bt-rail-w);
   background: linear-gradient(180deg, var(--rev-blue), var(--rev-purple));
+  border-radius: 0 2px 2px 0;
 }
 
-/* --- Column polish --- */
-/* Col 1: Generation — make bold */
-.post-body #bottleneck + table td:nth-child(1){ font-weight: 800; }
+/* Col 1: Generation — strong label */
+.post-body #bottleneck + table td:nth-child(1){
+  font-weight: 800; letter-spacing: .005em;
+}
 
-/* Col 3: 6 GHz support — inject icons (No / 6E only / Yes) */
+/* Col 3: 6 GHz support — iconized (No / 6E only / Yes) */
 .post-body #bottleneck + table td:nth-child(3){
-  padding-left: 2rem;
+  padding-left: 2rem; position: relative;
 }
 .post-body #bottleneck + table td:nth-child(3)::before{
   content:""; position:absolute; left:.75rem; top:50%; transform:translateY(-50%);
-  width:14px; height:14px; -webkit-mask-size:contain; mask-size:contain; -webkit-mask-repeat:no-repeat; mask-repeat:no-repeat;
+  width:16px; height:16px; -webkit-mask-size:contain; mask-size:contain; -webkit-mask-repeat:no-repeat; mask-repeat:no-repeat;
 }
-/* Row 1 (Wi-Fi 5): No */
+/* Row 1 (Wi-Fi 5): No (x) */
 .post-body #bottleneck + table tbody tr:nth-child(1) td:nth-child(3)::before{
   background:#ef4444;
-  -webkit-mask-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"><path fill="%23000" d="M18.3 5.71L12 12.01L5.7 5.7L4.29 7.11L10.59 13.41L4.29 19.71L5.7 21.12L12 14.82L18.3 21.12L19.71 19.71L13.41 13.41L19.71 7.11z"/></svg>');
-  mask-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"><path fill="%23000" d="M18.3 5.71L12 12.01L5.7 5.7L4.29 7.11L10.59 13.41L4.29 19.71L5.7 21.12L12 14.82L18.3 21.12L19.71 19.71L13.41 13.41L19.71 7.11z"/></svg>');
+  -webkit-mask-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="%23000" d="M18.3 5.71L12 12.01L5.7 5.7L4.29 7.11L10.59 13.41L4.29 19.71L5.7 21.12L12 14.82L18.3 21.12L19.71 19.71L13.41 13.41L19.71 7.11z"/></svg>');
+  mask-image:   url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="%23000" d="M18.3 5.71L12 12.01L5.7 5.7L4.29 7.11L10.59 13.41L4.29 19.71L5.7 21.12L12 14.82L18.3 21.12L19.71 19.71L13.41 13.41L19.71 7.11z"/></svg>');
 }
 /* Row 2 (Wi-Fi 6/6E): 6E only (minus) */
 .post-body #bottleneck + table tbody tr:nth-child(2) td:nth-child(3)::before{
   background:#f59e0b;
-  -webkit-mask-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"><path fill="%23000" d="M19 13H5v-2h14z"/></svg>');
-  mask-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"><path fill="%23000" d="M19 13H5v-2h14z"/></svg>');
+  -webkit-mask-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="%23000" d="M19 13H5v-2h14z"/></svg>');
+  mask-image:   url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="%23000" d="M19 13H5v-2h14z"/></svg>');
 }
 /* Row 3 (Wi-Fi 7): Yes (check) */
 .post-body #bottleneck + table tbody tr:nth-child(3) td:nth-child(3)::before{
   background:#22c55e;
-  -webkit-mask-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"><path fill="%23000" d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg>');
-  mask-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"><path fill="%23000" d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg>');
+  -webkit-mask-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="%23000" d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg>');
+  mask-image:   url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="%23000" d="M9 16.2L4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg>');
 }
 
-/* Col 4: Typical phone throughput — inline meter behind text */
+/* Col 4: Throughput meter — gradient bar + animated gleam */
+@keyframes bt-gleam { from{ background-position: -200% 0, 0 0; } to{ background-position: 200% 0, 0 0; } }
 .post-body #bottleneck + table td:nth-child(4){
-  padding-top: 1.35rem; /* room for bar */
+  position: relative; padding-top: 1.35rem;
 }
 .post-body #bottleneck + table td:nth-child(4)::before{
-  content:""; position:absolute; left:1rem; right:1rem; top:.65rem; height:8px; border-radius:999px;
-  background: color-mix(in oklab, var(--text-muted) 18%, transparent);
+  content:"";
+  position:absolute; left:1rem; right:1rem; top:.65rem; height:8px; border-radius:999px;
+  background: var(--bt-track);
 }
 .post-body #bottleneck + table td:nth-child(4)::after{
-  content:""; position:absolute; left:1rem; top:.65rem; height:8px; border-radius:999px;
-  width: var(--bar, 0%); background: linear-gradient(90deg, var(--rev-blue), var(--rev-purple));
+  content:"";
+  position:absolute; left:1rem; top:.65rem; height:8px; border-radius:999px;
+  width: var(--bar, 0%);
+  background:
+    linear-gradient(90deg, rgba(255,255,255,.0) 0%, rgba(255,255,255,.35) 50%, rgba(255,255,255,.0) 100%),
+    linear-gradient(90deg, var(--rev-blue), var(--rev-purple));
+  background-size: 200% 100%, auto;
+  animation: bt-gleam 2.6s linear infinite;
   box-shadow: 0 0 0 1px color-mix(in oklab, var(--primary) 25%, transparent) inset;
 }
-/* Per-row bar widths (tune as needed) */
-.post-body #bottleneck + table tbody tr:nth-child(1) td:nth-child(4){ --bar: 55%; } /* 200–500 Mb/s */
-.post-body #bottleneck + table tbody tr:nth-child(2) td:nth-child(4){ --bar: 78%; } /* 400–900 Mb/s */
-.post-body #bottleneck + table tbody tr:nth-child(3) td:nth-child(4){ --bar: 96%; } /* 1 Gb/s+ */
+/* Bar widths per row */
+.post-body #bottleneck + table tbody tr:nth-child(1) td:nth-child(4){ --bar: 55%; } /* Wi-Fi 5 */
+.post-body #bottleneck + table tbody tr:nth-child(2) td:nth-child(4){ --bar: 78%; } /* Wi-Fi 6/6E */
+.post-body #bottleneck + table tbody tr:nth-child(3) td:nth-child(4){ --bar: 96%; } /* Wi-Fi 7 */
 
-/* Col 5: Latency behavior — make secondary, add subtle pill */
+/* Col 5: Latency behavior — subtle pill accent */
 .post-body #bottleneck + table td:nth-child(5){
+  position: relative;
   color: var(--text-muted);
+  padding-left: 1.75rem;
 }
 .post-body #bottleneck + table td:nth-child(5)::before{
-  content:""; position:absolute; left:1rem; top:.9rem; height:6px; width:6px; border-radius:999px;
-  background: color-mix(in oklab, var(--primary) 45%, transparent);
+  content:""; position:absolute; left:.95rem; top:50%; transform:translateY(-50%);
+  width:10px; height:10px; border-radius:999px;
+  background: radial-gradient(closest-side, color-mix(in oklab, var(--primary) 65%, transparent), transparent 70%);
+  box-shadow: 0 0 0 2px color-mix(in oklab, var(--primary) 20%, transparent);
 }
 
-/* Zebra striping (keeps emphasis row intact) */
-.post-body #bottleneck + table tbody tr:nth-child(odd) td{
-  background: color-mix(in oklab, var(--text-muted) 6%, transparent);
-}
-.post-body #bottleneck + table tbody tr:last-child td{
-  background: color-mix(in oklab, var(--accent) 8%, transparent);
-}
-
-/* Footnote just after the table */
+/* Footer note after table */
 .post-body #bottleneck + table + p em{
-  display: inline-block;
-  margin-top: .35rem;
-  color: var(--text-muted);
-  font-size: .95rem;
+  display: inline-block; margin-top: .4rem; color: var(--text-muted); font-size: .95rem;
 }
 
-/* --- Compact, readable mobile cards for THIS table only --- */
+/* ===== Mobile: luxury cards with labeled rows ===== */
 @media (max-width: 720px){
   .post-body #bottleneck + table,
   .post-body #bottleneck + table thead,
@@ -538,30 +581,52 @@ html[data-theme="dark"] .post-body pre{
   .post-body #bottleneck + table th,
   .post-body #bottleneck + table td,
   .post-body #bottleneck + table tr{ display:block; }
+
   .post-body #bottleneck + table thead{ display:none; }
+
   .post-body #bottleneck + table tr{
     background: var(--card);
     border: var(--card-border);
-    border-radius: 16px;
-    padding: .75rem .9rem;
-    margin: .75rem 0;
+    border-radius: 18px;
+    padding: .9rem .95rem;
+    margin: .85rem 0;
     box-shadow: var(--shadow-sm);
+    position: relative;
+    overflow: hidden;
   }
-  .post-body #bottleneck + table td{
-    border:0; padding: .6rem 0 .6rem 8.5rem; /* room for labels */
-  }
-  .post-body #bottleneck + table td::after,
-  .post-body #bottleneck + table td::before{ left: .9rem; right: .9rem; } /* align bars in mobile */
 
-  /* Labels per column */
-  .post-body #bottleneck + table td:nth-child(1)::before{ content:"Generation"; position:absolute; left:.9rem; top:.55rem; font-weight:700; color:var(--text-muted); }
-  .post-body #bottleneck + table td:nth-child(2)::before{ content:"Max channel width"; position:absolute; left:.9rem; }
-  .post-body #bottleneck + table td:nth-child(3)::before{ content:"6 GHz support"; position:absolute; left:.9rem; }
-  .post-body #bottleneck + table td:nth-child(4)::before{ content:"Typical throughput"; position:absolute; left:.9rem; }
-  .post-body #bottleneck + table td:nth-child(5)::before{ content:"Latency behavior"; position:absolute; left:.9rem; }
+  /* Left gradient rail on Wi-Fi 7 card */
+  .post-body #bottleneck + table tr:last-child::before{
+    content:""; position:absolute; inset:0 auto 0 0; width:4px;
+    background: linear-gradient(180deg, var(--rev-blue), var(--rev-purple));
+  }
+
+  .post-body #bottleneck + table td{
+    border:0;
+    padding: .55rem 0 .55rem 8.8rem; /* label column */
+    min-height: 40px;
+  }
+
+  /* Align bar track within card width */
+  .post-body #bottleneck + table td::before,
+  .post-body #bottleneck + table td::after{ left: .95rem; right: .95rem; }
+
+  /* “Labels” per column */
+  .post-body #bottleneck + table td:nth-child(1){ font-weight:800; }
+  .post-body #bottleneck + table td:nth-child(1)::before{ content:"Generation"; position:absolute; left:.95rem; top:.55rem; color:var(--text-muted); font-weight:700; }
+  .post-body #bottleneck + table td:nth-child(2)::before{ content:"Max channel width"; position:absolute; left:.95rem; color:var(--text-muted); }
+  .post-body #bottleneck + table td:nth-child(3)::before{ content:"6 GHz support"; position:absolute; left:.95rem; color:var(--text-muted); }
+  .post-body #bottleneck + table td:nth-child(4)::before{ content:"Typical throughput"; position:absolute; left:.95rem; color:var(--text-muted); }
+  .post-body #bottleneck + table td:nth-child(5)::before{ content:"Latency behavior"; position:absolute; left:.95rem; color:var(--text-muted); }
 }
 
-/* Dark mode tweaks for the meter track */
+/* ===== Dark-mode refinements ===== */
+html[data-theme="dark"] .post-body #bottleneck + table{
+  box-shadow: var(--shadow-lg);
+}
+html[data-theme="dark"] .post-body #bottleneck + table tbody tr:hover td{
+  background: color-mix(in oklab, var(--primary) 14%, transparent);
+}
 html[data-theme="dark"] .post-body #bottleneck + table td:nth-child(4)::before{
   background: color-mix(in oklab, var(--text-muted) 28%, transparent);
 }

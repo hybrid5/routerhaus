@@ -14,6 +14,7 @@
   if (!dlg) return;
 
   const LS_KEY = 'rh.quiz.answers';
+  const hasShowModal = typeof dlg.showModal === 'function';
 
   // ---------- Helpers ----------
   const $ = (s, r=document) => r.querySelector(s);
@@ -45,7 +46,7 @@
   let fbBackdrop = document.getElementById('quizBackdrop');
   if (!fbBackdrop) {
     fbBackdrop = document.createElement('div');
-    fbBackdrop.id = 'quizBackdrop'; // styled in kits.css
+    fbBackdrop.id = 'quizBackdrop'; // style in CSS; z-index just under dialog
     fbBackdrop.style.display = 'none';
     document.body.appendChild(fbBackdrop);
     fbBackdrop.addEventListener('click', () => closeModal());
@@ -78,23 +79,30 @@
     lastOpener = from || null;
     prefillForm();
     showStep(1);
+
     try {
-      if (typeof dlg.showModal === 'function') {
-        dlg.showModal();                 // native modal layer + ::backdrop
+      if (hasShowModal) {
+        dlg.showModal();                 // native top layer + ::backdrop
         dlg.classList.remove('no-toplayer');
+        dlg.style.removeProperty('display');
         fbBackdrop.style.display = 'none';
       } else {
-        dlg.setAttribute('open','');     // fallback (no native backdrop)
+        // Fallback: show dialog + our manual backdrop
+        dlg.setAttribute('open','');
         dlg.classList.add('no-toplayer');
+        dlg.style.display = 'block';
         fbBackdrop.style.display = 'block';
       }
     } catch {
-      dlg.setAttribute('open','');       // fallback if showModal throws
+      // Ultra-safe fallback
+      dlg.setAttribute('open','');
       dlg.classList.add('no-toplayer');
+      dlg.style.display = 'block';
       fbBackdrop.style.display = 'block';
     }
+
     dlg.classList.add('is-open');
-    // lock background scroll (works for both native and fallback)
+    // lock background scroll for both modes
     document.documentElement.style.overflow = 'hidden';
 
     queueMicrotask(() => firstFocusable(dlg)?.focus());
@@ -102,22 +110,45 @@
     updateMeshHint();
     updateProgress();
   }
+
   function closeModal() {
     detachTrap();
-    dlg.classList.remove('is-open','no-toplayer');
-    fbBackdrop.style.display = 'none';
+
     // unlock background scroll
     document.documentElement.style.overflow = '';
+
+    // hide fallback backdrop
+    fbBackdrop.style.display = 'none';
+
+    // Remove cosmetic flags immediately
+    dlg.classList.remove('is-open','no-toplayer');
+
+    try {
+      if (hasShowModal) {
+        // Native: close() is authoritative
+        if (dlg.open) dlg.close();
+      } else {
+        // Fallback: ensure it disappears visually even if UA doesn't hide <dialog>
+        dlg.removeAttribute('open');
+        dlg.style.display = 'none';
+      }
+    } catch {
+      // Belt & suspenders in weird engines
+      dlg.removeAttribute('open');
+      dlg.style.display = 'none';
+    }
+
+    // Return focus to opener on the next tick
     setTimeout(() => {
-      try { if (dlg.open) dlg.close(); else dlg.removeAttribute('open'); } catch {}
       try { lastOpener?.focus?.(); } catch {}
     }, 0);
   }
 
-  // Backdrop click closes (clicks outside the panel)
+  // Backdrop click (outside the card) closes
   dlg.addEventListener('click', (e) => {
     if (!e.target.closest('.modal-content')) closeModal();
   });
+  // Escape key from native <dialog>
   dlg.addEventListener('cancel', (e) => { e.preventDefault(); closeModal(); });
 
   // Wire global open/edit hooks (header, empty state, etc.)
@@ -130,8 +161,8 @@
   document.addEventListener('quiz:open', () => openModal());
 
   // Buttons
-  btnCancel?.addEventListener('click', closeModal);
-  $('.modal-close', dlg)?.addEventListener('click', closeModal);
+  btnCancel?.addEventListener('click', (e) => { e.preventDefault(); closeModal(); });
+  $('.modal-close', dlg)?.addEventListener('click', (e) => { e.preventDefault(); closeModal(); });
 
   // ---------- Focus Trap & Keys ----------
   function attachTrap() {
@@ -286,9 +317,7 @@
     let mesh = readMeshChoice();
 
     // Heuristics
-    // 1) Auto-mesh for large homes when auto enabled and explicit mesh not chosen
     if (!mesh && meshAutoVal && coverage === 'Large/Multi-floor') mesh = 'yes';
-    // 2) If user picked "Gaming" or "Prosumer" and no speed chosen, suggest >= 2.5G tier
     let finalWan = wanTierLabel;
     if (!finalWan && (use === 'Gaming' || use === 'Prosumer')) finalWan = '2.5G';
 
@@ -302,7 +331,6 @@
   function normalizeSpeedLabel(v) {
     const s = String(v || '');
     return (s === '≤1G' || s === '2.5G' || s === '5G' || s === '10G') ? s : '';
-    // "" becomes “not sure”
   }
   function readMeshChoice() {
     const r = form?.querySelector('input[name="qMesh"]:checked');
@@ -329,8 +357,7 @@
 
   // ---------- Public extras ----------
   function onInputChange() {
-    // live preview of answered count (optional future use)
-    answeredGroupsCount(); // no-op here, but cheap
+    answeredGroupsCount(); // placeholder for future live preview
   }
   form?.addEventListener('input', onInputChange);
   form?.addEventListener('change', onInputChange);

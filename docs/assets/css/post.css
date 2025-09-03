@@ -781,3 +781,63 @@ html[data-theme="dark"] .post-body h2#bottleneck ~ table td:nth-child(4)::after{
       color-mix(in oklab, var(--text-muted) 12%, transparent);
   }
 }
+/* ===== Bottleneck desktop fine-tuning (drop-in overrides) ===== */
+@media (min-width: 901px){
+
+  /* 1) Grid: equal heights + nicer spacing */
+  .post-body h2#bottleneck ~ table{
+    grid-template-columns: repeat(3, 1fr);
+    gap: clamp(20px, 2.4vw, 28px);
+    grid-auto-rows: 1fr;               /* equal-height cards */
+    align-items: stretch;
+  }
+
+  /* 2) Card internals: consistent rhythm + badge clearance */
+  .post-body h2#bottleneck ~ table tr{
+    /* keep your visual style, but refine spacing */
+    padding: clamp(20px, 1.6vw, 24px) clamp(18px, 1.5vw, 22px) clamp(22px, 1.6vw, 26px);
+    padding-top: calc(clamp(20px,1.6vw,24px) + 14px); /* room for badge */
+    display: grid;
+    grid-template-rows: auto auto auto 1fr auto;      /* puts latency at bottom; perf row aligns */
+    border-color: color-mix(in oklab, var(--text-muted) 10%, transparent);
+  }
+
+  /* 3) Badge positions consistent on all three cards */
+  .post-body h2#bottleneck ~ table tr::after{
+    top: clamp(10px, .9vw, 14px);
+    right: clamp(10px, .9vw, 14px);
+  }
+
+  /* 4) Internal spacing trims */
+  .post-body h2#bottleneck ~ table td{ padding: .65rem 0; position: relative; }
+  .post-body h2#bottleneck ~ table td:nth-child(1){ margin-top:.2rem; font-size:1.02rem; }
+  .post-body h2#bottleneck ~ table td:nth-child(4){ margin-top:.6rem; }  /* performance block */
+  .post-body h2#bottleneck ~ table td:nth-child(5){ margin-top:.8rem; }  /* latency */
+
+  /* 5) Subtle baseline and bar polish */
+  .post-body h2#bottleneck ~ table td:nth-child(4)::before{
+    margin-bottom:.5rem;                /* slightly tighter label */
+  }
+  .post-body h2#bottleneck ~ table td:nth-child(4)::after{
+    bottom:.4rem;                       /* aligns bars across cards */
+  }
+
+  /* 6) Remove any residual “boxed highlight” styling (defensive) */
+  .post-body h2#bottleneck ~ table tbody tr:nth-child(3) td:nth-child(2),
+  .post-body h2#bottleneck ~ table tbody tr:nth-child(3) td:nth-child(4){
+    background:none !important;
+    border:0 !important;
+    padding:.65rem 0 !important;
+    box-shadow:none !important;
+  }
+  .post-body h2#bottleneck ~ table tbody tr:nth-child(3) td:nth-child(2){
+    background-image: linear-gradient(90deg, var(--rev-blue), var(--rev-purple));
+    background-repeat:no-repeat; background-size:100% 2px; background-position:0 100%;
+  }
+}
+
+/* Optional: slightly tighter gap to section title on very wide screens */
+@media (min-width: 1200px){
+  .post-body h2#bottleneck{ margin-bottom: .75rem; }
+}
+

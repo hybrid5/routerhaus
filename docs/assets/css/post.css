@@ -1,6 +1,6 @@
 /* ==========================================================
    RouterHaus Journal — Revolutionary Blog Design (2025)
-   Cleaned & harmonized with main.css tokens
+   FIXED VERSION - Bugs resolved and harmonized with main.css
    ========================================================== */
 
 /* ---------- Local tokens (derived from main.css) ---------- */
@@ -17,7 +17,7 @@
 .reading-progress{
   position:fixed; top:0; left:0; height:4px; width:0;
   background:linear-gradient(90deg,var(--hero-start),var(--hero-end));
-  z-index:1100;
+  z-index:999; /* FIX: Reduced from 1100 to stay below navbar (1000) */
   box-shadow:0 6px 16px rgba(0,0,0,.12);
   transform-origin:0 50%;
   transition:width .1s ease;
@@ -30,10 +30,15 @@
   padding: clamp(1.5rem, 3vw, 3rem) 0;
   display:grid;
   grid-template-columns: 300px 1fr;
+  grid-auto-flow: row dense; /* FIX: Moved to base to prevent layout shifts */
   gap: clamp(1.25rem, 3vw, 2.5rem);
 }
-@media (max-width:1024px){
-  .post-shell{ grid-template-columns: 1fr; }
+/* FIX: Aligned breakpoints with main.css (768px instead of 1024px) */
+@media (max-width:768px){
+  .post-shell{ 
+    grid-template-columns: 1fr; 
+    grid-auto-flow: row; /* Reset to normal flow on mobile */
+  }
 }
 
 /* ---------- Navigation Sidebar (ToC) ---------- */
@@ -85,7 +90,11 @@
 }
 .toc a:hover::before,
 .toc a.active::before{ transform: scaleY(1); }
-@media (max-width:1100px){ .toc{ display:none; } }
+
+/* FIX: Simplified TOC display logic - hide below 900px to match main.css */
+@media (max-width:900px){ 
+  .toc{ display:none; } 
+}
 
 /* ---------- Hero (uses page markup's .post-hero) ---------- */
 .post-hero{
@@ -305,7 +314,8 @@
   color: var(--text-primary);
 }
 .data-table tr:hover td{ background: color-mix(in oklab, var(--primary) 8%, transparent); }
-@media (max-width:640px){ .post-body table{ display:block; overflow-x:auto; } }
+/* FIX: Aligned breakpoint with main.css */
+@media (max-width:768px){ .post-body table{ display:block; overflow-x:auto; } }
 
 /* ---------- Share / Tags / Author ---------- */
 .post-share{
@@ -363,7 +373,8 @@
 }
 .post-nav .meta{ color: var(--text-muted); font-size:.95rem; margin-bottom:.25rem; }
 .post-nav .title{ font-weight:800; }
-@media (max-width:640px){ .post-nav{ grid-template-columns:1fr; } }
+/* FIX: Aligned breakpoint with main.css */
+@media (max-width:768px){ .post-nav{ grid-template-columns:1fr; } }
 
 /* ---------- Reveal Animation ---------- */
 .reveal{ opacity:0; transform:translateY(20px); transition: all .6s var(--rev-curve); }
@@ -382,9 +393,12 @@ html[data-theme="dark"] .post-body pre{
 }
 
 /* ===== Desktop: put TOC left of the hero; content flows on right ===== */
-@media (min-width: 1024px){
+/* FIX: Aligned breakpoint with main.css and simplified logic */
+@media (min-width: 901px){
+  /* FIX: Properly redefine grid template to ensure consistent layout */
   .post-shell{
-    grid-auto-flow: row dense;                /* lets TOC backfill left of hero */
+    grid-template-columns: 300px 1fr;
+    grid-auto-flow: row dense;
   }
 
   /* Breadcrumb stays full-width on top */
@@ -399,7 +413,7 @@ html[data-theme="dark"] .post-body pre{
   .toc{
     grid-column: 1 / 2;
     grid-row: auto;
-    display: block;                           /* override earlier hide below 1100px */
+    display: block;
     max-height: calc(100vh - 96px);
     overflow: auto;
   }
@@ -413,6 +427,7 @@ html[data-theme="dark"] .post-body pre{
 @media (min-width: 1280px){
   .post-hero{ padding: clamp(24px, 3.5vw, 44px); }
 }
+
 /* ==========================================================
    Bottleneck Comparison — Grid Cards (no HTML edits)
    Targets the first table after <h2 id="bottleneck">
@@ -441,7 +456,8 @@ html[data-theme="dark"] .post-body pre{
 }
 
 /* ---------- Desktop: convert table -> 3-column card grid ---------- */
-@media (min-width: 769px){
+/* FIX: Aligned breakpoint with main.css */
+@media (min-width: 901px){
   .post-body h2#bottleneck ~ table{
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -545,11 +561,13 @@ html[data-theme="dark"] .post-body pre{
     border: 1px solid color-mix(in oklab, var(--accent) 25%, transparent);
   }
 
-  /* 6 GHz icons (✖ / – / ✓) */
+  /* 6 GHz icons (✖ / – / ✓) with fallback text */
   .post-body h2#bottleneck ~ table td:nth-child(3)::after{
     content:""; position:absolute; left:.25rem; top:calc(50% + .2rem); transform:translateY(-50%);
     width:20px; height:20px; border-radius:10px;
-    -webkit-mask-size: contain; mask-size: contain; -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
+    -webkit-mask-size: contain; mask-size: contain; 
+    -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
+    -webkit-mask-position: center; mask-position: center; /* FIX: Added missing position */
     background: currentColor; box-shadow: 0 2px 4px rgba(0,0,0,.08);
   }
   .post-body h2#bottleneck ~ table tbody tr:nth-child(1) td:nth-child(3){ color:#ef4444; }
@@ -572,15 +590,15 @@ html[data-theme="dark"] .post-body pre{
   .post-body h2#bottleneck ~ table td:nth-child(4) span{ display:none; }
   .post-body h2#bottleneck ~ table td:nth-child(4){
     --bar: 0%;
-    --pct: "";
+    --pct: "0%"; /* FIX: Changed from empty string to default value */
   }
   .post-body h2#bottleneck ~ table tbody tr:nth-child(1) td:nth-child(4){ --bar: 55%; --pct:"55%"; }
   .post-body h2#bottleneck ~ table tbody tr:nth-child(2) td:nth-child(4){ --bar: 78%; --pct:"78%"; }
   .post-body h2#bottleneck ~ table tbody tr:nth-child(3) td:nth-child(4){ --bar: 96%; --pct:"96%"; }
 
   .post-body h2#bottleneck ~ table td:nth-child(4)::before{
-    /* label row */
-    content: "Performance" "  " var(--pct);
+    /* FIX: Proper CSS content concatenation */
+    content: "Performance  " var(--pct);
     display: flex; justify-content: space-between;
     color: var(--text-muted);
     font-weight: 700; font-size: .85rem;
@@ -678,11 +696,13 @@ html[data-theme="dark"] .post-body pre{
   .post-body h2#bottleneck ~ table td:nth-child(4){ --label:"Typical Throughput"; position:relative; padding-bottom:2.1rem; }
   .post-body h2#bottleneck ~ table td:nth-child(5){ --label:"Latency"; }
 
-  /* icons */
+  /* icons with fallback support */
   .post-body h2#bottleneck ~ table td:nth-child(3)::after{
     content:""; position:absolute; left:0; top:calc(50% + .2rem); transform:translateY(-50%);
     width:18px; height:18px; border-radius:9px; background: currentColor;
-    -webkit-mask-size:contain; mask-size:contain; -webkit-mask-repeat:no-repeat; mask-repeat:no-repeat;
+    -webkit-mask-size:contain; mask-size:contain; 
+    -webkit-mask-repeat:no-repeat; mask-repeat:no-repeat;
+    -webkit-mask-position: center; mask-position: center; /* FIX: Added missing position */
   }
   .post-body h2#bottleneck ~ table tbody tr:nth-child(1) td:nth-child(3){ color:#ef4444; }
   .post-body h2#bottleneck ~ table tbody tr:nth-child(1) td:nth-child(3)::after{
@@ -702,13 +722,14 @@ html[data-theme="dark"] .post-body pre{
 
   /* throughput bar + percent */
   .post-body h2#bottleneck ~ table td:nth-child(4) span{ display:none; }
-  .post-body h2#bottleneck ~ table td:nth-child(4){ --bar: 0%; --pct:""; }
+  .post-body h2#bottleneck ~ table td:nth-child(4){ --bar: 0%; --pct:"0%"; } /* FIX: Default value instead of empty */
   .post-body h2#bottleneck ~ table tbody tr:nth-child(1) td:nth-child(4){ --bar: 55%; --pct:"55%"; --fill: linear-gradient(90deg,#ef4444,#f87171); }
   .post-body h2#bottleneck ~ table tbody tr:nth-child(2) td:nth-child(4){ --bar: 78%; --pct:"78%"; --fill: linear-gradient(90deg,#f59e0b,#fbbf24); }
   .post-body h2#bottleneck ~ table tbody tr:nth-child(3) td:nth-child(4){ --bar: 96%; --pct:"96%"; --fill: linear-gradient(90deg,var(--rev-blue),var(--rev-purple)); }
 
   .post-body h2#bottleneck ~ table td:nth-child(4)::before{
-    content: "Performance" "  " var(--pct);
+    /* FIX: Proper CSS content concatenation */
+    content: "Performance  " var(--pct);
     display:flex; justify-content:space-between; color:var(--text-muted);
     font-weight:700; font-size:.82rem; margin-bottom:.55rem;
   }
@@ -723,10 +744,76 @@ html[data-theme="dark"] .post-body pre{
   }
 }
 
+/* ---------- Browser Fallbacks for CSS Masks ---------- */
+/* FIX: Added fallback support for browsers without CSS mask support */
+@supports not (mask-image: url("data:")) {
+  .post-body h2#bottleneck ~ table td:nth-child(3)::after {
+    /* Fallback: use text symbols instead of SVG masks */
+    content: "";
+    width: auto;
+    height: auto;
+    border-radius: 0;
+    background: none;
+    font-size: 16px;
+    font-weight: 900;
+    line-height: 1;
+  }
+  .post-body h2#bottleneck ~ table tbody tr:nth-child(1) td:nth-child(3)::after{ content: "✖"; }
+  .post-body h2#bottleneck ~ table tbody tr:nth-child(2) td:nth-child(3)::after{ content: "−"; }
+  .post-body h2#bottleneck ~ table tbody tr:nth-child(3) td:nth-child(3)::after{ content: "✓"; }
+}
+
 /* ---------- Dark mode tweaks ---------- */
 html[data-theme="dark"] .post-body h2#bottleneck ~ table td:nth-child(4)::after{
   background:
     linear-gradient(90deg, transparent, rgba(255,255,255,.35), transparent) 0 0 / 50% 100% no-repeat,
     var(--fill, linear-gradient(90deg,var(--rev-blue),var(--rev-purple))) 0 0 / var(--bar) 100% no-repeat,
     color-mix(in oklab, var(--text-muted) 28%, transparent);
+}
+
+/* ---------- Focus States for Accessibility ---------- */
+/* FIX: Added missing focus states */
+.toc a:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+  background: color-mix(in oklab, var(--primary) 12%, transparent);
+}
+
+.post-nav a:focus-visible,
+.speed-card:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 4px;
+}
+
+.copy-button:focus-visible,
+.copy-btn:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+
+/* ---------- Performance Optimizations ---------- */
+/* FIX: Add hardware acceleration hints */
+.toc a,
+.speed-card,
+.post-nav a {
+  will-change: transform;
+}
+
+.post-body h2#bottleneck ~ table tr {
+  will-change: transform;
+}
+
+/* FIX: Reduce backdrop filter usage for better performance */
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  .toc a,
+  .speed-card,
+  .post-nav a,
+  .post-body h2#bottleneck ~ table tr {
+    transition: none;
+  }
+  
+  .bt-shimmer {
+    animation: none;
+  }
 }

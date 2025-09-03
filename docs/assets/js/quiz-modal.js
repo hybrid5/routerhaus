@@ -90,14 +90,14 @@
         // Fallback: show dialog + our manual backdrop
         dlg.setAttribute('open','');
         dlg.classList.add('no-toplayer');
-        dlg.style.display = 'block';
+        dlg.style.removeProperty('display'); // let CSS control visibility
         fbBackdrop.style.display = 'block';
       }
     } catch {
       // Ultra-safe fallback
       dlg.setAttribute('open','');
       dlg.classList.add('no-toplayer');
-      dlg.style.display = 'block';
+      dlg.style.removeProperty('display');   // let CSS control visibility
       fbBackdrop.style.display = 'block';
     }
 
@@ -123,20 +123,10 @@
     // Remove cosmetic flags immediately
     dlg.classList.remove('is-open','no-toplayer');
 
-    try {
-      if (hasShowModal) {
-        // Native: close() is authoritative
-        if (dlg.open) dlg.close();
-      } else {
-        // Fallback: ensure it disappears visually even if UA doesn't hide <dialog>
-        dlg.removeAttribute('open');
-        dlg.style.display = 'none';
-      }
-    } catch {
-      // Belt & suspenders in weird engines
-      dlg.removeAttribute('open');
-      dlg.style.display = 'none';
-    }
+    // Try native close, then force hidden regardless of UA/CSS
+    try { if (hasShowModal && dlg.open) dlg.close(); } catch {}
+    dlg.removeAttribute('open');
+    dlg.style.display = 'none';
 
     // Return focus to opener on the next tick
     setTimeout(() => {

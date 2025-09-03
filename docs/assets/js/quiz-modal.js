@@ -68,8 +68,22 @@
     lastOpener = from || null;
     prefillForm();
     showStep(1);
-    try { if (typeof dlg.showModal === 'function') dlg.showModal(); else dlg.setAttribute('open',''); } catch { dlg.setAttribute('open',''); }
+    try {
+      if (typeof dlg.showModal === 'function') {
+        dlg.showModal();                 // native modal layer + ::backdrop
+        dlg.classList.remove('no-toplayer');
+      } else {
+        dlg.setAttribute('open','');     // fallback (no native backdrop)
+        dlg.classList.add('no-toplayer');
+      }
+    } catch {
+      dlg.setAttribute('open','');
+      dlg.classList.add('no-toplayer');
+    }
     dlg.classList.add('is-open');
+    // lock background scroll for fallback/older browsers
+    document.documentElement.style.overflow = 'hidden';
+
     queueMicrotask(() => firstFocusable(dlg)?.focus());
     attachTrap();
     updateMeshHint();
@@ -77,18 +91,18 @@
   }
   function closeModal() {
     detachTrap();
-    dlg.classList.remove('is-open');
+    dlg.classList.remove('is-open','no-toplayer');
+    // unlock background scroll
+    document.documentElement.style.overflow = '';
     setTimeout(() => {
       try { if (dlg.open) dlg.close(); else dlg.removeAttribute('open'); } catch {}
       try { lastOpener?.focus?.(); } catch {}
     }, 0);
   }
 
-  // Backdrop click closes (outside dialog rect)
+  // Backdrop click closes (clicks outside the panel)
   dlg.addEventListener('click', (e) => {
-    const r = dlg.getBoundingClientRect();
-    const inside = e.clientX >= r.left && e.clientX <= r.right && e.clientY >= r.top && e.clientY <= r.bottom;
-    if (!inside) closeModal();
+    if (!e.target.closest('.modal-content')) closeModal();
   });
   dlg.addEventListener('cancel', (e) => { e.preventDefault(); closeModal(); });
 

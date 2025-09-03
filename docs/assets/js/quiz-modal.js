@@ -41,6 +41,16 @@
     set(v) { try { localStorage.setItem(LS_KEY, JSON.stringify(v)); } catch {} }
   };
 
+  // ---------- Fallback backdrop (for non-top-layer dialogs) ----------
+  let fbBackdrop = document.getElementById('quizBackdrop');
+  if (!fbBackdrop) {
+    fbBackdrop = document.createElement('div');
+    fbBackdrop.id = 'quizBackdrop'; // styled in kits.css
+    fbBackdrop.style.display = 'none';
+    document.body.appendChild(fbBackdrop);
+    fbBackdrop.addEventListener('click', () => closeModal());
+  }
+
   // ---------- Elements ----------
   const form = document.getElementById('quizForm');
   const stepEls = $$('.q-step', form);
@@ -72,16 +82,19 @@
       if (typeof dlg.showModal === 'function') {
         dlg.showModal();                 // native modal layer + ::backdrop
         dlg.classList.remove('no-toplayer');
+        fbBackdrop.style.display = 'none';
       } else {
         dlg.setAttribute('open','');     // fallback (no native backdrop)
         dlg.classList.add('no-toplayer');
+        fbBackdrop.style.display = 'block';
       }
     } catch {
-      dlg.setAttribute('open','');
+      dlg.setAttribute('open','');       // fallback if showModal throws
       dlg.classList.add('no-toplayer');
+      fbBackdrop.style.display = 'block';
     }
     dlg.classList.add('is-open');
-    // lock background scroll for fallback/older browsers
+    // lock background scroll (works for both native and fallback)
     document.documentElement.style.overflow = 'hidden';
 
     queueMicrotask(() => firstFocusable(dlg)?.focus());
@@ -92,6 +105,7 @@
   function closeModal() {
     detachTrap();
     dlg.classList.remove('is-open','no-toplayer');
+    fbBackdrop.style.display = 'none';
     // unlock background scroll
     document.documentElement.style.overflow = '';
     setTimeout(() => {

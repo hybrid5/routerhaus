@@ -921,3 +921,14 @@ button:focus-visible, select:focus-visible, input:focus-visible, [tabindex]:focu
 .drawer{ z-index:150; }
 .modal{ z-index:160; }
 .page-progress-ring{ z-index:200; }
+
+/* Fallback backdrop for non-top-layer dialogs */
+#quizBackdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.8);
+  backdrop-filter: blur(12px);
+  z-index: 155;          /* below .modal (160), above page */
+  display: none;
+}
+

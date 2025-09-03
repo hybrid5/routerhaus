@@ -568,7 +568,6 @@ details.facet[open] .chev{ transform: rotate(180deg); color: var(--primary); }
   /* Overlay container (centers panel reliably) */
   position: fixed;
   inset: 0;
-  display: grid;
   place-items: center;                /* hard center */
   padding: clamp(12px, 2vw, 24px);    /* gutter around panel */
   margin: 0;
@@ -583,7 +582,16 @@ details.facet[open] .chev{ transform: rotate(180deg); color: var(--primary); }
   width: 100vw;
   height: 100vh;
   max-height: 100vh;
+
+  /* Hidden by default. Shown only when [open] or .is-open */
+  display: none;
 }
+.modal[open],
+.modal.is-open{ display: grid; }
+
+/* Extra belt & suspenders for dialog behavior in odd engines */
+dialog.modal:not([open]):not(.is-open){ display: none !important; }
+
 .modal::backdrop{
   background: rgba(0,0,0,.8);
   backdrop-filter: blur(12px);

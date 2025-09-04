@@ -74,15 +74,6 @@
     search: (urlQS.get('q') || '').trim().toLowerCase(),
     contentIndexed: false,  // set true after we lazily index HTML bodies
   };
-
-  // ---------- Reveal ----------
-  const io = new IntersectionObserver((entries)=>{
-    entries.forEach(e=>{
-      if(e.isIntersecting){ e.target.classList.add('in-view'); io.unobserve(e.target); }
-    });
-  }, { threshold: 0.1, rootMargin: '0px 0px -10% 0px' });
-  const revealify = () => $$('.reveal').forEach(n => io.observe(n));
-
   // ---------- Data ----------
   const FALLBACK_POSTS = [
     { id:'p1', title:'Wi-Fi 7 vs 6E: What Actually Changes at Home?', slug:'wifi-7-vs-6e', author:'RouterHaus', date:'2025-02-10',
@@ -328,7 +319,7 @@
       ch.addEventListener('click', () => { const t = ch.dataset.tag; if (t) state.tags.add(t); state.page = 1; onStateChanged({ scrollToTop:true }); });
     });
     el.featuredHero.querySelector('[data-preview]')?.addEventListener('click', async () => openPreview(await fetchPostBody(f)));
-    revealify();
+    window.RH?.reveal();
   }
 
   function renderActiveChips() {
@@ -351,7 +342,7 @@
     const frag = document.createDocumentFragment();
     for (const p of items) frag.appendChild(renderCard(p));
     el.resultsGrid.appendChild(frag);
-    revealify();
+    window.RH?.reveal();
   }
 
   function renderCard(p) {

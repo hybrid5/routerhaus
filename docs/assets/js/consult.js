@@ -1,6 +1,5 @@
 /* assets/js/consult.js
  * RouterHaus — Consult page interactions
- * - Header/footer partials
  * - Case scroller controls
  * - IntersectionObserver reveals
  * - Intake multi-step form with validation
@@ -11,28 +10,6 @@
   const $ = (sel, root = document) => root.querySelector(sel);
   const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
   const byId = (id) => document.getElementById(id);
-
-  // ----- Mount partials -----
-  async function mountPartial(target) {
-    const path = target?.dataset?.partial;
-    if (!path) return;
-    try {
-      const res = await fetch(path, { cache: 'no-store' });
-      if (res.ok) target.innerHTML = await res.text();
-    } catch { /* ignore */ }
-  }
-
-  // ----- Intersection reveals -----
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach((e) => {
-      if (e.isIntersecting) {
-        e.target.classList.add('in-view');
-        io.unobserve(e.target);
-      }
-    });
-  }, { rootMargin: '0px 0px -10% 0px', threshold: 0.1 });
-
-  function revealify() { $$('.reveal').forEach((el) => io.observe(el)); }
 
   // ----- Case scroller -----
   function wireCases() {
@@ -152,12 +129,8 @@ ${(data.notes || '').trim() || '(none)'}
   }
 
   // ----- Init -----
-  document.addEventListener('DOMContentLoaded', async () => {
-    await Promise.all([
-      mountPartial(byId('header-placeholder')),
-      mountPartial(byId('footer-placeholder')),
-    ]);
-    revealify();
+  document.addEventListener('DOMContentLoaded', () => {
+    window.RH?.reveal();
     wireCases();
     wireIntake();
     storeUTMs();

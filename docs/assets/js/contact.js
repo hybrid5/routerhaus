@@ -1,6 +1,5 @@
 /* assets/js/contact.js
  * RouterHaus — Contact page interactions
- * - Mount header/footer partials
  * - IntersectionObserver reveal
  * - Live reply ETA message
  * - Contact form validation
@@ -12,24 +11,6 @@
   const $ = (sel, root=document) => root.querySelector(sel);
   const $$ = (sel, root=document) => Array.from(root.querySelectorAll(sel));
   const byId = (id) => document.getElementById(id);
-
-  // ---- Partials ----
-  async function mountPartial(target){
-    const path = target?.dataset?.partial;
-    if(!path) return;
-    try{
-      const res = await fetch(path, { cache: 'no-store' });
-      if(res.ok) target.innerHTML = await res.text();
-    }catch{}
-  }
-
-  // ---- Reveal on scroll ----
-  const io = new IntersectionObserver((entries)=>{
-    entries.forEach(e=>{
-      if(e.isIntersecting){ e.target.classList.add('in-view'); io.unobserve(e.target); }
-    });
-  }, { threshold: 0.1, rootMargin: '0px 0px -10% 0px' });
-  function revealify(){ $$('.reveal').forEach(n => io.observe(n)); }
 
   // ---- Reply ETA (simple heuristic) ----
   function updateEta(){
@@ -157,12 +138,8 @@ Links: ${data.link || '-'}
   }
 
   // ---- Init ----
-  document.addEventListener('DOMContentLoaded', async ()=>{
-    await Promise.all([
-      mountPartial(byId('header-placeholder')),
-      mountPartial(byId('footer-placeholder')),
-    ]);
-    revealify();
+  document.addEventListener('DOMContentLoaded', () => {
+    window.RH?.reveal();
     updateEta();
     wireCopy();
     wireForm();

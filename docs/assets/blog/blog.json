@@ -8,7 +8,7 @@
     "tags": ["Wi-Fi 7", "Apple", "iPhone", "Buying Guide"],
     "excerpt": "Apple’s iPhone 16 Pro ships with a Wi-Fi 7 chip and 320 MHz channel support—but you won’t see the speed or latency benefits unless your router can keep up.",
     "content": "<p>Apple quietly made the iPhone 16 Pro one of the first mainstream Wi-Fi 7 devices. With its new 320 MHz channel support, the phone can hit multi-gigabit speeds and enjoy lower latency for AirDrop, streaming, and gaming. But unless you upgrade your router, you won’t feel any of those benefits. This post explains exactly why your new iPhone deserves a Wi-Fi 7 router.</p>",
-    "cover": "assets/blog/img/iphone16-wifi7.jpg",
+    "cover": "assets/img/iphone-wifi7-hero-min.jpg",
     "minutes": 8,
     "featured": true,
     "views": 0
@@ -22,7 +22,7 @@
     "tags": ["Mesh", "Routers", "Coverage"],
     "excerpt": "Do you really need a mesh system, or will a single high-end Wi-Fi 7 router cover your home? We break it down by square footage, layout, and device load.",
     "content": "<p>Mesh isn’t always the answer. For apartments and smaller homes, a single Wi-Fi 7 router may outperform a 3-node mesh. But for multi-story layouts and ranch-style homes with tough materials, mesh with wired backhaul is the way to go. Here’s how to decide.</p>",
-    "cover": "assets/blog/img/mesh-vs-router.jpg",
+    "cover": "https://images.unsplash.com/photo-1492724441997-5dc865305da7?w=1200&auto=format&fit=crop",
     "minutes": 7,
     "featured": false,
     "views": 0
@@ -36,7 +36,7 @@
     "tags": ["WFH", "Wi-Fi 7", "QoS", "Security"],
     "excerpt": "Video calls, uploads, and VPNs demand reliability more than raw speed. Here’s how to design a home network that won’t drop mid-meeting.",
     "content": "<p>A work-from-home network must prioritize latency, coverage, and device contention control. That means using Wi-Fi 7 for modern devices, wiring desks where possible, enabling QoS, and isolating IoT on guest Wi-Fi or VLANs. This post walks you through a blueprint for apartments, ranches, and multi-story homes.</p>",
-    "cover": "assets/blog/img/wfh-network-hero.jpg",
+    "cover": "https://images.unsplash.com/photo-1580894894513-6451c0a1c8fa?w=1200&auto=format&fit=crop",
     "minutes": 12,
     "featured": false,
     "views": 0
@@ -50,7 +50,7 @@
     "tags": ["Coverage", "Dead Zones", "Mesh", "Wi-Fi 7"],
     "excerpt": "Fast specs don’t fix weak coverage. Dead zones are solved by placement, mesh nodes, and wiring—not just a ‘powerful’ router.",
     "content": "<p>Modern Wi-Fi 7 routers boast 320 MHz channels and multi-link operation, but if your office or bedroom has −70 dBm signal, performance tanks. This guide shows how to identify dead zones, understand how walls and materials block signals, and apply practical fixes—from router placement to mesh with wired backhaul.</p>",
-    "cover": "assets/blog/img/why-range-hero.jpg",
+    "cover": "https://images.unsplash.com/photo-1520880867055-1e30d1cb001c?w=1200&auto=format&fit=crop",
     "minutes": 9,
     "featured": false,
     "views": 0
@@ -64,7 +64,7 @@
     "tags": ["Bandwidth", "Devices", "Wi-Fi 7", "Home Networking"],
     "excerpt": "Smart homes with 30–50 devices are now common. Learn how MU-MIMO, OFDMA, and QoS keep calls smooth and streaming stable when everything is online.",
     "content": "<p>It’s normal for a home to have 40+ devices online: phones, TVs, cameras, consoles, smart speakers, thermostats. Without proper airtime management, everything slows. Wi-Fi 7 routers with MU-MIMO, OFDMA, and QoS prevent congestion. Here’s how bandwidth is split, and how to make sure your network doesn’t crumble under load.</p>",
-    "cover": "assets/blog/img/many-devices.jpg",
+    "cover": "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?w=1200&auto=format&fit=crop",
     "minutes": 10,
     "featured": false,
     "views": 0

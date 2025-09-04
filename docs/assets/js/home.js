@@ -1,25 +1,12 @@
 /* ============================
    RouterHaus – home.js
-   Stable, aligned with other pages; safe partial mounting
+   Persona chips, reveals, and card tilt
 ============================ */
 (() => {
   "use strict";
   const $ = (s, r = document) => r.querySelector(s);
   const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
 
-  /* ---- Partials (idempotent) ---- */
-  async function mountPartial(target){
-    const path = target?.dataset?.partial;
-    if(!path || (target?.children?.length ?? 0) > 0) return;
-    try{
-      const res = await fetch(path, { cache: 'no-store' });
-      if(res.ok){
-        const html = await res.text();
-        // Only set if still empty (avoid racing with global scripts.js)
-        if ((target?.children?.length ?? 0) === 0) target.innerHTML = html;
-      }
-    }catch{}
-  }
 
   /* ---- Persona quick chips → route to kits with mapped filters ---- */
   function wireQuickChips() {
@@ -38,24 +25,6 @@
         window.location.href = `kits.html?${qs}`;
       });
     });
-  }
-
-  /* ---- Reveal animations on scroll ---- */
-  function revealify() {
-    const els = $$(".reveal");
-    if (!els.length || !("IntersectionObserver" in window)) return;
-    const io = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((en) => {
-          if (en.isIntersecting) {
-            en.target.classList.add("in-view");
-            io.unobserve(en.target);
-          }
-        });
-      },
-      { rootMargin: "0px 0px -10% 0px", threshold: 0.1 }
-    );
-    els.forEach((el) => io.observe(el));
   }
 
   /* ---- FAQ accordion (no HTML changes needed) ---- */
@@ -97,15 +66,9 @@
   }
 
   /* ---- Init ---- */
-  document.addEventListener("DOMContentLoaded", async () => {
-    await Promise.all([
-      mountPartial($("#header-placeholder")),
-      mountPartial($("#footer-placeholder")),
-    ]);
-    // If your global scripts.js already mounts partials, the above is a no-op.
-
+  document.addEventListener("DOMContentLoaded", () => {
     wireQuickChips();
-    revealify();
+    window.RH?.reveal();
     wireAccordion();
     tiltCards();
   });

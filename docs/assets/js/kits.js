@@ -46,9 +46,6 @@
 
   // ---------- Elements ----------
   const el = {
-    headerMount: byId('header-placeholder'),
-    footerMount: byId('footer-placeholder'),
-
     filtersAside: byId('filtersAside'),
     filtersForm: byId('filtersForm'),
     expandAll: byId('expandAll'),
@@ -125,15 +122,6 @@
     facet_priceBucket: byId('facet-priceBucket'),
   };
 
-  // ---------- Partials (header/footer) ----------
-  const mountPartial = async (target) => {
-    const path = target?.dataset?.partial;
-    if (!path) return;
-    try {
-      const res = await fetch(path, { cache: 'no-store' });
-      if (res.ok) target.innerHTML = await res.text();
-    } catch {}
-  };
 
   // ---------- Data load / normalize ----------
   const getJsonUrl = () => (window.RH_CONFIG?.jsonUrl || 'kits.json');
@@ -1070,7 +1058,6 @@
 
   // ---------- Lifecycle ----------
   async function init() {
-    await Promise.all([mountPartial(el.headerMount), mountPartial(el.footerMount)]);
     wireHeaderQuizBridges();
 
     renderSkeletons(12);

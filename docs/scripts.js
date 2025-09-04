@@ -10,6 +10,27 @@
 const debounce = (fn, d = 200) => { let t; return (...a) => { clearTimeout(t); t = setTimeout(() => fn.apply(null, a), d); }; };
 const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
 
+/* ---------- Reveal helper ---------- */
+function reveal(selector = ".reveal") {
+  const els = $$(selector);
+  if (!els.length || !("IntersectionObserver" in window)) return;
+  const io = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) {
+          e.target.classList.add("in-view");
+          io.unobserve(e.target);
+        }
+      });
+    },
+    { threshold: 0.1, rootMargin: "0px 0px -10% 0px" }
+  );
+  els.forEach((el) => io.observe(el));
+}
+
+// expose minimal namespace
+window.RH = Object.assign(window.RH || {}, { reveal });
+
 /* ---------- Toast (lightweight) ---------- */
 function showToast(msg, type = "success") {
   let c = document.getElementById("toast-container");
@@ -36,20 +57,19 @@ function showToast(msg, type = "success") {
 
 /* ---------- Partials ---------- */
 async function loadPartials() {
-  const headHolder = document.getElementById("header-placeholder");
-  if (headHolder && (headHolder.children?.length ?? 0) === 0) {
+  async function inject(id, fallback) {
+    const holder = document.getElementById(`${id}-placeholder`);
+    if (!holder || holder.children.length) return;
+    const path = holder.dataset.partial || fallback;
     try {
-      const h = await fetch("header.html", { cache: "no-store" });
-      if (h.ok) headHolder.innerHTML = await h.text(); // keep node; cooperate with page scripts
+      const resp = await fetch(path, { cache: "no-store" });
+      if (resp.ok) holder.innerHTML = await resp.text();
     } catch {}
   }
-  const footHolder = document.getElementById("footer-placeholder");
-  if (footHolder && (footHolder.children?.length ?? 0) === 0) {
-    try {
-      const f = await fetch("footer.html", { cache: "no-store" });
-      if (f.ok) footHolder.innerHTML = await f.text();
-    } catch {}
-  }
+  await Promise.all([
+    inject("header", "header.html"),
+    inject("footer", "footer.html"),
+  ]);
   document.dispatchEvent(new CustomEvent("partials:loaded"));
 }
 
@@ -153,6 +173,18 @@ function initUI() {
     if (!t) return;
     e.preventDefault();
     window.location.href = "kits.html?quiz=1";
+  });
+
+  /* Highlight active link */
+  const current = location.pathname === "/" ? "/index.html" : location.pathname;
+  $$(".nav-desktop a, #sidebar nav a, .footer-links a").forEach((a) => {
+    const href = a.getAttribute("href");
+    if (!href) return;
+    if (href === current || (href === "/index.html" && current === "/")) {
+      a.setAttribute("aria-current", "page");
+    } else {
+      a.removeAttribute("aria-current");
+    }
   });
 }
 

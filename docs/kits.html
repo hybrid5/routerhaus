@@ -2,19 +2,25 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
+  <meta http-equiv="Content-Language" content="en-US">
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <!-- Title/Description (non-visible UI impact) -->
+  <!-- Title / Description -->
   <title>Compare Routers & Mesh (Wi-Fi 7/6E) — Filter & Buy | RouterHaus</title>
   <meta name="description" content="Filter and compare Wi-Fi 7 / Wi-Fi 6E routers and mesh systems by coverage, device count, multi-gig (2.5/5/10GbE), price, and use-case. Brands include ASUS, Netgear, TP-Link, Ubiquiti, Google, eero, Linksys, Synology." />
 
-  <!-- Canonical to base (update domain if needed) -->
+  <!-- Canonical (stable; no client-side rewrites) -->
   <link rel="canonical" href="https://www.routerhaus.com/kits.html" />
 
-  <!-- Robots default: indexable base; param pages handled via script below -->
-  <meta name="robots" content="index,follow" />
+  <!-- Robots: maximize snippet/preview for SEO + AEO -->
+  <meta name="robots" content="index,follow,max-snippet:-1,max-image-preview:large,max-video-preview:-1" />
+  <meta name="googlebot" content="index,follow,max-snippet:-1,max-image-preview:large,max-video-preview:-1" />
+  <meta name="bingbot" content="index,follow" />
 
-  <!-- Color scheme / PWA -->
+  <!-- Hreflang (expand later if localized) -->
+  <link rel="alternate" href="https://www.routerhaus.com/kits.html" hreflang="en" />
+
+  <!-- PWA / Theme -->
   <meta name="color-scheme" content="light dark" />
   <meta name="theme-color" content="#6f7dff">
 
@@ -25,7 +31,7 @@
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <link rel="manifest" href="/site.webmanifest">
 
-  <!-- Open Graph / Twitter (non-visible, improves share previews) -->
+  <!-- Open Graph / Twitter -->
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="RouterHaus" />
   <meta property="og:title" content="Compare Routers & Mesh (Wi-Fi 7/6E) — Filter & Buy" />
@@ -33,15 +39,23 @@
   <meta property="og:url" content="https://www.routerhaus.com/kits.html" />
   <meta property="og:image" content="https://www.routerhaus.com/assets/img/og/routerhaus-kits.webp" />
   <meta property="og:image:alt" content="RouterHaus — compare routers and mesh Wi-Fi kits" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
   <meta name="twitter:card" content="summary_large_image" />
 
   <!-- Performance hints -->
-  <link rel="preload" href="kits.json" as="fetch" type="application/json" />
+  <link rel="preload" href="main.css" as="style" />
+  <link rel="preload" href="assets/css/kits.css" as="style" />
+  <link rel="preload" href="kits.json" as="fetch" type="application/json" crossorigin="anonymous" />
   <link rel="preconnect" href="https://www.routerhaus.com" crossorigin>
+  <link rel="dns-prefetch" href="//images.unsplash.com">
   <link rel="preconnect" href="https://images.unsplash.com" crossorigin>
   <link rel="preconnect" href="https://store.ui.com" crossorigin>
+  <link rel="dns-prefetch" href="//www.amazon.com">
+  <link rel="dns-prefetch" href="//www.bestbuy.com">
+  <link rel="dns-prefetch" href="//www.newegg.com">
 
-  <!-- Theme sync to system with no FOUC -->
+  <!-- Theme sync (no FOUC) -->
   <script>
     (() => {
       const root = document.documentElement;
@@ -72,11 +86,16 @@
     <span class="progress-percentage">0%</span>
   </div>
 
-  <!-- Header partial mounts BEFORE main to avoid CLS -->
+  <!-- Header partial -->
   <div id="header-placeholder" data-partial="header.html"></div>
 
-  <!-- Main two-column layout (sticky filter rail + results) -->
+  <!-- Main two-column layout -->
   <main id="main-content" class="container kits-layout" role="main">
+    <!-- Keep H1 non-visual to avoid UI changes -->
+    <h1 class="sr-only" style="position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;">
+      Compare Wi-Fi Routers &amp; Mesh Systems (2025)
+    </h1>
+
     <!-- Desktop filter rail -->
     <aside id="filtersAside" class="filters-rail glass" aria-label="Filters" role="complementary">
       <div class="filters-header">
@@ -89,18 +108,9 @@
       </div>
 
       <div class="facet-toolbar" role="group" aria-label="Facet tools">
-        <button type="button" id="expandAll" class="btn small" aria-label="Expand all">
-          <span aria-hidden="true">⬇</span>
-          Expand all
-        </button>
-        <button type="button" id="collapseAll" class="btn small" aria-label="Collapse all">
-          <span aria-hidden="true">⬆</span>
-          Collapse all
-        </button>
-        <button type="button" id="clearAllFacets" class="btn small ghost" aria-label="Clear all">
-          <span aria-hidden="true">✕</span>
-          Clear all
-        </button>
+        <button type="button" id="expandAll" class="btn small" aria-label="Expand all"><span aria-hidden="true">⬇</span>Expand all</button>
+        <button type="button" id="collapseAll" class="btn small" aria-label="Collapse all"><span aria-hidden="true">⬆</span>Collapse all</button>
+        <button type="button" id="clearAllFacets" class="btn small ghost" aria-label="Clear all"><span aria-hidden="true">✕</span>Clear all</button>
       </div>
 
       <form id="filtersForm" class="filters-form" aria-describedby="matchCount">
@@ -126,14 +136,9 @@
         <details class="facet" data-facet="brand" open>
           <summary>
             <span class="facet-title">Brand</span>
-            <span class="facet-meta">
-              <span class="badge count" id="badge-brand"></span>
-              <span class="chev" aria-hidden="true">▾</span>
-            </span>
+            <span class="facet-meta"><span class="badge count" id="badge-brand"></span><span class="chev" aria-hidden="true">▾</span></span>
           </summary>
-          <div class="facet-controls">
-            <button type="button" class="btn tiny facet-clear" data-clear="brand">Clear</button>
-          </div>
+          <div class="facet-controls"><button type="button" class="btn tiny facet-clear" data-clear="brand">Clear</button></div>
           <div class="options" id="facet-brand"></div>
         </details>
 
@@ -141,28 +146,16 @@
         <details class="facet" data-facet="wifi" open>
           <summary>
             <span class="facet-title">Wi-Fi Speed & Tech</span>
-            <span class="facet-meta">
-              <span class="badge count" id="badge-wifiGen"></span>
-              <span class="chev" aria-hidden="true">▾</span>
-            </span>
+            <span class="facet-meta"><span class="badge count" id="badge-wifiGen"></span><span class="chev" aria-hidden="true">▾</span></span>
           </summary>
-          <div class="facet-controls">
-            <button type="button" class="btn tiny facet-clear" data-clear="wifi">Clear</button>
-          </div>
+          <div class="facet-controls"><button type="button" class="btn tiny facet-clear" data-clear="wifi">Clear</button></div>
           <div class="options two-cols" id="facet-wifiGen"></div>
         </details>
 
         <!-- Wi-Fi Bands -->
         <details class="facet" data-facet="bands">
-          <summary>
-            <span class="facet-title">Wi-Fi Bands</span>
-            <span class="facet-meta">
-              <span class="chev" aria-hidden="true">▾</span>
-            </span>
-          </summary>
-          <div class="facet-controls">
-            <button type="button" class="btn tiny facet-clear" data-clear="bands">Clear</button>
-          </div>
+          <summary><span class="facet-title">Wi-Fi Bands</span><span class="facet-meta"><span class="chev" aria-hidden="true">▾</span></span></summary>
+          <div class="facet-controls"><button type="button" class="btn tiny facet-clear" data-clear="bands">Clear</button></div>
           <div class="options two-cols" id="facet-wifiBands"></div>
         </details>
 
@@ -170,14 +163,9 @@
         <details class="facet" data-facet="mesh" open>
           <summary>
             <span class="facet-title">Whole-Home Coverage (Mesh)</span>
-            <span class="facet-meta">
-              <span class="badge count" id="badge-meshReady"></span>
-              <span class="chev" aria-hidden="true">▾</span>
-            </span>
+            <span class="facet-meta"><span class="badge count" id="badge-meshReady"></span><span class="chev" aria-hidden="true">▾</span></span>
           </summary>
-          <div class="facet-controls">
-            <button type="button" class="btn tiny facet-clear" data-clear="mesh">Clear</button>
-          </div>
+          <div class="facet-controls"><button type="button" class="btn tiny facet-clear" data-clear="mesh">Clear</button></div>
           <div class="options" id="facet-meshReady"></div>
           <div class="options" id="facet-meshEco"></div>
         </details>
@@ -186,56 +174,30 @@
         <details class="facet" data-facet="wan">
           <summary>
             <span class="facet-title">Internet Speed Support</span>
-            <span class="facet-meta">
-              <span class="badge count" id="badge-wanTier"></span>
-              <span class="chev" aria-hidden="true">▾</span>
-            </span>
+            <span class="facet-meta"><span class="badge count" id="badge-wanTier"></span><span class="chev" aria-hidden="true">▾</span></span>
           </summary>
-          <div class="facet-controls">
-            <button type="button" class="btn tiny facet-clear" data-clear="wan">Clear</button>
-          </div>
+          <div class="facet-controls"><button type="button" class="btn tiny facet-clear" data-clear="wan">Clear</button></div>
           <div class="options two-cols" id="facet-wanTier"></div>
         </details>
 
         <!-- LAN Ports -->
         <details class="facet" data-facet="lanCount">
-          <summary>
-            <span class="facet-title">Wired Ports (LAN)</span>
-            <span class="facet-meta">
-              <span class="chev" aria-hidden="true">▾</span>
-            </span>
-          </summary>
-          <div class="facet-controls">
-            <button type="button" class="btn tiny facet-clear" data-clear="lanCount">Clear</button>
-          </div>
+          <summary><span class="facet-title">Wired Ports (LAN)</span><span class="facet-meta"><span class="chev" aria-hidden="true">▾</span></span></summary>
+          <div class="facet-controls"><button type="button" class="btn tiny facet-clear" data-clear="lanCount">Clear</button></div>
           <div class="options two-cols" id="facet-lanCount"></div>
         </details>
 
         <!-- Multi-Gig LAN -->
         <details class="facet" data-facet="multiGigLan">
-          <summary>
-            <span class="facet-title">Super-Fast Wired Ports</span>
-            <span class="facet-meta">
-              <span class="chev" aria-hidden="true">▾</span>
-            </span>
-          </summary>
-          <div class="facet-controls">
-            <button type="button" class="btn tiny facet-clear" data-clear="multiGigLan">Clear</button>
-          </div>
+          <summary><span class="facet-title">Super-Fast Wired Ports</span><span class="facet-meta"><span class="chev" aria-hidden="true">▾</span></span></summary>
+          <div class="facet-controls"><button type="button" class="btn tiny facet-clear" data-clear="multiGigLan">Clear</button></div>
           <div class="options two-cols" id="facet-multiGigLan"></div>
         </details>
 
         <!-- USB Ports -->
         <details class="facet" data-facet="usb">
-          <summary>
-            <span class="facet-title">USB Ports</span>
-            <span class="facet-meta">
-              <span class="chev" aria-hidden="true">▾</span>
-            </span>
-          </summary>
-          <div class="facet-controls">
-            <button type="button" class="btn tiny facet-clear" data-clear="usb">Clear</button>
-          </div>
+          <summary><span class="facet-title">USB Ports</span><span class="facet-meta"><span class="chev" aria-hidden="true">▾</span></span></summary>
+          <div class="facet-controls"><button type="button" class="btn tiny facet-clear" data-clear="usb">Clear</button></div>
           <div class="options two-cols" id="facet-usb"></div>
         </details>
 
@@ -243,14 +205,9 @@
         <details class="facet" data-facet="coverage" open>
           <summary>
             <span class="facet-title">Home Size Coverage</span>
-            <span class="facet-meta">
-              <span class="badge count" id="badge-coverageBucket"></span>
-              <span class="chev" aria-hidden="true">▾</span>
-            </span>
+            <span class="facet-meta"><span class="badge count" id="badge-coverageBucket"></span><span class="chev" aria-hidden="true">▾</span></span>
           </summary>
-          <div class="facet-controls">
-            <button type="button" class="btn tiny facet-clear" data-clear="coverage">Clear</button>
-          </div>
+          <div class="facet-controls"><button type="button" class="btn tiny facet-clear" data-clear="coverage">Clear</button></div>
           <div class="options two-cols" id="facet-coverageBucket"></div>
         </details>
 
@@ -258,14 +215,9 @@
         <details class="facet" data-facet="device" open>
           <summary>
             <span class="facet-title">Number of Devices on Wi-Fi</span>
-            <span class="facet-meta">
-              <span class="badge count" id="badge-deviceLoad"></span>
-              <span class="chev" aria-hidden="true">▾</span>
-            </span>
+            <span class="facet-meta"><span class="badge count" id="badge-deviceLoad"></span><span class="chev" aria-hidden="true">▾</span></span>
           </summary>
-          <div class="facet-controls">
-            <button type="button" class="btn tiny facet-clear" data-clear="device">Clear</button>
-          </div>
+          <div class="facet-controls"><button type="button" class="btn tiny facet-clear" data-clear="device">Clear</button></div>
           <div class="options two-cols" id="facet-deviceLoad"></div>
         </details>
 
@@ -273,28 +225,16 @@
         <details class="facet" data-facet="use" open>
           <summary>
             <span class="facet-title">Main Use</span>
-            <span class="facet-meta">
-              <span class="badge count" id="badge-primaryUse"></span>
-              <span class="chev" aria-hidden="true">▾</span>
-            </span>
+            <span class="facet-meta"><span class="badge count" id="badge-primaryUse"></span><span class="chev" aria-hidden="true">▾</span></span>
           </summary>
-          <div class="facet-controls">
-            <button type="button" class="btn tiny facet-clear" data-clear="use">Clear</button>
-          </div>
+          <div class="facet-controls"><button type="button" class="btn tiny facet-clear" data-clear="use">Clear</button></div>
           <div class="options" id="facet-primaryUse"></div>
         </details>
 
         <!-- Internet Type -->
         <details class="facet" data-facet="access">
-          <summary>
-            <span class="facet-title">Internet Type</span>
-            <span class="facet-meta">
-              <span class="chev" aria-hidden="true">▾</span>
-            </span>
-          </summary>
-          <div class="facet-controls">
-            <button type="button" class="btn tiny facet-clear" data-clear="access">Clear</button>
-          </div>
+          <summary><span class="facet-title">Internet Type</span><span class="facet-meta"><span class="chev" aria-hidden="true">▾</span></span></summary>
+          <div class="facet-controls"><button type="button" class="btn tiny facet-clear" data-clear="access">Clear</button></div>
           <div class="options two-cols" id="facet-access"></div>
         </details>
 
@@ -302,14 +242,9 @@
         <details class="facet" data-facet="price">
           <summary>
             <span class="facet-title">Price Range</span>
-            <span class="facet-meta">
-              <span class="badge count" id="badge-priceBucket"></span>
-              <span class="chev" aria-hidden="true">▾</span>
-            </span>
+            <span class="facet-meta"><span class="badge count" id="badge-priceBucket"></span><span class="chev" aria-hidden="true">▾</span></span>
           </summary>
-          <div class="facet-controls">
-            <button type="button" class="btn tiny facet-clear" data-clear="price">Clear</button>
-          </div>
+          <div class="facet-controls"><button type="button" class="btn tiny facet-clear" data-clear="price">Clear</button></div>
           <div class="options two-cols" id="facet-priceBucket"></div>
         </details>
 
@@ -326,22 +261,16 @@
 
     <!-- Mobile filter FAB & drawer -->
     <button id="filtersFab" class="fab" aria-controls="filtersDrawer" aria-expanded="false">
-      <span aria-hidden="true">⚙</span>
-      Filters
-      <span id="activeCount" class="badge count">0</span>
+      <span aria-hidden="true">⚙</span>Filters <span id="activeCount" class="badge count">0</span>
     </button>
 
     <div id="filtersDrawer" class="drawer" aria-hidden="true" aria-labelledby="drawerTitle" role="dialog">
       <div class="drawer-panel glass">
         <div class="drawer-header">
           <h2 id="drawerTitle">Filters</h2>
-          <button class="modal-close" data-close-drawer type="button" aria-label="Close filters">
-            <span aria-hidden="true">&times;</span>
-          </button>
+          <button class="modal-close" data-close-drawer type="button" aria-label="Close filters"><span aria-hidden="true">&times;</span></button>
         </div>
-        <div class="drawer-body">
-          <div id="drawerFormMount"></div>
-        </div>
+        <div class="drawer-body"><div id="drawerFormMount"></div></div>
         <div class="drawer-footer">
           <button class="btn ghost" data-close-drawer type="button">Cancel</button>
           <button id="applyDrawer" class="btn primary" type="button">Apply Filters</button>
@@ -357,15 +286,9 @@
           <div class="search-container">
             <div class="search-wrapper">
               <span class="search-icon" aria-hidden="true">🔍</span>
-              <input type="text" id="searchInput"
-                     placeholder="Search by brand, model, or feature…"
-                     aria-label="Search routers"
-                     autocomplete="off" />
+              <input type="text" id="searchInput" placeholder="Search by brand, model, or feature…" aria-label="Search routers" autocomplete="off" />
             </div>
-            <button id="searchBtn" class="btn primary" type="button" aria-label="Run search">
-              <span aria-hidden="true">🔍</span>
-              Search
-            </button>
+            <button id="searchBtn" class="btn primary" type="button" aria-label="Run search"><span aria-hidden="true">🔍</span>Search</button>
             <button id="openQuiz" class="btn ghost" type="button">Find My Router</button>
           </div>
         </div>
@@ -389,7 +312,6 @@
               <option value="reviews-desc">Best Reviewed</option>
             </select>
           </label>
-
           <label class="pagesize">
             <span>Per page</span>
             <select id="pageSizeSelect" aria-label="Results per page">
@@ -406,11 +328,7 @@
             <span class="toggle-slider" aria-hidden="true"></span>
             <span>Show recommendations</span>
           </label>
-
-          <button id="openFiltersHeader" class="btn glass" type="button" aria-label="Open filters">
-            <span aria-hidden="true">⚙</span>
-            Filters
-          </button>
+          <button id="openFiltersHeader" class="btn glass" type="button" aria-label="Open filters"><span aria-hidden="true">⚙</span>Filters</button>
         </div>
       </div>
 
@@ -440,7 +358,6 @@
         <!-- Empty state -->
         <div id="emptyState" class="empty-modern hide" role="note" aria-live="polite">
           <div class="empty-icon" aria-hidden="true">
-            <!-- Simple inline magnifier icon (no emoji) -->
             <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
               <circle cx="11" cy="11" r="7"></circle>
               <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
@@ -482,47 +399,30 @@
   <dialog id="quizModal" class="modal" aria-labelledby="quizTitle" aria-modal="true">
     <div class="modal-content">
       <header class="modal-header">
-        <div class="modal-title-group">
-          <h2 id="quizTitle">Help me pick a router</h2>
-        </div>
-        <button type="button" class="modal-close" aria-label="Close quiz">
-          <span aria-hidden="true">&times;</span>
-        </button>
+        <div class="modal-title-group"><h2 id="quizTitle">Help me pick a router</h2></div>
+        <button type="button" class="modal-close" aria-label="Close quiz"><span aria-hidden="true">&times;</span></button>
       </header>
 
       <form id="quizForm" class="quiz-body">
-        <!-- Top progress -->
+        <!-- Progress -->
         <div class="quiz-progress" role="status" aria-live="polite">
           <div class="progress-bar"><div class="progress-fill" style="width:14.28%"></div></div>
           <span class="progress-text">Step <span id="quizStep">1</span> of <span id="quizTotal">7</span></span>
         </div>
 
-        <!-- STEP 1: Home size -->
+        <!-- Steps (unchanged UI) -->
         <fieldset class="q-group q-step" data-step="1">
           <legend>Where will the Wi-Fi be used?</legend>
           <p class="hint">Size helps us choose single-router vs mesh for even coverage.</p>
           <div class="speed-grid" role="group" aria-label="Home size">
-            <label class="radio-pill">
-              <input type="radio" name="qCoverage" value="Apartment/Small" />
-              <span>Apartment / Small (under 1,800 sq ft)</span>
-            </label>
-            <label class="radio-pill">
-              <input type="radio" name="qCoverage" value="2–3 Bedroom" />
-              <span>Medium (2–3 bedrooms, up to ~3,200 sq ft)</span>
-            </label>
-            <label class="radio-pill">
-              <input type="radio" name="qCoverage" value="Large/Multi-floor" />
-              <span>Large / Multi-floor (over ~3,200 sq ft)</span>
-            </label>
-            <label class="radio-pill">
-              <input type="radio" name="qCoverage" value="" />
-              <span>I’m not sure</span>
-            </label>
+            <label class="radio-pill"><input type="radio" name="qCoverage" value="Apartment/Small" /><span>Apartment / Small (under 1,800 sq ft)</span></label>
+            <label class="radio-pill"><input type="radio" name="qCoverage" value="2–3 Bedroom" /><span>Medium (2–3 bedrooms, up to ~3,200 sq ft)</span></label>
+            <label class="radio-pill"><input type="radio" name="qCoverage" value="Large/Multi-floor" /><span>Large / Multi-floor (over ~3,200 sq ft)</span></label>
+            <label class="radio-pill"><input type="radio" name="qCoverage" value="" /><span>I’m not sure</span></label>
           </div>
           <p id="meshHint" class="hint" aria-live="polite"></p>
         </fieldset>
 
-        <!-- STEP 2: Devices -->
         <fieldset class="q-group q-step" data-step="2" hidden>
           <legend>How many devices use Wi-Fi?</legend>
           <p class="hint">Phones, laptops, tablets, TVs, smart home, consoles, etc.</p>
@@ -537,7 +437,6 @@
           </div>
         </fieldset>
 
-        <!-- STEP 3: Primary use -->
         <fieldset class="q-group q-step" data-step="3" hidden>
           <legend>What matters most?</legend>
           <p class="hint">We’ll tune for the thing you care about most. You can still do everything.</p>
@@ -552,14 +451,10 @@
           </div>
         </fieldset>
 
-        <!-- STEP 4: Mesh preference -->
         <fieldset class="q-group q-step" data-step="4" hidden>
           <legend>Do you want whole-home coverage?</legend>
           <div class="mesh-row">
-            <label class="auto">
-              <input type="checkbox" id="qMeshAuto" checked />
-              <span>Auto decide for me (recommended)</span>
-            </label>
+            <label class="auto"><input type="checkbox" id="qMeshAuto" checked /><span>Auto decide for me (recommended)</span></label>
           </div>
           <div class="mesh-row" role="group" aria-label="Mesh preference">
             <label class="radio-pill"><input type="radio" name="qMesh" value="" checked><span>No preference</span></label>
@@ -569,7 +464,6 @@
           <p class="hint">Mesh uses 2–3 smaller units so Wi-Fi stays strong across floors and far rooms.</p>
         </fieldset>
 
-        <!-- STEP 5: Internet speed -->
         <fieldset class="q-group q-step" data-step="5" hidden>
           <legend>How fast is your internet plan?</legend>
           <p class="hint">If you’re not sure, pick “I’m not sure.” We’ll choose safe options.</p>
@@ -582,7 +476,6 @@
           </div>
         </fieldset>
 
-        <!-- STEP 6: Internet type -->
         <fieldset class="q-group q-step" data-step="6" hidden>
           <legend>What kind of internet do you have?</legend>
           <div class="speed-grid" role="group" aria-label="Internet type">
@@ -595,7 +488,6 @@
           </div>
         </fieldset>
 
-        <!-- STEP 7: Budget -->
         <fieldset class="q-group q-step" data-step="7" hidden>
           <legend>What’s your budget?</legend>
           <div class="speed-grid" role="group" aria-label="Budget">
@@ -625,7 +517,10 @@
   <template id="cardTpl">
     <article class="product glass" data-id="" tabindex="0">
       <div class="product-media">
-        <img loading="lazy" alt="" src="" onerror="this.style.display='none'">
+        <!-- Intrinsic dimensions + decoding guard CLS; style keeps same look -->
+        <img loading="lazy" decoding="async" fetchpriority="low"
+             width="640" height="360" style="aspect-ratio:16/9;object-fit:cover"
+             alt="" src="" onerror="this.style.display='none'">
         <div class="product-badges">
           <span class="badge-wifi" style="display:none">Wi-Fi 7</span>
           <span class="badge-recommended" style="display:none">Recommended</span>
@@ -639,16 +534,14 @@
         </div>
       </div>
       <header class="product-header">
-        <h4 class="title">
-          <em class="brand"></em><span class="model"></span>
-        </h4>
+        <h4 class="title"><em class="brand"></em><span class="model"></span></h4>
         <div class="chips line"></div>
       </header>
       <ul class="specs" role="list"></ul>
       <div class="priceRow">
         <strong class="price" aria-label="Price"></strong>
         <div class="ctaRow">
-          <!-- Non-visible SEO/compliance: add rel="sponsored nofollow noopener" -->
+          <!-- Affiliate compliance -->
           <a class="btn small primary" target="_blank" rel="sponsored nofollow noopener" aria-label="Buy now">Buy</a>
           <button class="icon-btn compare-btn" type="button" aria-pressed="false" aria-label="Add to compare">
             <span class="sr-only">Compare</span>
@@ -661,7 +554,7 @@
   <!-- Skeleton template -->
   <template id="skeletonTpl">
     <article class="product glass skeleton" aria-hidden="true">
-      <div class="product-media shimmer"></div>
+      <div class="product-media shimmer" style="aspect-ratio:16/9;"></div>
       <header class="product-header">
         <div class="title shimmer" style="height:1.5em;width:80%"></div>
         <div class="chips line">
@@ -689,12 +582,7 @@
 
   <!-- Configuration -->
   <script>
-    window.RH_CONFIG = {
-      jsonUrl: 'kits.json',
-      enableRecos: true,
-      enableAnimations: true,
-      enableAnalytics: false
-    };
+    window.RH_CONFIG = { jsonUrl: 'kits.json', enableRecos: true, enableAnimations: true, enableAnalytics: false };
   </script>
 
   <!-- Core scripts -->
@@ -702,7 +590,7 @@
   <script type="module" src="assets/js/kits.js"></script>
   <script type="module" src="assets/js/quiz-modal.js"></script>
 
-  <!-- Quick Picks, progress ring, reveals, a11y, perf (unchanged functional logic) -->
+  <!-- Quick Picks, progress ring, reveals, a11y, perf -->
   <script>
     (function initQuickPicks() {
       const QUICK_PICK_MAP = {
@@ -751,10 +639,7 @@
       }
       let ticking = false;
       window.addEventListener('scroll', () => {
-        if (!ticking) {
-          requestAnimationFrame(() => { update(); ticking = false; });
-          ticking = true;
-        }
+        if (!ticking) { requestAnimationFrame(() => { update(); ticking = false; }); ticking = true; }
       }, { passive: true });
       update();
     })();
@@ -763,20 +648,14 @@
       if (!window.IntersectionObserver) return;
       const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('in-view');
-            observer.unobserve(entry.target);
-          }
+          if (entry.isIntersecting) { entry.target.classList.add('in-view'); observer.unobserve(entry.target); }
         });
       }, { threshold: 0.1, rootMargin: '50px' });
-
       const observeReveals = () => {
         document.querySelectorAll('.product:not(.in-view)').forEach(el => {
-          el.classList.add('reveal');
-          observer.observe(el);
+          el.classList.add('reveal'); observer.observe(el);
         });
       };
-
       observeReveals();
       const mo = new MutationObserver(() => { setTimeout(observeReveals, 100); });
       mo.observe(document.getElementById('kitResults'), { childList: true, subtree: true });
@@ -787,41 +666,30 @@
       skip.href = '#main-content';
       skip.textContent = 'Skip to main content';
       skip.className = 'sr-only';
-      skip.style.position = 'fixed';
-      skip.style.top = '10px';
-      skip.style.left = '10px';
-      skip.style.zIndex = '9999';
+      skip.style.position = 'fixed'; skip.style.top = '10px'; skip.style.left = '10px'; skip.style.zIndex = '9999';
       skip.addEventListener('focus', () => skip.classList.remove('sr-only'));
       skip.addEventListener('blur', () => skip.classList.add('sr-only'));
       document.body.prepend(skip);
 
       document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') {
-          const openModal = document.querySelector('dialog[open]');
-          if (openModal) openModal.querySelector('.modal-close')?.click();
-          const openDrawer = document.querySelector('.drawer[aria-hidden="false"]');
-          if (openDrawer) openDrawer.querySelector('[data-close-drawer]')?.click();
+          const openModal = document.querySelector('dialog[open]'); if (openModal) openModal.querySelector('.modal-close')?.click();
+          const openDrawer = document.querySelector('.drawer[aria-hidden="false"]'); if (openDrawer) openDrawer.querySelector('[data-close-drawer]')?.click();
         }
       });
 
       const announcer = document.createElement('div');
-      announcer.setAttribute('aria-live', 'polite');
-      announcer.setAttribute('aria-atomic', 'true');
-      announcer.className = 'sr-only';
-      announcer.id = 'announcer';
+      announcer.setAttribute('aria-live', 'polite'); announcer.setAttribute('aria-atomic', 'true');
+      announcer.className = 'sr-only'; announcer.id = 'announcer';
       document.body.appendChild(announcer);
       window.announce = (m) => { announcer.textContent = m; setTimeout(() => announcer.textContent = '', 1000); };
     })();
 
     (function initPerformanceOptimizations() {
-      if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
-        document.documentElement.classList.add('reduce-motion');
-      }
+      if (matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('reduce-motion');
       if ('connection' in navigator) {
         const c = navigator.connection;
-        if (c.effectiveType === 'slow-2g' || c.effectiveType === '2g') {
-          document.documentElement.classList.add('performance-mode');
-        }
+        if (c.effectiveType === 'slow-2g' || c.effectiveType === '2g') document.documentElement.classList.add('performance-mode');
       }
       if ('IntersectionObserver' in window) {
         const imgObs = new IntersectionObserver((entries) => {
@@ -838,74 +706,146 @@
       }
     })();
 
-    /* SEO: canonicalize param pages — add robots noindex on faceted URLs (non-visible) */
-    (function facetedSEO(){
-      if (location.search.length > 1) {
-        const robots = document.createElement('meta');
-        robots.name = 'robots';
-        robots.content = 'noindex,follow';
-        document.head.appendChild(robots);
-      }
-    })();
-
-    /* Deep-link helper (non-visible) — if you later link #ids, this will center the card */
-    (function jumpToCard() {
-      function scrollToHash() {
-        const id = location.hash.slice(1); if (!id) return;
-        const tryFind = () => {
-          const el = document.querySelector(`[data-id="${id}"]`);
-          if (el) { el.scrollIntoView({ behavior:'smooth', block:'center' }); el.classList.add('highlight'); setTimeout(()=>el.classList.remove('highlight'), 2000); return true; }
-          return false;
-        };
-        if (!tryFind()) {
-          const mo = new MutationObserver(() => { if (tryFind()) mo.disconnect(); });
-          mo.observe(document.getElementById('kitResults'), { childList:true, subtree:true });
-        }
-      }
-      window.addEventListener('hashchange', scrollToHash);
-      window.addEventListener('load', scrollToHash);
-    })();
+    /* NOTE: Removed client-side robots/canonical manipulation.
+       Promote only curated facet combos as static landing pages at build-time. */
   </script>
 
-  <!-- Structured data (non-visible) -->
+  <!-- Minimal Breadcrumbs -->
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[
+    {"@type":"ListItem","position":1,"name":"Home","item":"https://www.routerhaus.com/"},
+    {"@type":"ListItem","position":2,"name":"Kits","item":"https://www.routerhaus.com/kits.html"}
+  ]}
+  </script>
+
+  <!-- Site / Organization / CollectionPage schema -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"WebSite",
+    "name":"RouterHaus",
+    "url":"https://www.routerhaus.com",
+    "potentialAction":{
+      "@type":"SearchAction",
+      "target":"https://www.routerhaus.com/search?q={query}",
+      "query-input":"required name=query"
+    }
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"Organization",
+    "name":"RouterHaus",
+    "url":"https://www.routerhaus.com",
+    "logo":"https://www.routerhaus.com/favicon-32x32.png",
+    "sameAs":["https://www.linkedin.com/company/routerhaus"]
+  }
+  </script>
   <script type="application/ld+json">
   {
     "@context":"https://schema.org",
     "@type":"CollectionPage",
-    "name":"Router & Mesh Kits — RouterHaus",
-    "description":"Filter and compare Wi-Fi 7/6E routers and mesh systems by coverage, device count, multi-gig, and price.",
-    "breadcrumb":{
-      "@type":"BreadcrumbList",
-      "itemListElement":[
-        {"@type":"ListItem","position":1,"name":"Home","item":"https://www.routerhaus.com/"},
-        {"@type":"ListItem","position":2,"name":"Kits","item":"https://www.routerhaus.com/kits.html"}
-      ]
-    },
-    "mainEntity":{
-      "@type":"ItemList",
-      "itemListOrder":"https://schema.org/ItemListOrderAscending",
-      "itemListElement":[
-        {"@type":"ListItem","position":1,"item":{"@type":"Product","name":"Netgear Orbi 970 Series (RBE973S 3-pack)","brand":"Netgear","category":"Mesh Wi-Fi","url":"https://www.routerhaus.com/kits.html#netgear-orbi-970-series-3-pack"}},
-        {"@type":"ListItem","position":2,"item":{"@type":"Product","name":"TP-Link Deco BE85 (3-pack)","brand":"TP-Link","category":"Mesh Wi-Fi","url":"https://www.routerhaus.com/kits.html#tp-link-deco-be85-3-pack"}},
-        {"@type":"ListItem","position":3,"item":{"@type":"Product","name":"Netgear Nighthawk RS700S","brand":"Netgear","category":"Wi-Fi Router","url":"https://www.routerhaus.com/kits.html#netgear-nighthawk-rs700s"}},
-        {"@type":"ListItem","position":4,"item":{"@type":"Product","name":"ASUS ROG Rapture GT-BE98 Pro","brand":"ASUS","category":"Wi-Fi Router","url":"https://www.routerhaus.com/kits.html#asus-rog-rapture-gt-be98-pro"}},
-        {"@type":"ListItem","position":5,"item":{"@type":"Product","name":"TP-Link Archer BE805","brand":"TP-Link","category":"Wi-Fi Router","url":"https://www.routerhaus.com/kits.html#tp-link-archer-be805"}},
-        {"@type":"ListItem","position":6,"item":{"@type":"Product","name":"TP-Link Archer BE800","brand":"TP-Link","category":"Wi-Fi Router","url":"https://www.routerhaus.com/kits.html#tp-link-archer-be800"}},
-        {"@type":"ListItem","position":7,"item":{"@type":"Product","name":"Amazon eero Max 7","brand":"Amazon","category":"Mesh Wi-Fi","url":"https://www.routerhaus.com/kits.html#eero-max-7"}},
-        {"@type":"ListItem","position":8,"item":{"@type":"Product","name":"Ubiquiti UniFi Dream Router 7","brand":"Ubiquiti","category":"Wi-Fi Router","url":"https://www.routerhaus.com/kits.html#ubiquiti-unifi-dream-router-7"}},
-        {"@type":"ListItem","position":9,"item":{"@type":"Product","name":"Google Nest Wifi Pro","brand":"Google","category":"Mesh Wi-Fi (6E)","url":"https://www.routerhaus.com/kits.html#google-nest-wifi-pro"}},
-        {"@type":"ListItem","position":10,"item":{"@type":"Product","name":"Linksys Velop Pro 6E (3-pack)","brand":"Linksys","category":"Mesh Wi-Fi (6E)","url":"https://www.routerhaus.com/kits.html#linksys-velop-pro-6e-3-pack"}},
-        {"@type":"ListItem","position":11,"item":{"@type":"Product","name":"Synology WRX560","brand":"Synology","category":"Wi-Fi Router (6)","url":"https://www.routerhaus.com/kits.html#synology-wrx560"}},
-        {"@type":"ListItem","position":12,"item":{"@type":"Product","name":"TP-Link Archer AX55","brand":"TP-Link","category":"Wi-Fi Router (Budget)","url":"https://www.routerhaus.com/kits.html#tp-link-archer-ax55"}}
-      ]
-    }
+    "name":"Router & Mesh Kits",
+    "description":"Filter and compare Wi-Fi 7 / 6E routers and mesh kits by coverage, device load, multi-gig ports, price, and use-case.",
+    "url":"https://www.routerhaus.com/kits.html",
+    "isPartOf":{"@type":"WebSite","name":"RouterHaus","url":"https://www.routerhaus.com"}
   }
   </script>
 
+  <!-- Dynamic Product + ItemList schema from kits.json (bounded) -->
+  <script>
+    (async function injectProductSchema(){
+      try {
+        const res = await fetch((window.RH_CONFIG && window.RH_CONFIG.jsonUrl) || 'kits.json', { credentials: 'omit' });
+        if (!res.ok) return;
+        const items = await res.json();
+        if (!Array.isArray(items) || !items.length) return;
+
+        const origin = location.origin || 'https://www.routerhaus.com';
+        const path = location.pathname || '/kits.html';
+
+        const MAX = 30;
+        const take = items.slice(0, MAX);
+
+        const products = take.map((p) => {
+          const name = [p.brand, p.model].filter(Boolean).join(' ');
+          const category = p.meshReady ? 'Mesh Wi-Fi' : 'Wi-Fi Router';
+          const desc = p.fitSummary || (Array.isArray(p.fitBullets) ? p.fitBullets.join('; ') : '');
+          const props = [];
+
+          if (p.wifiStandard) props.push({ "@type":"PropertyValue", "name":"Wi-Fi Standard", "value": String(p.wifiStandard) });
+          if (Array.isArray(p.wifiBands)) props.push({ "@type":"PropertyValue", "name":"Bands", "value": p.wifiBands.join(', ') });
+          if (typeof p.lanCount === 'number') props.push({ "@type":"PropertyValue", "name":"LAN Ports", "value": String(p.lanCount) });
+          if (p.multiGigLan) props.push({ "@type":"PropertyValue", "name":"Multi-Gig LAN", "value": "Yes" });
+          if (p.maxWanSpeedMbps) props.push({ "@type":"PropertyValue", "name":"Max WAN (Mbps)", "value": String(p.maxWanSpeedMbps) });
+          if (p.coverageSqft) props.push({ "@type":"PropertyValue", "name":"Coverage (sq ft)", "value": String(p.coverageSqft) });
+          if (p.deviceCapacity) props.push({ "@type":"PropertyValue", "name":"Device Capacity", "value": String(p.deviceCapacity) });
+
+          const prod = {
+            "@type": "Product",
+            "@id": `${origin}${path}#prod-${p.id}`,
+            "name": name || p.id || "",
+            "brand": p.brand ? { "@type":"Brand", "name": p.brand } : undefined,
+            "sku": p.id || undefined,
+            "model": p.model || undefined,
+            "category": category,
+            "image": p.img ? [ (p.img.startsWith('http') ? p.img : `${origin}${p.img}`) ] : undefined,
+            "description": desc || undefined,
+            "url": `${origin}${path}#${p.id}`,
+            "additionalProperty": props.length ? props : undefined
+          };
+
+          if (p.mpn) prod.mpn = String(p.mpn);
+          if (p.gtin) prod.gtin13 = String(p.gtin);
+
+          if (p.priceUsd) {
+            prod.offers = {
+              "@type":"Offer",
+              "priceCurrency":"USD",
+              "price": String(p.priceUsd),
+              "availability":"https://schema.org/InStock",
+              "url": `${origin}${path}#${p.id}`
+            };
+          }
+          if (p.rating && p.reviewCount) {
+            prod.aggregateRating = {
+              "@type":"AggregateRating",
+              "ratingValue": String(p.rating),
+              "reviewCount": String(p.reviewCount)
+            };
+          }
+          return prod;
+        });
+
+        const itemList = {
+          "@context":"https://schema.org",
+          "@type":"ItemList",
+          "name":"Router & Mesh Kits — RouterHaus",
+          "itemListOrder":"https://schema.org/ItemListOrderAscending",
+          "itemListElement": products.map((prod, idx) => ({
+            "@type":"ListItem",
+            "position": idx + 1,
+            "url": prod.url,
+            "item": prod
+          }))
+        };
+
+        const graph = { "@context":"https://schema.org", "@graph":[ itemList ] };
+
+        const tag = document.createElement('script');
+        tag.type = 'application/ld+json';
+        tag.textContent = JSON.stringify(graph);
+        document.head.appendChild(tag);
+      } catch {}
+    })();
+  </script>
+
+  <!-- NoScript: lightweight summary for bots/users without JS (no visual change for JS users) -->
   <noscript>
-    <div style="padding:2rem;text-align:center;background:var(--surface-primary);margin:2rem;border-radius:var(--radius)">
-      <h2>JavaScript Required</h2>
-      <p>Please enable JavaScript to use the router filtering and comparison features.</p>
+    <div style="position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden">
+      <h2>Compare Wi-Fi Routers &amp; Mesh Systems</h2>
+      <p>Use the filters to find Wi-Fi 7/6E routers and mesh systems by home size, device load, WAN speed (2.5–10GbE), ports, and price. Popular picks include mesh kits for large homes and Wi-Fi 7 routers for low-latency gaming.</p>
     </div>
   </noscript>
 </body>

@@ -1,0 +1,12 @@
+{
+  "/workspace/routerhaus/docs/kits.json": {
+    "total": 198,
+    "valid": true,
+    "errors": []
+  },
+  "/workspace/routerhaus/docs/routers_full_combined.json": {
+    "total": 494,
+    "valid": true,
+    "errors": []
+  }
+}

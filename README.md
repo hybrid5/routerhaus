@@ -1,23 +1,14 @@
-# RouterHaus – Static Site Setup
+# RouterHaus – Static Site
 
-## Rebuild Tailwind
-Compile Tailwind into `docs/main.css`:
-```bash
-npx tailwindcss -i input.css -o docs/main.css --minify
-```
+## Development
+- `npm run build` copies `input.css` to `docs/main.css`.
+- `npm run lint` runs a syntax check on JavaScript files.
+- `npm test` validates JSON data files.
 
-## Preview Locally
-Serve the `docs/` folder with any static server:
+To preview locally:
 ```bash
-npx serve docs
-# or
 python -m http.server -d docs
 ```
-
-## Structure
-- `docs/` – production site (HTML, assets)
-- `input.css` – Tailwind source
-- `tailwind.config.js` – Tailwind settings
 
 ## Notes
 - This repository is intentionally unlicensed.

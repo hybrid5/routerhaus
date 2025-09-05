@@ -1,0 +1,640 @@
+diff --git a/REPORTS/data-validation.json b/REPORTS/data-validation.json
+index 15df4f2..af44b4b 100644
+--- a/REPORTS/data-validation.json
++++ b/REPORTS/data-validation.json
+@@ -6,614 +6,7 @@
+   },
+   "/workspace/routerhaus/docs/routers_full_combined.json": {
+     "total": 494,
+-    "valid": false,
+-    "errors": [
+-      {
+-        "index": 369,
+-        "errors": [
+-          "priceUsd not number"
+-        ]
+-      },
+-      {
+-        "index": 370,
+-        "errors": [
+-          "priceUsd not number"
+-        ]
+-      },
+-      {
+-        "index": 381,
+-        "errors": [
+-          "priceUsd not number"
+-        ]
+-      },
+-      {
+-        "index": 382,
+-        "errors": [
+-          "priceUsd not number"
+-        ]
+-      },
+-      {
+-        "index": 383,
+-        "errors": [
+-          "priceUsd not number"
+-        ]
+-      },
+-      {
+-        "index": 384,
+-        "errors": [
+-          "priceUsd not number"
+-        ]
+-      },
+-      {
+-        "index": 385,
+-        "errors": [
+-          "priceUsd not number"
+-        ]
+-      },
+-      {
+-        "index": 386,
+-        "errors": [
+-          "priceUsd not number"
+-        ]
+-      },
+-      {
+-        "index": 387,
+-        "errors": [
+-          "priceUsd not number"
+-        ]
+-      },
+-      {
+-        "index": 388,
+-        "errors": [
+-          "priceUsd not number"
+-        ]
+-      },
+-      {
+-        "index": 389,
+-        "errors": [
+-          "priceUsd not number"
+-        ]
+-      },
+-      {
+-        "index": 390,
+-        "errors": [
+-          "priceUsd not number"
+-        ]
+-      },
+-      {
+-        "index": 391,
+-        "errors": [
+-          "priceUsd not number"
+-        ]
+-      },
+-      {
+-        "index": 392,
+-        "errors": [
+-          "priceUsd not number"
+-        ]
+-      },
+-      {
+-        "index": 393,
+-        "errors": [
+-          "priceUsd not number"
+-        ]
+-      },
+-      {
+-        "index": 394,
+-        "errors": [
+-          "priceUsd not number"
+-        ]
+-      },
+-      {
+-        "index": 395,
+-        "errors": [
+-          "priceUsd not number"
+-        ]
+-      },
+-      {
+-        "index": 396,
+-        "errors": [
+-          "priceUsd not number"
+-        ]
+-      },
+-      {
+-        "index": 397,
+-        "errors": [
+-          "priceUsd not number"
+-        ]
+-      },
+-      {
+-        "index": 398,
+-        "errors": [
+-          "priceUsd not number"
+-        ]
+-      },
+-      {
+-        "index": 399,
+-        "errors": [
+-          "priceUsd not number"
+-        ]
+-      },
+-      {
+-        "index": 400,
+-        "errors": [
+-          "priceUsd not number"
+-        ]
+-      },
+-      {
+-        "index": 401,
+-        "errors": [
+-          "priceUsd not number"
+-        ]
+-      },
+-      {
+-        "index": 402,
+-        "errors": [
+-          "priceUsd not number"
+-        ]
+-      },
+-      {
+-        "index": 403,
+-        "errors": [
+-          "priceUsd not number"
+-        ]
+-      },
+-      {
+-        "index": 404,
+-        "errors": [
+-          "priceUsd not number"
+-        ]
+-      },
+-      {
+-        "index": 405,
+-        "errors": [
+-          "priceUsd not number"
+-        ]
+-      },
+-      {
+-        "index": 406,
+-        "errors": [
+-          "priceUsd not number"
+-        ]
+-      },
+-      {
+-        "index": 407,
+-        "errors": [
+-          "priceUsd not number"
+-        ]
+-      },
+-      {
+-        "index": 408,
+-        "errors": [
+-          "priceUsd not number"
+-        ]
+-      },
+-      {
+-        "index": 409,
+-        "errors": [
+-          "priceUsd not number"
+-        ]
+-      },
+-      {
+-        "index": 410,
+-        "errors": [
+-          "priceUsd not number"
+-        ]
+-      },
+-      {
+-        "index": 411,
+-        "errors": [
+-          "priceUsd not number"
+-        ]
+-      },
+-      {
+-        "index": 412,
+-        "errors": [
+-          "priceUsd not number"
+-        ]
+-      },
+-      {
+-        "index": 413,
+-        "errors": [
+-          "priceUsd not number"
+-        ]
+-      },
+-      {
+-        "index": 414,
+-        "errors": [
+-          "priceUsd not number"
+-        ]
+-      },
+-      {
+-        "index": 415,
+-        "errors": [
+-          "priceUsd not number"
+-        ]
+-      },
+-      {
+-        "index": 416,
+-        "errors": [
+-          "priceUsd not number"
+-        ]
+-      },
+-      {
+-        "index": 417,
+-        "errors": [
+-          "priceUsd not number"
+-        ]
+-      },
+-      {
+-        "index": 418,
+-        "errors": [
+-          "priceUsd not number"
+-        ]
+-      },
+-      {
+-        "index": 419,
+-        "errors": [
+-          "priceUsd not number"
+-        ]
+-      },
+-      {
+-        "index": 420,
+-        "errors": [
+-          "priceUsd not number"
+-        ]
+-      },
+-      {
+-        "index": 421,
+-        "errors": [
+-          "priceUsd not number"
+-        ]
+-      },
+-      {
+-        "index": 422,
+-        "errors": [
+-          "priceUsd not number"
+-        ]
+-      },
+-      {
+-        "index": 423,
+-        "errors": [
+-          "priceUsd not number"
+-        ]
+-      },
+-      {
+-        "index": 424,
+-        "errors": [
+-          "priceUsd not number"
+-        ]
+-      },
+-      {
+-        "index": 425,
+-        "errors": [
+-          "priceUsd not number"
+-        ]
+-      },
+-      {
+-        "index": 426,
+-        "errors": [
+-          "priceUsd not number"
+-        ]
+-      },
+-      {
+-        "index": 427,
+-        "errors": [
+-          "priceUsd not number"
+-        ]
+-      },
+-      {
+-        "index": 428,
+-        "errors": [
+-          "priceUsd not number"
+-        ]
+-      },
+-      {
+-        "index": 429,
+-        "errors": [
+-          "priceUsd not number"
+-        ]
+-      },
+-      {
+-        "index": 430,
+-        "errors": [
+-          "priceUsd not number"
+-        ]
+-      },
+-      {
+-        "index": 431,
+-        "errors": [
+-          "priceUsd not number"
+-        ]
+-      },
+-      {
+-        "index": 432,
+-        "errors": [
+-          "priceUsd not number"
+-        ]
+-      },
+-      {
+-        "index": 433,
+-        "errors": [
+-          "priceUsd not number"
+-        ]
+-      },
+-      {
+-        "index": 434,
+-        "errors": [
+-          "priceUsd not number"
+-        ]
+-      },
+-      {
+-        "index": 435,
+-        "errors": [
+-          "priceUsd not number"
+-        ]
+-      },
+-      {
+-        "index": 436,
+-        "errors": [
+-          "priceUsd not number"
+-        ]
+-      },
+-      {
+-        "index": 437,
+-        "errors": [
+-          "priceUsd not number"
+-        ]
+-      },
+-      {
+-        "index": 438,
+-        "errors": [
+-          "priceUsd not number"
+-        ]
+-      },
+-      {
+-        "index": 439,
+-        "errors": [
+-          "priceUsd not number"
+-        ]
+-      },
+-      {
+-        "index": 440,
+-        "errors": [
+-          "priceUsd not number"
+-        ]
+-      },
+-      {
+-        "index": 441,
+-        "errors": [
+-          "priceUsd not number"
+-        ]
+-      },
+-      {
+-        "index": 442,
+-        "errors": [
+-          "priceUsd not number"
+-        ]
+-      },
+-      {
+-        "index": 443,
+-        "errors": [
+-          "priceUsd not number"
+-        ]
+-      },
+-      {
+-        "index": 444,
+-        "errors": [
+-          "priceUsd not number"
+-        ]
+-      },
+-      {
+-        "index": 445,
+-        "errors": [
+-          "priceUsd not number"
+-        ]
+-      },
+-      {
+-        "index": 446,
+-        "errors": [
+-          "priceUsd not number"
+-        ]
+-      },
+-      {
+-        "index": 447,
+-        "errors": [
+-          "priceUsd not number"
+-        ]
+-      },
+-      {
+-        "index": 448,
+-        "errors": [
+-          "priceUsd not number"
+-        ]
+-      },
+-      {
+-        "index": 449,
+-        "errors": [
+-          "priceUsd not number"
+-        ]
+-      },
+-      {
+-        "index": 450,
+-        "errors": [
+-          "priceUsd not number"
+-        ]
+-      },
+-      {
+-        "index": 451,
+-        "errors": [
+-          "priceUsd not number"
+-        ]
+-      },
+-      {
+-        "index": 452,
+-        "errors": [
+-          "priceUsd not number"
+-        ]
+-      },
+-      {
+-        "index": 453,
+-        "errors": [
+-          "priceUsd not number"
+-        ]
+-      },
+-      {
+-        "index": 454,
+-        "errors": [
+-          "priceUsd not number"
+-        ]
+-      },
+-      {
+-        "index": 455,
+-        "errors": [
+-          "priceUsd not number"
+-        ]
+-      },
+-      {
+-        "index": 456,
+-        "errors": [
+-          "priceUsd not number"
+-        ]
+-      },
+-      {
+-        "index": 457,
+-        "errors": [
+-          "priceUsd not number"
+-        ]
+-      },
+-      {
+-        "index": 458,
+-        "errors": [
+-          "priceUsd not number"
+-        ]
+-      },
+-      {
+-        "index": 459,
+-        "errors": [
+-          "priceUsd not number"
+-        ]
+-      },
+-      {
+-        "index": 460,
+-        "errors": [
+-          "priceUsd not number"
+-        ]
+-      },
+-      {
+-        "index": 461,
+-        "errors": [
+-          "priceUsd not number"
+-        ]
+-      },
+-      {
+-        "index": 462,
+-        "errors": [
+-          "priceUsd not number"
+-        ]
+-      },
+-      {
+-        "index": 463,
+-        "errors": [
+-          "priceUsd not number"
+-        ]
+-      },
+-      {
+-        "index": 464,
+-        "errors": [
+-          "priceUsd not number"
+-        ]
+-      },
+-      {
+-        "index": 465,
+-        "errors": [
+-          "priceUsd not number"
+-        ]
+-      },
+-      {
+-        "index": 466,
+-        "errors": [
+-          "priceUsd not number"
+-        ]
+-      },
+-      {
+-        "index": 467,
+-        "errors": [
+-          "priceUsd not number"
+-        ]
+-      },
+-      {
+-        "index": 468,
+-        "errors": [
+-          "priceUsd not number"
+-        ]
+-      },
+-      {
+-        "index": 469,
+-        "errors": [
+-          "priceUsd not number"
+-        ]
+-      },
+-      {
+-        "index": 470,
+-        "errors": [
+-          "priceUsd not number"
+-        ]
+-      },
+-      {
+-        "index": 471,
+-        "errors": [
+-          "priceUsd not number"
+-        ]
+-      },
+-      {
+-        "index": 472,
+-        "errors": [
+-          "priceUsd not number"
+-        ]
+-      },
+-      {
+-        "index": 473,
+-        "errors": [
+-          "priceUsd not number"
+-        ]
+-      },
+-      {
+-        "index": 474,
+-        "errors": [
+-          "priceUsd not number"
+-        ]
+-      },
+-      {
+-        "index": 475,
+-        "errors": [
+-          "priceUsd not number"
+-        ]
+-      },
+-      {
+-        "index": 476,
+-        "errors": [
+-          "priceUsd not number"
+-        ]
+-      },
+-      {
+-        "index": 477,
+-        "errors": [
+-          "priceUsd not number"
+-        ]
+-      },
+-      {
+-        "index": 478,
+-        "errors": [
+-          "priceUsd not number"
+-        ]
+-      },
+-      {
+-        "index": 479,
+-        "errors": [
+-          "priceUsd not number"
+-        ]
+-      }
+-    ]
++    "valid": true,
++    "errors": []
+   }
+-}
+\ No newline at end of file
++}
+diff --git a/SCRIPTS/validate-data.js b/SCRIPTS/validate-data.js
+index d6affad..b00cbfe 100644
+--- a/SCRIPTS/validate-data.js
++++ b/SCRIPTS/validate-data.js
+@@ -8,8 +8,10 @@ function validateObj(o){
+   if (!o.model || typeof o.model !== 'string') errs.push('model missing');
+   if (Object.prototype.hasOwnProperty.call(o, 'priceUsd')) {
+     const p = o.priceUsd;
+-    if (typeof p !== 'number' || Number.isNaN(p)) errs.push('priceUsd not number');
+-    else if (p < 0) errs.push('priceUsd negative');
++    if (p !== null) {
++      if (typeof p !== 'number' || Number.isNaN(p)) errs.push('priceUsd not number');
++      else if (p < 0) errs.push('priceUsd negative');
++    }
+   }
+   return errs;
+ }

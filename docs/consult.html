@@ -5,17 +5,39 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <!-- Core -->
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Expert network consulting, design, and white-glove deployment for large homes, estates, offices, hospitality, and campuses." />
   <meta name="color-scheme" content="light dark" />
-  <title>Consult · RouterHaus</title>
+  <meta name="theme-color" content="#6f7dff">
+
+  <!-- SEO: title/description/canonical/robots -->
+  <title>Network Consulting for Large Homes & SMBs | RouterHaus</title>
+  <meta name="description" content="Design, deployment, and troubleshooting for estates, new builds, and small businesses. Structured wiring plans, AP/mesh design, VLANs, and security hardening." />
+  <link rel="canonical" href="https://www.routerhaus.com/consult.html"/>
+  <meta name="robots" content="index,follow" />
+
+  <!-- Open Graph / Twitter -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="RouterHaus">
+  <meta property="og:title" content="Network Consulting for Large Homes & SMBs | RouterHaus">
+  <meta property="og:description" content="White-glove Wi-Fi & wired networking: structured wiring, multi-gig core, VLANs, and security hardening.">
+  <meta property="og:url" content="https://www.routerhaus.com/consult.html">
+  <meta property="og:image" content="https://www.routerhaus.com/assets/img/og/routerhaus-consult.webp">
+  <meta property="og:image:alt" content="RouterHaus Enterprise & Large-Home Consulting">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <!-- Icons -->
   <link rel="icon" href="/favicon.ico" sizes="any">
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <link rel="manifest" href="/site.webmanifest">
-  <meta name="theme-color" content="#6f7dff">
+
+  <!-- Performance hints -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://www.routerhaus.com" crossorigin>
 
   <!-- Fonts & Base Styles -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet" />
@@ -27,14 +49,13 @@
   <!-- Icons (Font Awesome) -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
-  <!-- Theme sync -->
+  <!-- Theme sync (no UI change) -->
   <script>
     (() => {
       const root = document.documentElement;
       const media = matchMedia('(prefers-color-scheme: dark)');
       const apply = () => root.setAttribute('data-theme', media.matches ? 'dark' : 'light');
-      apply();
-      media.addEventListener('change', apply);
+      apply(); media.addEventListener('change', apply);
     })();
   </script>
 </head>
@@ -413,8 +434,127 @@
   <!-- Footer partial -->
   <div id="footer-placeholder" data-partial="footer.html"></div>
 
+  <!-- SEO helpers (no UI change) -->
+  <script>
+    /* Optional: if this page is accessed with faceted/search params, prevent index bloat */
+    (() => {
+      const qs = new URLSearchParams(location.search);
+      const hasSearch = qs.has('q') || qs.has('query') || qs.has('s');
+      const hasTag = qs.has('tag') || qs.has('tags');
+      if (hasSearch || hasTag) {
+        const m = document.createElement('meta');
+        m.name = 'robots'; m.content = 'noindex,follow';
+        document.head.appendChild(m);
+      }
+    })();
+  </script>
+
+  <!-- Structured Data (JSON-LD) -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"WebSite",
+    "name":"RouterHaus",
+    "url":"https://www.routerhaus.com/",
+    "potentialAction":{
+      "@type":"SearchAction",
+      "target":"https://www.routerhaus.com/search?q={search_term_string}",
+      "query-input":"required name=search_term_string"
+    }
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"Service",
+    "name":"Network Consulting & Deployment",
+    "serviceType":"Computer Network Consulting",
+    "provider":{
+      "@type":"Organization",
+      "name":"RouterHaus",
+      "url":"https://www.routerhaus.com"
+    },
+    "url":"https://www.routerhaus.com/consult.html",
+    "areaServed":[
+      {"@type":"Place","name":"United States"},
+      {"@type":"City","name":"Phoenix"}
+    ],
+    "offers":{
+      "@type":"Offer",
+      "availability":"https://schema.org/InStock"
+    },
+    "hasOfferCatalog":{
+      "@type":"OfferCatalog",
+      "name":"Consulting Packages",
+      "itemListElement":[
+        {"@type":"Offer","name":"Site Assessment","itemOffered":{"@type":"Service","name":"Site Assessment"}},
+        {"@type":"Offer","name":"Design & Bill of Materials","itemOffered":{"@type":"Service","name":"Design & BOM"}},
+        {"@type":"Offer","name":"White-Glove Deployment","itemOffered":{"@type":"Service","name":"Deployment"}},
+        {"@type":"Offer","name":"ProCare Concierge","itemOffered":{"@type":"Service","name":"Monitoring & Optimization"}}
+      ]
+    }
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"FAQPage",
+    "mainEntity":[
+      {
+        "@type":"Question",
+        "name":"Can you work with my builder or GC?",
+        "acceptedAnswer":{"@type":"Answer","text":"Yes — we coordinate with architects, builders, electricians, and AV teams to plan conduit, low-voltage, and AP placement before drywall."}
+      },
+      {
+        "@type":"Question",
+        "name":"Do you support remote properties?",
+        "acceptedAnswer":{"@type":"Answer","text":"We can ship pre-configured gear and travel for on-site deployment. Remote monitoring keeps everything healthy after we leave."}
+      },
+      {
+        "@type":"Question",
+        "name":"Which brands do you specify?",
+        "acceptedAnswer":{"@type":"Answer","text":"Solution-first. We select hardware that fits your goals — Wi-Fi 7 APs, multi-gig switching, and reliable gateways from proven vendors."}
+      },
+      {
+        "@type":"Question",
+        "name":"What about privacy and security?",
+        "acceptedAnswer":{"@type":"Answer","text":"Principle of least privilege, segmented networks, and firmware policies. We’ll align to your compliance needs where applicable."}
+      }
+    ]
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"BreadcrumbList",
+    "itemListElement":[
+      {"@type":"ListItem","position":1,"name":"Solutions","item":"https://www.routerhaus.com/solutions/"},
+      {"@type":"ListItem","position":2,"name":"Consulting","item":"https://www.routerhaus.com/consult.html"}
+    ]
+  }
+  </script>
+
   <!-- Scripts -->
   <script src="scripts.js" defer></script>
   <script type="module" src="assets/js/consult.js"></script>
+
+  <!-- Optional LocalBusiness schema (enable if prioritizing city SEO)
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"LocalBusiness",
+    "name":"RouterHaus",
+    "url":"https://www.routerhaus.com",
+    "image":"https://www.routerhaus.com/assets/img/og/routerhaus-consult.webp",
+    "address":{"@type":"PostalAddress","addressLocality":"Phoenix","addressRegion":"AZ","addressCountry":"US"},
+    "areaServed":{"@type":"AdministrativeArea","name":"Greater Phoenix Area"},
+    "telephone":"+1-000-000-0000",
+    "priceRange":"$$$"
+  }
+  </script>
+  -->
 </body>
 </html>

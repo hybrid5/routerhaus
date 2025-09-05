@@ -1,0 +1,13 @@
+{
+  "name": "routerhaus",
+  "version": "1.0.0",
+  "description": "Static site tooling and data validation for RouterHaus",
+  "type": "commonjs",
+  "scripts": {
+    "build": "node SCRIPTS/build.js",
+    "lint": "node SCRIPTS/lint.js",
+    "validate-data": "node SCRIPTS/validate-data.js",
+    "test": "npm run validate-data",
+    "optimize-css": "node SCRIPTS/optimize-css.js"
+  }
+}

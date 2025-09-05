@@ -1,0 +1,854 @@
+diff --git a/.gitignore b/.gitignore
+new file mode 100644
+index 0000000..2752eb9
+--- /dev/null
++++ b/.gitignore
+@@ -0,0 +1,2 @@
++node_modules/
++.DS_Store
+diff --git a/CHANGELOG.md b/CHANGELOG.md
+new file mode 100644
+index 0000000..de26956
+--- /dev/null
++++ b/CHANGELOG.md
+@@ -0,0 +1,6 @@
++# Changelog
++
++## Unreleased
++- add basic build, lint, and data validation scripts
++- introduce JSON schema for router data
++- initial diagnostics and report scaffolding
+diff --git a/README.md b/README.md
+index 08b8bc3..096f01e 100644
+--- a/README.md
++++ b/README.md
+@@ -1,24 +1,15 @@
+-# RouterHaus – Static Site Setup
++# RouterHaus – Static Site
+ 
+-## Rebuild Tailwind
+-Compile Tailwind into `docs/main.css`:
+-```bash
+-npx tailwindcss -i input.css -o docs/main.css --minify
+-```
++## Development
++- `npm run build` copies `input.css` to `docs/main.css`.
++- `npm run lint` runs a syntax check on JavaScript files.
++- `npm test` validates JSON data files.
+ 
+-## Preview Locally
+-Serve the `docs/` folder with any static server:
++To preview locally:
+ ```bash
+-npx serve docs
+-# or
+ python -m http.server -d docs
+ ```
+ 
+-## Structure
+-- `docs/` – production site (HTML, assets)
+-- `input.css` – Tailwind source
+-- `tailwind.config.js` – Tailwind settings
+-
+ ## Notes
+ - This repository is intentionally unlicensed.
+ - Do **not** edit `index.html` unless prompted—Codex may manage it.
+diff --git a/REPORTS/a11y.md b/REPORTS/a11y.md
+new file mode 100644
+index 0000000..0c9c646
+--- /dev/null
++++ b/REPORTS/a11y.md
+@@ -0,0 +1,3 @@
++# Accessibility Report
++
++Automated accessibility testing was not executed. Manual review pending.
+diff --git a/REPORTS/data-validation.json b/REPORTS/data-validation.json
+new file mode 100644
+index 0000000..15df4f2
+--- /dev/null
++++ b/REPORTS/data-validation.json
+@@ -0,0 +1,619 @@
++{
++  "/workspace/routerhaus/docs/kits.json": {
++    "total": 198,
++    "valid": true,
++    "errors": []
++  },
++  "/workspace/routerhaus/docs/routers_full_combined.json": {
++    "total": 494,
++    "valid": false,
++    "errors": [
++      {
++        "index": 369,
++        "errors": [
++          "priceUsd not number"
++        ]
++      },
++      {
++        "index": 370,
++        "errors": [
++          "priceUsd not number"
++        ]
++      },
++      {
++        "index": 381,
++        "errors": [
++          "priceUsd not number"
++        ]
++      },
++      {
++        "index": 382,
++        "errors": [
++          "priceUsd not number"
++        ]
++      },
++      {
++        "index": 383,
++        "errors": [
++          "priceUsd not number"
++        ]
++      },
++      {
++        "index": 384,
++        "errors": [
++          "priceUsd not number"
++        ]
++      },
++      {
++        "index": 385,
++        "errors": [
++          "priceUsd not number"
++        ]
++      },
++      {
++        "index": 386,
++        "errors": [
++          "priceUsd not number"
++        ]
++      },
++      {
++        "index": 387,
++        "errors": [
++          "priceUsd not number"
++        ]
++      },
++      {
++        "index": 388,
++        "errors": [
++          "priceUsd not number"
++        ]
++      },
++      {
++        "index": 389,
++        "errors": [
++          "priceUsd not number"
++        ]
++      },
++      {
++        "index": 390,
++        "errors": [
++          "priceUsd not number"
++        ]
++      },
++      {
++        "index": 391,
++        "errors": [
++          "priceUsd not number"
++        ]
++      },
++      {
++        "index": 392,
++        "errors": [
++          "priceUsd not number"
++        ]
++      },
++      {
++        "index": 393,
++        "errors": [
++          "priceUsd not number"
++        ]
++      },
++      {
++        "index": 394,
++        "errors": [
++          "priceUsd not number"
++        ]
++      },
++      {
++        "index": 395,
++        "errors": [
++          "priceUsd not number"
++        ]
++      },
++      {
++        "index": 396,
++        "errors": [
++          "priceUsd not number"
++        ]
++      },
++      {
++        "index": 397,
++        "errors": [
++          "priceUsd not number"
++        ]
++      },
++      {
++        "index": 398,
++        "errors": [
++          "priceUsd not number"
++        ]
++      },
++      {
++        "index": 399,
++        "errors": [
++          "priceUsd not number"
++        ]
++      },
++      {
++        "index": 400,
++        "errors": [
++          "priceUsd not number"
++        ]
++      },
++      {
++        "index": 401,
++        "errors": [
++          "priceUsd not number"
++        ]
++      },
++      {
++        "index": 402,
++        "errors": [
++          "priceUsd not number"
++        ]
++      },
++      {
++        "index": 403,
++        "errors": [
++          "priceUsd not number"
++        ]
++      },
++      {
++        "index": 404,
++        "errors": [
++          "priceUsd not number"
++        ]
++      },
++      {
++        "index": 405,
++        "errors": [
++          "priceUsd not number"
++        ]
++      },
++      {
++        "index": 406,
++        "errors": [
++          "priceUsd not number"
++        ]
++      },
++      {
++        "index": 407,
++        "errors": [
++          "priceUsd not number"
++        ]
++      },
++      {
++        "index": 408,
++        "errors": [
++          "priceUsd not number"
++        ]
++      },
++      {
++        "index": 409,
++        "errors": [
++          "priceUsd not number"
++        ]
++      },
++      {
++        "index": 410,
++        "errors": [
++          "priceUsd not number"
++        ]
++      },
++      {
++        "index": 411,
++        "errors": [
++          "priceUsd not number"
++        ]
++      },
++      {
++        "index": 412,
++        "errors": [
++          "priceUsd not number"
++        ]
++      },
++      {
++        "index": 413,
++        "errors": [
++          "priceUsd not number"
++        ]
++      },
++      {
++        "index": 414,
++        "errors": [
++          "priceUsd not number"
++        ]
++      },
++      {
++        "index": 415,
++        "errors": [
++          "priceUsd not number"
++        ]
++      },
++      {
++        "index": 416,
++        "errors": [
++          "priceUsd not number"
++        ]
++      },
++      {
++        "index": 417,
++        "errors": [
++          "priceUsd not number"
++        ]
++      },
++      {
++        "index": 418,
++        "errors": [
++          "priceUsd not number"
++        ]
++      },
++      {
++        "index": 419,
++        "errors": [
++          "priceUsd not number"
++        ]
++      },
++      {
++        "index": 420,
++        "errors": [
++          "priceUsd not number"
++        ]
++      },
++      {
++        "index": 421,
++        "errors": [
++          "priceUsd not number"
++        ]
++      },
++      {
++        "index": 422,
++        "errors": [
++          "priceUsd not number"
++        ]
++      },
++      {
++        "index": 423,
++        "errors": [
++          "priceUsd not number"
++        ]
++      },
++      {
++        "index": 424,
++        "errors": [
++          "priceUsd not number"
++        ]
++      },
++      {
++        "index": 425,
++        "errors": [
++          "priceUsd not number"
++        ]
++      },
++      {
++        "index": 426,
++        "errors": [
++          "priceUsd not number"
++        ]
++      },
++      {
++        "index": 427,
++        "errors": [
++          "priceUsd not number"
++        ]
++      },
++      {
++        "index": 428,
++        "errors": [
++          "priceUsd not number"
++        ]
++      },
++      {
++        "index": 429,
++        "errors": [
++          "priceUsd not number"
++        ]
++      },
++      {
++        "index": 430,
++        "errors": [
++          "priceUsd not number"
++        ]
++      },
++      {
++        "index": 431,
++        "errors": [
++          "priceUsd not number"
++        ]
++      },
++      {
++        "index": 432,
++        "errors": [
++          "priceUsd not number"
++        ]
++      },
++      {
++        "index": 433,
++        "errors": [
++          "priceUsd not number"
++        ]
++      },
++      {
++        "index": 434,
++        "errors": [
++          "priceUsd not number"
++        ]
++      },
++      {
++        "index": 435,
++        "errors": [
++          "priceUsd not number"
++        ]
++      },
++      {
++        "index": 436,
++        "errors": [
++          "priceUsd not number"
++        ]
++      },
++      {
++        "index": 437,
++        "errors": [
++          "priceUsd not number"
++        ]
++      },
++      {
++        "index": 438,
++        "errors": [
++          "priceUsd not number"
++        ]
++      },
++      {
++        "index": 439,
++        "errors": [
++          "priceUsd not number"
++        ]
++      },
++      {
++        "index": 440,
++        "errors": [
++          "priceUsd not number"
++        ]
++      },
++      {
++        "index": 441,
++        "errors": [
++          "priceUsd not number"
++        ]
++      },
++      {
++        "index": 442,
++        "errors": [
++          "priceUsd not number"
++        ]
++      },
++      {
++        "index": 443,
++        "errors": [
++          "priceUsd not number"
++        ]
++      },
++      {
++        "index": 444,
++        "errors": [
++          "priceUsd not number"
++        ]
++      },
++      {
++        "index": 445,
++        "errors": [
++          "priceUsd not number"
++        ]
++      },
++      {
++        "index": 446,
++        "errors": [
++          "priceUsd not number"
++        ]
++      },
++      {
++        "index": 447,
++        "errors": [
++          "priceUsd not number"
++        ]
++      },
++      {
++        "index": 448,
++        "errors": [
++          "priceUsd not number"
++        ]
++      },
++      {
++        "index": 449,
++        "errors": [
++          "priceUsd not number"
++        ]
++      },
++      {
++        "index": 450,
++        "errors": [
++          "priceUsd not number"
++        ]
++      },
++      {
++        "index": 451,
++        "errors": [
++          "priceUsd not number"
++        ]
++      },
++      {
++        "index": 452,
++        "errors": [
++          "priceUsd not number"
++        ]
++      },
++      {
++        "index": 453,
++        "errors": [
++          "priceUsd not number"
++        ]
++      },
++      {
++        "index": 454,
++        "errors": [
++          "priceUsd not number"
++        ]
++      },
++      {
++        "index": 455,
++        "errors": [
++          "priceUsd not number"
++        ]
++      },
++      {
++        "index": 456,
++        "errors": [
++          "priceUsd not number"
++        ]
++      },
++      {
++        "index": 457,
++        "errors": [
++          "priceUsd not number"
++        ]
++      },
++      {
++        "index": 458,
++        "errors": [
++          "priceUsd not number"
++        ]
++      },
++      {
++        "index": 459,
++        "errors": [
++          "priceUsd not number"
++        ]
++      },
++      {
++        "index": 460,
++        "errors": [
++          "priceUsd not number"
++        ]
++      },
++      {
++        "index": 461,
++        "errors": [
++          "priceUsd not number"
++        ]
++      },
++      {
++        "index": 462,
++        "errors": [
++          "priceUsd not number"
++        ]
++      },
++      {
++        "index": 463,
++        "errors": [
++          "priceUsd not number"
++        ]
++      },
++      {
++        "index": 464,
++        "errors": [
++          "priceUsd not number"
++        ]
++      },
++      {
++        "index": 465,
++        "errors": [
++          "priceUsd not number"
++        ]
++      },
++      {
++        "index": 466,
++        "errors": [
++          "priceUsd not number"
++        ]
++      },
++      {
++        "index": 467,
++        "errors": [
++          "priceUsd not number"
++        ]
++      },
++      {
++        "index": 468,
++        "errors": [
++          "priceUsd not number"
++        ]
++      },
++      {
++        "index": 469,
++        "errors": [
++          "priceUsd not number"
++        ]
++      },
++      {
++        "index": 470,
++        "errors": [
++          "priceUsd not number"
++        ]
++      },
++      {
++        "index": 471,
++        "errors": [
++          "priceUsd not number"
++        ]
++      },
++      {
++        "index": 472,
++        "errors": [
++          "priceUsd not number"
++        ]
++      },
++      {
++        "index": 473,
++        "errors": [
++          "priceUsd not number"
++        ]
++      },
++      {
++        "index": 474,
++        "errors": [
++          "priceUsd not number"
++        ]
++      },
++      {
++        "index": 475,
++        "errors": [
++          "priceUsd not number"
++        ]
++      },
++      {
++        "index": 476,
++        "errors": [
++          "priceUsd not number"
++        ]
++      },
++      {
++        "index": 477,
++        "errors": [
++          "priceUsd not number"
++        ]
++      },
++      {
++        "index": 478,
++        "errors": [
++          "priceUsd not number"
++        ]
++      },
++      {
++        "index": 479,
++        "errors": [
++          "priceUsd not number"
++        ]
++      }
++    ]
++  }
++}
+\ No newline at end of file
+diff --git a/REPORTS/diagnostics.md b/REPORTS/diagnostics.md
+new file mode 100644
+index 0000000..5868dc4
+--- /dev/null
++++ b/REPORTS/diagnostics.md
+@@ -0,0 +1,5 @@
++# Diagnostics
++
++- Added basic tooling scripts for build, lint, and data validation.
++- No automated accessibility or performance audits were run due to environment limitations.
++- Data files are now checked for required fields (`brand`, `model`, optional `priceUsd`).
+diff --git a/REPORTS/lighthouse-index.md b/REPORTS/lighthouse-index.md
+new file mode 100644
+index 0000000..6c558f1
+--- /dev/null
++++ b/REPORTS/lighthouse-index.md
+@@ -0,0 +1,3 @@
++# Lighthouse Report: index.html
++
++Lighthouse analysis could not be run in this environment. Use `lighthouse docs/index.html` locally to gather metrics.
+diff --git a/SCHEMAS/router.schema.json b/SCHEMAS/router.schema.json
+new file mode 100644
+index 0000000..b4f2290
+--- /dev/null
++++ b/SCHEMAS/router.schema.json
+@@ -0,0 +1,13 @@
++{
++  "$schema": "http://json-schema.org/draft-07/schema#",
++  "title": "Router",
++  "type": "object",
++  "required": ["brand", "model"],
++  "properties": {
++    "id": { "type": "string" },
++    "slug": { "type": "string" },
++    "brand": { "type": "string" },
++    "model": { "type": "string" },
++    "priceUsd": { "type": ["number", "null"], "minimum": 0 }
++  }
++}
+diff --git a/SCRIPTS/build.js b/SCRIPTS/build.js
+new file mode 100644
+index 0000000..3e874cf
+--- /dev/null
++++ b/SCRIPTS/build.js
+@@ -0,0 +1,6 @@
++const fs = require('fs');
++const path = require('path');
++const src = path.join(__dirname, '..', 'input.css');
++const dest = path.join(__dirname, '..', 'docs', 'main.css');
++fs.copyFileSync(src, dest);
++console.log('Copied input.css to docs/main.css');
+diff --git a/SCRIPTS/lint.js b/SCRIPTS/lint.js
+new file mode 100644
+index 0000000..6c75cc7
+--- /dev/null
++++ b/SCRIPTS/lint.js
+@@ -0,0 +1,33 @@
++const fs = require('fs');
++const path = require('path');
++const { execSync } = require('child_process');
++
++function checkFile(file){
++  try {
++    execSync(`node --check "${file}"`, { stdio: 'ignore' });
++    return null;
++  } catch (e) {
++    return e.message;
++  }
++}
++
++const base = path.join(__dirname, '..');
++const dirs = [path.join(base, 'docs', 'assets', 'js'), path.join(base, 'docs')];
++let errors = [];
++for (const dir of dirs){
++  if (!fs.existsSync(dir)) continue;
++  for (const f of fs.readdirSync(dir)){
++    if (f.endsWith('.js')){
++      const filePath = path.join(dir, f);
++      const err = checkFile(filePath);
++      if (err) errors.push({ file: path.relative(base, filePath), error: err });
++    }
++  }
++}
++if (errors.length){
++  console.error('Lint errors:');
++  errors.forEach(e => console.error(e.file + '\n' + e.error));
++  process.exit(1);
++} else {
++  console.log('All JS files passed syntax check');
++}
+diff --git a/SCRIPTS/validate-data.js b/SCRIPTS/validate-data.js
+new file mode 100644
+index 0000000..d6affad
+--- /dev/null
++++ b/SCRIPTS/validate-data.js
+@@ -0,0 +1,39 @@
++const fs = require('fs');
++const path = require('path');
++
++function validateObj(o){
++  const errs = [];
++  if (!o || typeof o !== 'object') return ['not an object'];
++  if (!o.brand || typeof o.brand !== 'string') errs.push('brand missing');
++  if (!o.model || typeof o.model !== 'string') errs.push('model missing');
++  if (Object.prototype.hasOwnProperty.call(o, 'priceUsd')) {
++    const p = o.priceUsd;
++    if (typeof p !== 'number' || Number.isNaN(p)) errs.push('priceUsd not number');
++    else if (p < 0) errs.push('priceUsd negative');
++  }
++  return errs;
++}
++
++const base = path.join(__dirname, '..');
++const files = [
++  path.join(base, 'docs', 'kits.json'),
++  path.join(base, 'docs', 'routers_full_combined.json')
++];
++const report = {};
++for (const file of files){
++  const content = fs.readFileSync(file, 'utf-8');
++  let arr;
++  try { arr = JSON.parse(content); } catch (e) { report[file] = { error: 'invalid JSON' }; continue; }
++  if (!Array.isArray(arr)) { report[file] = { error: 'not array' }; continue; }
++  const errors = [];
++  arr.forEach((item, idx) => {
++    const e = validateObj(item);
++    if (e.length) errors.push({ index: idx, errors: e });
++  });
++  report[file] = { total: arr.length, valid: errors.length === 0, errors };
++}
++const outPath = path.join(base, 'REPORTS', 'data-validation.json');
++fs.writeFileSync(outPath, JSON.stringify(report, null, 2));
++console.log('Wrote', outPath);
++const allValid = Object.values(report).every(r => r.valid);
++if (!allValid) process.exit(1);
+diff --git a/TODO.md b/TODO.md
+new file mode 100644
+index 0000000..5765794
+--- /dev/null
++++ b/TODO.md
+@@ -0,0 +1,5 @@
++# TODO
++- Integrate Tailwind build pipeline and minification.
++- Add ESLint/Prettier once package installation is available.
++- Run Lighthouse and accessibility audits.
++- Implement unit tests and CI.
+diff --git a/package.json b/package.json
+new file mode 100644
+index 0000000..700c747
+--- /dev/null
++++ b/package.json
+@@ -0,0 +1,12 @@
++{
++  "name": "routerhaus",
++  "version": "1.0.0",
++  "description": "Static site tooling and data validation for RouterHaus",
++  "type": "commonjs",
++  "scripts": {
++    "build": "node SCRIPTS/build.js",
++    "lint": "node SCRIPTS/lint.js",
++    "validate-data": "node SCRIPTS/validate-data.js",
++    "test": "npm run validate-data"
++  }
++}

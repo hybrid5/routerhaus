@@ -1,0 +1,13 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Router",
+  "type": "object",
+  "required": ["brand", "model"],
+  "properties": {
+    "id": { "type": "string" },
+    "slug": { "type": "string" },
+    "brand": { "type": "string" },
+    "model": { "type": "string" },
+    "priceUsd": { "type": ["number", "null"], "minimum": 0 }
+  }
+}

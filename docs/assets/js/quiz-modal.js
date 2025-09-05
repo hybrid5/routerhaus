@@ -104,6 +104,17 @@
     dlg.classList.add('is-open');
     // lock background scroll for both modes
     document.documentElement.style.overflow = 'hidden';
+    document.documentElement.classList.add('is-quiz-open');
+    document.body.classList.add('is-quiz-open');
+
+    // ensure other overlays/drawers are suppressed
+    document.getElementById('sidebar-overlay')?.classList.remove('active');
+    document.getElementById('sidebar')?.classList.remove('active');
+    document.getElementById('sidebar')?.setAttribute('aria-hidden','true');
+    document.getElementById('hamburger-menu')?.classList.remove('active');
+    document.getElementById('hamburger-menu')?.setAttribute('aria-expanded','false');
+    document.getElementById('filtersDrawer')?.setAttribute('aria-hidden','true');
+    document.documentElement.classList.remove('scroll-lock');
 
     queueMicrotask(() => firstFocusable(dlg)?.focus());
     attachTrap();
@@ -116,6 +127,8 @@
 
     // unlock background scroll
     document.documentElement.style.overflow = '';
+    document.documentElement.classList.remove('is-quiz-open');
+    document.body.classList.remove('is-quiz-open');
 
     // hide fallback backdrop
     fbBackdrop.style.display = 'none';

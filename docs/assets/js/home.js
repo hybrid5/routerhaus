@@ -7,18 +7,36 @@
   const $ = (s, r = document) => r.querySelector(s);
   const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
 
-  /* ---- Partials (idempotent) ---- */
+  const prefersReduced = matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ?? false;
+  const isCoarsePointer = matchMedia?.("(pointer: coarse)")?.matches ?? false;
+
+  /* ---- Partials (robust + idempotent; mirrors blog loader) ---- */
   async function mountPartial(target){
-    const path = target?.dataset?.partial;
-    if(!path || (target?.children?.length ?? 0) > 0) return;
-    try{
-      const res = await fetch(path, { cache: 'no-store' });
-      if(res.ok){
-        const html = await res.text();
-        // Only set if still empty (avoid racing with global scripts.js)
-        if ((target?.children?.length ?? 0) === 0) target.innerHTML = html;
-      }
-    }catch{}
+    const requested = target?.dataset?.partial;
+    if (!requested || (target?.children?.length ?? 0) > 0) return;
+
+    const siteRoot = (location.pathname.includes('/assets/')
+      ? location.pathname.split('/assets/')[0] + '/'
+      : '/');
+    const file = requested.split('/').pop();
+    const candidates = [
+      requested,          // as-given (relative)
+      siteRoot + file,    // site root (e.g., /docs/header.html)
+      '/' + file          // domain root (/header.html)
+    ];
+
+    for (const url of candidates){
+      try {
+        const res = await fetch(url, { cache: 'no-store' });
+        if (res.ok){
+          const html = await res.text();
+          // Only set if still empty (avoid racing with global scripts.js)
+          if ((target?.children?.length ?? 0) === 0) target.innerHTML = html;
+          return;
+        }
+      } catch { /* swallow and try next */ }
+    }
+    console.warn('Partial load failed for', candidates);
   }
 
   /* ---- Persona quick chips → route to kits with mapped filters ---- */
@@ -37,13 +55,24 @@
         const qs = map[key] || "quiz=1";
         window.location.href = `kits.html?${qs}`;
       });
+      // keyboard affordance (Enter/Space) if not naturally a button
+      btn.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); btn.click(); }
+      });
+      btn.setAttribute("aria-label", btn.textContent.trim());
     });
   }
 
   /* ---- Reveal animations on scroll ---- */
   function revealify() {
     const els = $$(".reveal");
-    if (!els.length || !("IntersectionObserver" in window)) return;
+    if (!els.length) return;
+
+    if (prefersReduced || !("IntersectionObserver" in window)) {
+      els.forEach(el => el.classList.add("in-view"));
+      return;
+    }
+
     const io = new IntersectionObserver(
       (entries) => {
         entries.forEach((en) => {
@@ -58,22 +87,48 @@
     els.forEach((el) => io.observe(el));
   }
 
-  /* ---- FAQ accordion (no HTML changes needed) ---- */
+  /* ---- FAQ accordion (ARIA without HTML edits) ---- */
   function wireAccordion(){
     $$(".accordion-item").forEach(item=>{
+      // make the header region focusable
+      item.setAttribute("role","button");
+      item.setAttribute("tabindex","0");
+      item.setAttribute("aria-expanded", "false");
+
+      const content = $("p", item);
+      if (content) {
+        const cid = content.id || `acc_${Math.random().toString(36).slice(2)}`;
+        content.id = cid;
+        item.setAttribute("aria-controls", cid);
+      }
+
+      const toggle = () => {
+        const isOpen = item.classList.toggle("open");
+        item.setAttribute("aria-expanded", String(isOpen));
+      };
+
       item.addEventListener("click", (e)=>{
+        // avoid toggling when selecting text or clicking links inside
         if (getSelection()?.toString()) return;
-        item.classList.toggle("open");
+        if ((e.target as HTMLElement).closest('a,button')) return;
+        toggle();
+      });
+      item.addEventListener("keydown", (e)=>{
+        if (e.key === "Enter" || e.key === " ") { e.preventDefault(); toggle(); }
+        if (e.key === "Escape" && item.classList.contains("open")) { e.preventDefault(); toggle(); }
       });
     });
   }
 
-  /* ---- Subtle tilt on product cards (perf-safe) ---- */
+  /* ---- Subtle tilt on product cards (perf-safe, respects reduced motion) ---- */
   function tiltCards() {
+    if (prefersReduced || isCoarsePointer) return; // skip on mobile / reduced motion
     const cards = $$(".product");
     if (!cards.length) return;
+
     cards.forEach((card) => {
       let rAF = 0;
+
       const onMove = (e) => {
         const rect = card.getBoundingClientRect();
         const cx = rect.left + rect.width / 2;
@@ -90,9 +145,14 @@
         cancelAnimationFrame(rAF);
         card.style.transform = "";
       };
-      card.addEventListener("mousemove", onMove);
+
+      card.addEventListener("mousemove", onMove, { passive: true });
       card.addEventListener("mouseleave", reset);
       card.addEventListener("blur", reset, true);
+      // defensive: if pointer becomes coarse mid-session (e.g., switch to touch)
+      window.addEventListener("pointerdown", (ev) => {
+        if (ev.pointerType !== "mouse") reset();
+      }, { passive: true });
     });
   }
 

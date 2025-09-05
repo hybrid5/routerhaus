@@ -1,5 +1,5 @@
 /* ============================
-   RouterHaus – home.js (patched)
+   RouterHaus – home.js (final)
    Stable, aligned with other pages; safe partial mounting
 ============================ */
 (() => {
@@ -50,11 +50,14 @@
       wfh: "use=Work%20from%20Home&recos=1",
       gaming: "use=Gaming&wan=2.5G&recos=1",
     };
+    const gotoKits = (qs) => {
+      // keep relative to current dir so it works under /docs/ or root
+      window.location.href = `kits.html?${qs}`;
+    };
     chips.forEach((btn) => {
       btn.addEventListener("click", () => {
         const key = btn.dataset.qpick;
-        const qs = map[key] || "quiz=1";
-        window.location.href = `kits.html?${qs}`;
+        gotoKits(map[key] || "quiz=1");
       });
       // Keyboard affordance
       btn.addEventListener("keydown", (e) => {
@@ -107,7 +110,7 @@
       item.addEventListener("click", (e)=>{
         if (getSelection()?.toString()) return;
         const t = e.target;
-        if (t && t.nodeType === 1 && /** Element */ t.closest && t.closest('a,button')) return; // ✅ no TS cast
+        if (t && t.nodeType === 1 && t.closest && t.closest('a,button')) return; // no TS cast
         toggle();
       });
 
@@ -125,17 +128,22 @@
     const cards = $$(".product");
     if (!cards.length) return;
 
+    // Track last pointer type globally to avoid adding many window listeners
+    let lastPointerType = 'mouse';
+    addEventListener('pointerdown', (ev) => { lastPointerType = ev.pointerType || lastPointerType; }, { passive: true });
+
+    const isInCarousel = (el) => !!el.closest(
+      '.carousel, .carousel-track, .splide, .splide__track, .swiper, .swiper-wrapper, .glide, .keen-slider, .slick-slider, .flickity-enabled, [data-slider], [role="region"][aria-roledescription="carousel"]'
+    );
+
     cards.forEach((card) => {
-      // Skip if the card lives inside a slider/carousel wrapper
-      if (card.closest('.carousel, .splide, .swiper, .glide, .keen-slider, [data-slider], [role="region"][aria-roledescription="carousel"]')) {
-        return;
-      }
+      if (card.matches('[data-no-tilt], [data-tilt="off"]')) return;
+      if (isInCarousel(card)) return;
 
       let rAF = 0;
 
       const onMove = (e) => {
-        // Only react to actual mouse pointers (don’t interfere with drag/swipe)
-        if (e.pointerType && e.pointerType !== "mouse") return;
+        if ((e.pointerType && e.pointerType !== "mouse") || lastPointerType !== 'mouse') return;
 
         const rect = card.getBoundingClientRect();
         const cx = rect.left + rect.width / 2;
@@ -157,11 +165,6 @@
       card.addEventListener("pointermove", onMove, { passive: true });
       card.addEventListener("pointerleave", reset);
       card.addEventListener("blur", reset, true);
-
-      // Defensive: if input switches to touch/pen mid-session
-      window.addEventListener("pointerdown", (ev) => {
-        if (ev.pointerType !== "mouse") reset();
-      }, { passive: true });
     });
   }
 

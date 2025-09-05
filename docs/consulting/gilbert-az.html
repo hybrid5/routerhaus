@@ -5,12 +5,27 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <!-- Core -->
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Gilbert, AZ network consulting: enterprise-grade Wi-Fi & wired design, installation, and optimization for large homes, offices, hospitality, and MDUs across the East Valley." />
   <meta name="color-scheme" content="light dark" />
-  <title>Gilbert, AZ Network Consulting · RouterHaus</title>
+  <meta name="theme-color" content="#6f7dff">
+
+  <!-- SEO: title / description / canonical / robots -->
+  <title>Gilbert Network Consulting & Structured Wiring | RouterHaus</title>
+  <meta name="description" content="Gilbert, AZ network consulting: enterprise-grade Wi-Fi & wired design, installation, and optimization for large homes, offices, hospitality, and MDUs across the East Valley." />
   <link rel="canonical" href="https://routerhaus.com/consulting/gilbert-az.html" />
+  <meta name="robots" content="index,follow" />
+
+  <!-- Social (Open Graph / Twitter) -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="RouterHaus">
+  <meta property="og:title" content="Gilbert Network Consulting & Structured Wiring | RouterHaus">
+  <meta property="og:description" content="East Valley Wi-Fi & wired designs for estates, studios, boutique hospitality, and MDUs—tuned for coverage, capacity, and rock-solid roaming.">
+  <meta property="og:url" content="https://routerhaus.com/consulting/gilbert-az.html">
+  <meta property="og:image" content="https://routerhaus.com/assets/img/og/routerhaus-gilbert.webp">
+  <meta property="og:image:alt" content="RouterHaus Gilbert Network Consulting">
+  <meta name="twitter:card" content="summary_large_image">
 
   <!-- Favicons -->
   <link rel="icon" href="/favicon.ico" sizes="any">
@@ -18,7 +33,11 @@
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <link rel="manifest" href="/site.webmanifest">
-  <meta name="theme-color" content="#6f7dff">
+
+  <!-- Performance hints -->
+  <link rel="preconnect" href="https://routerhaus.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
   <!-- Fonts & Base Styles -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet" />
@@ -30,11 +49,21 @@
   <!-- Icons (Font Awesome) -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
-  <!-- Local SEO: Breadcrumbs / ProfessionalService / FAQ -->
+  <!-- Local SEO: WebSite / Breadcrumbs / ProfessionalService (local) / FAQ -->
   <script type="application/ld+json">
   {
     "@context":"https://schema.org",
     "@graph":[
+      {
+        "@type":"WebSite",
+        "name":"RouterHaus",
+        "url":"https://routerhaus.com/",
+        "potentialAction":{
+          "@type":"SearchAction",
+          "target":"https://routerhaus.com/search?q={search_term_string}",
+          "query-input":"required name=search_term_string"
+        }
+      },
       {
         "@type":"BreadcrumbList",
         "itemListElement":[
@@ -45,17 +74,19 @@
       },
       {
         "@type":"ProfessionalService",
+        "@id":"https://routerhaus.com/consulting/gilbert-az.html#local",
         "name":"RouterHaus — Gilbert Network Consulting",
-        "image":"https://routerhaus.com/android-chrome-512x512.png",
+        "description":"Enterprise-grade Wi-Fi & wired design, installation, and optimization for large homes, offices, hospitality, and MDUs across Gilbert and the East Valley.",
+        "image":"https://routerhaus.com/assets/img/og/routerhaus-gilbert.webp",
         "logo":"https://routerhaus.com/android-chrome-512x512.png",
         "url":"https://routerhaus.com/consulting/gilbert-az.html",
-        "areaServed":"Gilbert, AZ (Agritopia, Power Ranch, Seville, Val Vista Lakes, Morrison Ranch) plus Chandler, Queen Creek, Mesa",
+        "priceRange":"$$$",
         "serviceType":[
           "Wi-Fi network design",
           "Structured cabling planning",
           "AP placement & validation",
           "Wired backhaul / multi-gig switching",
-          "VLAN/Guest segmentation",
+          "VLAN / Guest segmentation",
           "On-site deployment and optimization",
           "Monitoring & firmware policy"
         ],
@@ -65,7 +96,24 @@
           "addressRegion":"AZ",
           "addressCountry":"US"
         },
-        "hasMap":"https://www.google.com/maps/search/?api=1&query=Gilbert,AZ",
+        "areaServed":[
+          {"@type":"City","name":"Gilbert"},
+          {"@type":"City","name":"Chandler"},
+          {"@type":"City","name":"Queen Creek"},
+          {"@type":"City","name":"Mesa"},
+          {"@type":"City","name":"Tempe"}
+        ],
+        "geo":{
+          "@type":"GeoCoordinates",
+          "latitude":33.3528,
+          "longitude":-111.7890
+        },
+        "areaServedGeo":{
+          "@type":"GeoCircle",
+          "geoMidpoint":{"@type":"GeoCoordinates","latitude":33.3528,"longitude":-111.7890},
+          "geoRadius":40000
+        },
+        "hasMap":"https://www.google.com/maps/search/?api=1&query=Gilbert%2C%20AZ",
         "sameAs":[]
       },
       {
@@ -290,7 +338,7 @@
       </div>
     </section>
 
-    <!-- ===== Smart intake (multi-step) — identical structure for JS ===== -->
+    <!-- ===== Smart intake (multi-step) — identical structure for JS) ===== -->
     <section class="intake" id="intake">
       <div class="container">
         <header class="section-head reveal">
@@ -493,6 +541,21 @@
 
   <!-- Footer partial (subfolder path) -->
   <div id="footer-placeholder" data-partial="../footer.html"></div>
+
+  <!-- SEO helpers (no UI change) -->
+  <script>
+    /* Prevent index bloat for faceted/search params on this local page */
+    (() => {
+      const qs = new URLSearchParams(location.search);
+      const hasSearch = qs.has('q') || qs.has('query') || qs.has('s');
+      const hasTag = qs.has('tag') || qs.has('tags');
+      if (hasSearch || hasTag) {
+        const m = document.createElement('meta');
+        m.name = 'robots'; m.content = 'noindex,follow';
+        document.head.appendChild(m);
+      }
+    })();
+  </script>
 
   <!-- Scripts (subfolder paths) -->
   <script src="../scripts.js" defer></script>

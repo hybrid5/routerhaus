@@ -5,12 +5,27 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <!-- Core -->
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Scottsdale, AZ network consulting: enterprise-grade Wi-Fi & wired design, installation, and optimization for estates, offices, hospitality, and MDUs." />
   <meta name="color-scheme" content="light dark" />
-  <title>Scottsdale, AZ Network Consulting · RouterHaus</title>
+  <meta name="theme-color" content="#6f7dff">
+
+  <!-- SEO: title/description/canonical/robots -->
+  <title>Scottsdale Network Consulting & Structured Wiring | RouterHaus</title>
+  <meta name="description" content="Scottsdale, AZ network consulting: enterprise-grade Wi-Fi & wired design, installation, and optimization for estates, offices, hospitality, and MDUs." />
   <link rel="canonical" href="https://routerhaus.com/consulting/scottsdale-az.html" />
+  <meta name="robots" content="index,follow" />
+
+  <!-- Social (OG/Twitter) -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="RouterHaus">
+  <meta property="og:title" content="Scottsdale Network Consulting & Structured Wiring | RouterHaus">
+  <meta property="og:description" content="Estate-level Wi-Fi & wired designs for homes, studios, boutique hospitality, and MDUs — tuned for distance, density, and rock-solid roaming.">
+  <meta property="og:url" content="https://routerhaus.com/consulting/scottsdale-az.html">
+  <meta property="og:image" content="https://routerhaus.com/assets/img/og/routerhaus-scottsdale.webp">
+  <meta property="og:image:alt" content="RouterHaus Scottsdale Network Consulting">
+  <meta name="twitter:card" content="summary_large_image">
 
   <!-- Favicons -->
   <link rel="icon" href="/favicon.ico" sizes="any">
@@ -18,7 +33,11 @@
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <link rel="manifest" href="/site.webmanifest">
-  <meta name="theme-color" content="#6f7dff">
+
+  <!-- Performance hints -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://routerhaus.com" crossorigin>
 
   <!-- Fonts & Base Styles -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet" />
@@ -30,11 +49,31 @@
   <!-- Icons (Font Awesome) -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
-  <!-- Local SEO: Breadcrumbs / ProfessionalService / FAQ -->
+  <!-- Theme sync -->
+  <script>
+    (() => {
+      const root = document.documentElement;
+      const media = matchMedia('(prefers-color-scheme: dark)');
+      const apply = () => root.setAttribute('data-theme', media.matches ? 'dark' : 'light');
+      apply(); media.addEventListener('change', apply);
+    })();
+  </script>
+
+  <!-- Local SEO: WebSite / Breadcrumbs / Local ProfessionalService / FAQ -->
   <script type="application/ld+json">
   {
     "@context":"https://schema.org",
     "@graph":[
+      {
+        "@type":"WebSite",
+        "name":"RouterHaus",
+        "url":"https://routerhaus.com/",
+        "potentialAction":{
+          "@type":"SearchAction",
+          "target":"https://routerhaus.com/search?q={search_term_string}",
+          "query-input":"required name=search_term_string"
+        }
+      },
       {
         "@type":"BreadcrumbList",
         "itemListElement":[
@@ -45,17 +84,26 @@
       },
       {
         "@type":"ProfessionalService",
+        "@id":"https://routerhaus.com/consulting/scottsdale-az.html#local",
         "name":"RouterHaus — Scottsdale Network Consulting",
-        "image":"https://routerhaus.com/android-chrome-512x512.png",
+        "image":"https://routerhaus.com/assets/img/og/routerhaus-scottsdale.webp",
         "logo":"https://routerhaus.com/android-chrome-512x512.png",
         "url":"https://routerhaus.com/consulting/scottsdale-az.html",
-        "areaServed":"Scottsdale, AZ (Old Town, McCormick Ranch, Gainey Ranch, Kierland, DC Ranch, North Scottsdale) plus Paradise Valley, Phoenix, Tempe, Fountain Hills",
+        "description":"Enterprise-grade Wi-Fi & wired design, installation, and optimization for estates, SMBs, hospitality, and MDUs across Scottsdale and nearby areas.",
+        "priceRange":"$$$",
+        "areaServed":[
+          {"@type":"City","name":"Scottsdale"},
+          {"@type":"City","name":"Paradise Valley"},
+          {"@type":"City","name":"Phoenix"},
+          {"@type":"City","name":"Tempe"},
+          {"@type":"City","name":"Fountain Hills"}
+        ],
         "serviceType":[
           "Wi-Fi network design",
           "Structured cabling planning",
           "AP placement & validation",
           "Wired backhaul / multi-gig switching",
-          "VLAN/Guest segmentation",
+          "VLAN / Guest segmentation",
           "On-site deployment and optimization",
           "Monitoring & firmware policy"
         ],
@@ -65,7 +113,17 @@
           "addressRegion":"AZ",
           "addressCountry":"US"
         },
-        "hasMap":"https://www.google.com/maps/search/?api=1&query=Scottsdale,AZ",
+        "geo":{
+          "@type":"GeoCoordinates",
+          "latitude":33.4942,
+          "longitude":-111.9261
+        },
+        "hasMap":"https://www.google.com/maps/search/?api=1&query=Scottsdale%2C+AZ",
+        "areaServedGeo":{
+          "@type":"GeoCircle",
+          "geoMidpoint":{"@type":"GeoCoordinates","latitude":33.4942,"longitude":-111.9261},
+          "geoRadius":50000
+        },
         "sameAs":[]
       },
       {
@@ -74,7 +132,7 @@
           {
             "@type":"Question",
             "name":"Do you cover all of Scottsdale?",
-            "acceptedAnswer":{"@type":"Answer","text":"Yes — Old Town, McCormick & Gainey, Kierland, DC Ranch, North Scottsdale, Troon, and nearby PV, Phoenix, Tempe, and Fountain Hills."}
+            "acceptedAnswer":{"@type":"Answer","text":"Yes — Old Town, McCormick & Gainey, Kierland, DC Ranch, North Scottsdale, Troon, and Desert Mountain, plus nearby PV, Phoenix, Tempe, and Fountain Hills."}
           },
           {
             "@type":"Question",
@@ -90,17 +148,6 @@
       }
     ]
   }
-  </script>
-
-  <!-- Theme sync -->
-  <script>
-    (() => {
-      const root = document.documentElement;
-      const media = matchMedia('(prefers-color-scheme: dark)');
-      const apply = () => root.setAttribute('data-theme', media.matches ? 'dark' : 'light');
-      apply();
-      media.addEventListener('change', apply);
-    })();
   </script>
 </head>
 <body>
@@ -193,7 +240,7 @@
       </div>
     </section>
 
-    <!-- ===== Services / Packages (unchanged schema & hooks) ===== -->
+    <!-- ===== Services / Packages ===== -->
     <section class="packages">
       <div class="container">
         <header class="section-head reveal">
@@ -493,6 +540,21 @@
 
   <!-- Footer partial -->
   <div id="footer-placeholder" data-partial="../footer.html"></div>
+
+  <!-- SEO helpers (no UI change) -->
+  <script>
+    /* Prevent index bloat for faceted/search params on this local page */
+    (() => {
+      const qs = new URLSearchParams(location.search);
+      const hasSearch = qs.has('q') || qs.has('query') || qs.has('s');
+      const hasTag = qs.has('tag') || qs.has('tags');
+      if (hasSearch || hasTag) {
+        const m = document.createElement('meta');
+        m.name = 'robots'; m.content = 'noindex,follow';
+        document.head.appendChild(m);
+      }
+    })();
+  </script>
 
   <!-- Scripts (subfolder paths) -->
   <script src="../scripts.js" defer></script>

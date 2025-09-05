@@ -1,13 +1,13 @@
 [
   {
     "id": "bp1",
-    "title": "Why Your New iPhone 16 Pro Deserves a Wi-Fi 7 Router",
+    "title": "Why Your New iPhone 17 / 17 Pro / 17 Pro Max Deserves a Wi-Fi 7 Router",
     "slug": "iphone-wifi7-upgrade",
     "author": "RouterHaus",
-    "date": "2025-08-26",
-    "tags": ["Wi-Fi 7", "Apple", "iPhone", "Buying Guide"],
-    "excerpt": "Apple’s iPhone 16 Pro ships with a Wi-Fi 7 chip and 320 MHz channel support—but you won’t see the speed or latency benefits unless your router can keep up.",
-    "content": "<p>Apple quietly made the iPhone 16 Pro one of the first mainstream Wi-Fi 7 devices. With its new 320 MHz channel support, the phone can hit multi-gigabit speeds and enjoy lower latency for AirDrop, streaming, and gaming. But unless you upgrade your router, you won’t feel any of those benefits. This post explains exactly why your new iPhone deserves a Wi-Fi 7 router.</p>",
+    "date": "2025-09-05",
+    "tags": ["Wi-Fi 7", "Apple", "iPhone 17", "Buying Guide"],
+    "excerpt": "Apple’s iPhone 17 lineup supports Wi-Fi 7 and 320 MHz channels—BUT you won’t feel the speed or latency gains unless your router can match it (6 GHz, 320 MHz, MLO).",
+    "content": "<p>iPhone 17 / 17 Pro / 17 Pro Max bring Wi-Fi 7 with 320 MHz channels and Multi-Link Operation. That means faster AirDrop, quicker iCloud backups, and lower-lag streaming—if your router supports Wi-Fi 7 on 6 GHz. Still on Wi-Fi 5/6? Your phone falls back and you lose the benefits. This post shows why upgrading the router unlocks your new iPhone’s speed, what specs to buy (320 MHz, MLO, 2.5G+ ports), and how to set it up right.</p>",
     "cover": "assets/img/iphone-wifi7-hero-min.jpg",
     "minutes": 8,
     "featured": true,
@@ -29,7 +29,7 @@
   },
   {
     "id": "bp3",
-    "title": "How to Build a Rock-Solid Work-From-Home Network",
+    "title": "How to Build a Rock-Solid Work-From-Home Network (2025)",
     "slug": "work-from-home-network",
     "author": "RouterHaus",
     "date": "2025-08-26",
@@ -43,7 +43,7 @@
   },
   {
     "id": "bp4",
-    "title": "Why Range Still Matters: Beating Dead Zones in Modern Homes",
+    "title": "Why Range Still Matters: Beating Dead Zones in Modern Homes (2025)",
     "slug": "why-range-matters-dead-zones",
     "author": "RouterHaus",
     "date": "2025-08-26",
@@ -57,7 +57,7 @@
   },
   {
     "id": "bp5",
-    "title": "Too Many Devices? How Bandwidth Splits in a 50-Device Home",
+    "title": "Too Many Devices? How Bandwidth Splits in a 50-Device Home (2025)",
     "slug": "many-devices-bandwidth",
     "author": "RouterHaus",
     "date": "2025-08-26",
@@ -66,6 +66,34 @@
     "content": "<p>It’s normal for a home to have 40+ devices online: phones, TVs, cameras, consoles, smart speakers, thermostats. Without proper airtime management, everything slows. Wi-Fi 7 routers with MU-MIMO, OFDMA, and QoS prevent congestion. Here’s how bandwidth is split, and how to make sure your network doesn’t crumble under load.</p>",
     "cover": "assets/img/many-devices.jpg",
     "minutes": 10,
+    "featured": false,
+    "views": 0
+  },
+  {
+    "id": "bp6",
+    "title": "Gaming Latency & Jitter Explained: A 10-Minute Fix for Low-Lag Wi-Fi 7",
+    "slug": "gaming-latency-jitter",
+    "author": "RouterHaus",
+    "date": "2025-09-05",
+    "tags": ["Gaming", "Latency", "Wi-Fi 7", "QoS"],
+    "excerpt": "Cut ping spikes and packet loss fast. We explain latency vs. jitter in plain English and show the 10-minute setup that fixes it on Wi-Fi 7.",
+    "content": "<p>Lag isn’t just about Mbps—it’s about latency and jitter. In 10 minutes: place your router/node right, enable 6 GHz + MLO, turn on Smart QoS/SQM, and wire your console/PC if possible. We also recommend Wi-Fi 7 routers that excel at stable latency—see our picks on <a href=\"../../kits.html#gaming\" aria-label=\"Gaming Wi-Fi 7 router kits\">kits.html</a>.</p>",
+    "cover": "assets/img/gaming-latency-hero.jpg",
+    "minutes": 9,
+    "featured": false,
+    "views": 0
+  },
+  {
+    "id": "bp7",
+    "title": "The Ultimate Guide to Structured Wiring for New Home Construction (2025)",
+    "slug": "structured-wiring-new-home",
+    "author": "RouterHaus",
+    "date": "2025-09-05",
+    "tags": ["Builders", "Structured Wiring", "Ethernet", "Fiber", "Wi-Fi 7"],
+    "excerpt": "Definitive pillar for builders and new homeowners: where to run Ethernet and fiber, AP pre-wires, panel spec, and a ready-to-bid checklist.",
+    "content": "<p>Pre-wire right at rough-in: home-run Cat6a, single-mode fiber from demarc, ceiling AP drops with PoE, and a ventilated low-voltage closet. Use our room-by-room drop table and bid checklist, then funnel to <a href=\"../../consult.html#builders\" aria-label=\"Structured wiring consult\">consult.html</a> for stamped plans and AP layouts.</p>",
+    "cover": "assets/img/structured-wiring-hero.jpg",
+    "minutes": 14,
     "featured": false,
     "views": 0
   }

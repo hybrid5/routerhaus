@@ -863,13 +863,13 @@ dialog.modal:not([open]):not(.is-open){ display: none !important; }
   .bg-orb{ animation:none; }
   .shimmer{ animation:none; background: var(--surface-secondary); }
   .product:hover{ transform:none; }
-  .btn:hover{ transform:none; }
+  .product:hover{ transform:none; }
 }
 
 /* High contrast */
 @media (prefers-contrast: high){
   :root{ --border:#000; --border-strong:#000; --shadow:none; --shadow-soft:none; --shadow-strong:none; }
-  .btn,.product,.facet{ border-width:2px; }
+  .product,.facet{ border-width:2px; }
 }
 
 /* Print */
@@ -877,14 +877,12 @@ dialog.modal:not([open]):not(.is-open){ display: none !important; }
   .ambient-bg,.page-progress-ring,.fab,.drawer,.compare-sticky,.compare,.modal{ display:none !important; }
   .product{ break-inside: avoid; box-shadow:none; border:1px solid #000; }
   .product-hover-overlay{ display:none; }
-  .btn{ box-shadow:none; border:1px solid #000; }
   .filters-rail{ position:static; max-height:none; }
   .kits-layout{ grid-template-columns: 1fr; }
 }
 
 /* Focus management */
 .focus-trap{ position:fixed; top:0; left:0; width:1px; height:1px; opacity:0; pointer-events:none; }
-button:focus-visible, select:focus-visible, input:focus-visible, [tabindex]:focus-visible{ outline:2px solid var(--primary); outline-offset:2px; }
 
 /* Performance / support */
 .product-media img[loading="lazy"]{ content-visibility: auto; }

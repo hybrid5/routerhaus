@@ -429,8 +429,6 @@ a{ color: inherit; text-decoration: none; }
 .glass{ background: var(--glass-bg); backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-sat)); border:1px solid var(--glass-border); }
 .hide{ display:none !important; }
 .sr-only{ position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
-button:focus-visible, select:focus-visible, input:focus-visible, a:focus-visible{ outline:2px solid var(--primary); outline-offset:2px; }
-
 /* Reduced motion & high contrast */
 @media (prefers-reduced-motion: reduce){
   .bg-orb{ animation: none; }
@@ -439,7 +437,6 @@ button:focus-visible, select:focus-visible, input:focus-visible, a:focus-visible
 }
 @media (forced-colors: active){
   .glass, .post-card, .command-bar, .newsletter, .modal{ border: 1px solid CanvasText; }
-  .btn.primary{ border: 1px solid CanvasText; }
 }
 
 /* Responsive */

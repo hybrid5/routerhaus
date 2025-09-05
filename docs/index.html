@@ -1,21 +1,51 @@
 <!-- ===========================
-     RouterHaus v2 — index.html
-     (Home) — polished & unified with site system
-     =========================== -->
+     RouterHaus v2 — index.html (SEO-upgraded)
+     Home — optimized IA, schema, CWV hints
+=========================== -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="RouterHaus – AI-powered router recommendations for every space, from studio flats to multi-floor estates and offices." />
+  <meta name="robots" content="index,follow" />
+  <meta name="description" content="RouterHaus helps homeowners, SMBs, and builders design fast, reliable Wi-Fi: mesh systems, VLAN blueprints, and structured wiring plans—plus an AI kit finder." />
+
+  <title>Home Wi-Fi, SMB Networking & Builder Wiring Guides | RouterHaus</title>
+
+  <!-- Canonical & hreflang -->
+  <link rel="canonical" href="https://routerhaus.com/" />
+  <link rel="alternate" hreflang="en" href="https://routerhaus.com/" />
+
+  <!-- PWA / Icons -->
   <meta name="color-scheme" content="light dark" />
-  <title>RouterHaus</title>
+  <meta name="theme-color" content="#6f7dff">
   <link rel="icon" href="/favicon.ico" sizes="any">
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <link rel="manifest" href="/site.webmanifest">
-  <meta name="theme-color" content="#6f7dff">
+
+  <!-- Open Graph / Twitter -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="RouterHaus" />
+  <meta property="og:title" content="Home Wi-Fi, SMB Networking & Builder Wiring Guides | RouterHaus" />
+  <meta property="og:description" content="AI-tuned recommendations, mesh & router comparisons, troubleshooting, and structured wiring for new builds." />
+  <meta property="og:url" content="https://routerhaus.com/" />
+  <meta property="og:locale" content="en_US" />
+  <meta property="og:image" content="https://routerhaus.com/assets/img/og/routerhaus-hero.webp" />
+  <meta property="og:image:alt" content="RouterHaus — fast, reliable Wi-Fi solutions for homes and businesses" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Home Wi-Fi, SMB Networking & Builder Wiring Guides | RouterHaus" />
+  <meta name="twitter:description" content="AI-tuned recommendations, mesh & router comparisons, troubleshooting, and structured wiring for new builds." />
+  <meta name="twitter:image" content="https://routerhaus.com/assets/img/og/routerhaus-hero.webp" />
+
+  <!-- Performance hints -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+  <link rel="dns-prefetch" href="https://fonts.gstatic.com">
+  <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
 
   <!-- Fonts & Global -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet" />
@@ -34,6 +64,30 @@
 
   <!-- Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+  <!-- Organization + Sitewide breadcrumbs schema -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"Organization",
+    "name":"RouterHaus",
+    "url":"https://routerhaus.com/",
+    "logo":"https://routerhaus.com/assets/img/logo/routerhaus-mark.svg",
+    "sameAs":[
+      "https://www.linkedin.com/company/routerhaus"
+    ]
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"BreadcrumbList",
+    "itemListElement":[
+      {"@type":"ListItem","position":1,"name":"Home","item":"https://routerhaus.com/"},
+      {"@type":"ListItem","position":2,"name":"Solutions","item":"https://routerhaus.com/solutions/"}
+    ]
+  }
+  </script>
 </head>
 <body>
   <!-- Header partial -->
@@ -41,16 +95,24 @@
 
   <main class="home">
     <!-- ===== HERO ===== -->
-    <section class="hero index-hero">
+    <section class="hero index-hero" aria-labelledby="home-hero-title">
       <div class="container hero-grid">
         <div class="hero-copy reveal">
           <span class="eyebrow">AI-tuned network plans</span>
-          <h1>Lightning-Fast <span class="nowrap">Wi-Fi</span>, <span class="grad">Zero Guesswork</span></h1>
+          <h1 id="home-hero-title">Lightning-Fast <span class="nowrap">Wi-Fi</span>, <span class="grad">Zero Guesswork</span></h1>
           <p class="lede">Answer a few questions and get a dialed-in setup — sized to your space, devices, and plan speed.</p>
-          <div class="hero-actions">
+          <div class="hero-actions" role="group" aria-label="Primary actions">
             <a href="kits.html?quiz=1" class="btn primary">Start Recommendation</a>
             <a href="consult.html" class="btn ghost">Talk to an Engineer</a>
           </div>
+
+          <!-- Hub quick-links (persona-blending IA) -->
+          <nav class="hero-subnav" aria-label="Explore solutions">
+            <a class="subnav-link" href="/solutions/home-wifi/">Home Wi-Fi</a>
+            <a class="subnav-link" href="/solutions/business-networking/">Business / SMB</a>
+            <a class="subnav-link" href="/solutions/new-construction/">New Construction</a>
+          </nav>
+
           <ul class="stat-pills" aria-label="Highlights">
             <li><i class="fa-solid fa-list-check" aria-hidden="true"></i> 3-step kit finder</li>
             <li><i class="fa-solid fa-gauge-high" aria-hidden="true"></i> Multi-gig ready</li>
@@ -58,8 +120,8 @@
           </ul>
         </div>
 
-        <aside class="hero-card glass reveal">
-          <h3>What best describes you?</h3>
+        <aside class="hero-card glass reveal" aria-labelledby="persona-title">
+          <h3 id="persona-title">What best describes you?</h3>
           <div class="persona-chips">
             <button class="chip" data-qpick="apt" type="button"><i class="fa-solid fa-city" aria-hidden="true"></i> Apartment / Condo</button>
             <button class="chip" data-qpick="large" type="button"><i class="fa-solid fa-house-chimney" aria-hidden="true"></i> Large Home</button>
@@ -72,10 +134,10 @@
     </section>
 
     <!-- ===== TRUST ===== -->
-    <section class="trust">
+    <section class="trust" aria-labelledby="trust-title">
       <div class="container">
         <header class="section-head reveal">
-          <h2>Trusted by pros & power users</h2>
+          <h2 id="trust-title">Trusted by pros & power users</h2>
           <p class="subtle">We build with proven vendors and sane defaults.</p>
         </header>
         <div class="trust-logos reveal" aria-label="Vendors we work with">
@@ -90,27 +152,27 @@
     </section>
 
     <!-- ===== HOW IT WORKS ===== -->
-    <section class="steps">
+    <section id="how-it-works" class="steps" aria-labelledby="steps-title">
       <div class="container">
         <header class="section-head reveal">
-          <h2>How it works</h2>
+          <h2 id="steps-title">How it works</h2>
           <p class="subtle">From quiz to install — clarity at every step.</p>
         </header>
 
-        <div class="cards cards-3">
-          <article class="card step reveal">
+        <div class="cards cards-3" role="list">
+          <article class="card step reveal" role="listitem">
             <div class="step-icon"><i class="fa-solid fa-wand-magic-sparkles" aria-hidden="true"></i></div>
             <h3>1) Quick quiz</h3>
             <p>Tell us about your space, devices, and plan speed. We turn that into real-world requirements.</p>
           </article>
 
-          <article class="card step reveal">
+          <article class="card step reveal" role="listitem">
             <div class="step-icon"><i class="fa-solid fa-sliders" aria-hidden="true"></i></div>
             <h3>2) Compare picks</h3>
             <p>Filter by Wi-Fi gen, mesh, WAN tier, and price. Add up to four to compare.</p>
           </article>
 
-          <article class="card step reveal">
+          <article class="card step reveal" role="listitem">
             <div class="step-icon"><i class="fa-solid fa-diagram-project" aria-hidden="true"></i></div>
             <h3>3) Deploy</h3>
             <p>Use our guides or book an engineer. We can stage, tune, and hand off remotely or on-site.</p>
@@ -130,8 +192,8 @@
           <div class="journal-ctrls">
             <a class="btn ghost" href="blog.html">View all</a>
             <div class="carousel-nav" aria-label="Carousel controls">
-              <button class="ctrl prev" type="button" aria-label="Previous"><i class="fa-solid fa-chevron-left"></i></button>
-              <button class="ctrl next" type="button" aria-label="Next"><i class="fa-solid fa-chevron-right"></i></button>
+              <button class="ctrl prev" type="button" aria-label="Previous"><i class="fa-solid fa-chevron-left" aria-hidden="true"></i></button>
+              <button class="ctrl next" type="button" aria-label="Next"><i class="fa-solid fa-chevron-right" aria-hidden="true"></i></button>
             </div>
           </div>
         </header>
@@ -180,7 +242,7 @@
       <template id="jcCardTpl">
         <article class="jc-card">
           <a class="cover" href="#" target="_self" rel="noopener">
-            <img alt="" loading="lazy" />
+            <img alt="Featured Journal article cover" loading="lazy" decoding="async" />
           </a>
           <header class="jc-head">
             <h3 class="jc-title"><a href="#" target="_self" rel="noopener"></a></h3>
@@ -197,7 +259,7 @@
       </template>
 
       <!-- Optional: quick preview modal (reused style from blog) -->
-      <dialog id="postPreviewModal" class="modal">
+      <dialog id="postPreviewModal" class="modal" aria-labelledby="previewTitle">
         <div class="modal-content">
           <div class="modal-header">
             <div class="modal-title-group">
@@ -205,7 +267,7 @@
               <h2 id="previewTitle">Preview</h2>
             </div>
             <button class="modal-close" id="previewClose" type="button" aria-label="Close">
-              <i class="fa-solid fa-xmark"></i>
+              <i class="fa-solid fa-xmark" aria-hidden="true"></i>
             </button>
           </div>
           <div class="preview-body">
@@ -228,17 +290,17 @@
     </section>
 
     <!-- ===== FEATURED PICKS ===== -->
-    <section class="product-grid">
+    <section class="product-grid" aria-labelledby="picks-title">
       <div class="container">
         <header class="section-head reveal">
-          <h2>Great consumer picks</h2>
+          <h2 id="picks-title">Great consumer picks</h2>
           <p class="subtle">Fast, reliable, and simple to manage.</p>
         </header>
 
         <div class="product-row">
           <article class="product glass reveal">
             <div class="product-media" role="img" aria-label="TP-Link Deco BE25">
-              <img src="Deco-BE25.png" alt="TP-Link Deco BE25" />
+              <img src="Deco-BE25.png" alt="TP-Link Deco BE25 Wi-Fi 7 mesh system" loading="lazy" decoding="async" />
             </div>
             <h4>TP-Link Deco BE25</h4>
             <p class="tag">Apartments & small homes</p>
@@ -248,7 +310,7 @@
 
           <article class="product glass reveal">
             <div class="product-media" role="img" aria-label="Google Nest Wi-Fi Pro 3-pack">
-              <img src="google-nest-wi-fi.png" alt="Google Nest Wi-Fi Pro 3-pack" />
+              <img src="google-nest-wi-fi.png" alt="Google Nest Wi-Fi Pro (3-pack) tri-band mesh" loading="lazy" decoding="async" />
             </div>
             <h4>Google Nest Wi-Fi Pro (3-pack)</h4>
             <p class="tag">Seamless setup</p>
@@ -258,7 +320,7 @@
 
           <article class="product glass reveal">
             <div class="product-media" role="img" aria-label="ASUS ROG GT-BE98 Pro">
-              <img src="ASUS-BE98.png" alt="ASUS ROG GT-BE98 Pro" />
+              <img src="ASUS-BE98.png" alt="ASUS ROG GT-BE98 Pro gaming router" loading="lazy" decoding="async" />
             </div>
             <h4>ASUS ROG GT-BE98 Pro</h4>
             <p class="tag">Gaming & performance</p>
@@ -270,13 +332,13 @@
     </section>
 
     <!-- ===== ENTERPRISE STRIP ===== -->
-    <section class="enterprise-band">
+    <section class="enterprise-band" aria-labelledby="enterprise-title">
       <div class="container band-grid">
         <div class="band-copy reveal">
-          <h2>For businesses & large properties</h2>
+          <h2 id="enterprise-title">For businesses & large properties</h2>
           <p class="subtle">Multi-floor roaming, VLAN separation, multi-gig backbones, and controller-based tuning.</p>
         </div>
-        <div class="band-ctas reveal">
+        <div class="band-ctas reveal" role="group" aria-label="Enterprise actions">
           <a class="btn primary" href="consult.html">Enterprise / Large Home Consult</a>
           <a class="btn ghost" href="kits.html?mesh=Mesh-ready&coverage=Large/Multi-floor&recos=1">See mesh systems</a>
         </div>
@@ -284,11 +346,11 @@
     </section>
 
     <!-- ===== FAQ ===== -->
-    <section id="faq" class="faq">
+    <section id="faq" class="faq" aria-labelledby="faq-title">
       <div class="container">
-        <h2 class="faq-title reveal">FAQ</h2>
+        <h2 class="faq-title reveal" id="faq-title">FAQ</h2>
 
-        <div class="accordion">
+        <div class="accordion" itemscope itemtype="https://schema.org/FAQPage">
           <div class="accordion-item reveal">
             <h4>Do you support on-site installs?</h4><span aria-hidden="true">+</span>
             <p>Yes. We can coordinate on-site installation, validation, and handover. Remote staging and controller setup are also available.</p>
@@ -305,15 +367,28 @@
           </div>
         </div>
       </div>
+
+      <!-- FAQPage JSON-LD -->
+      <script type="application/ld+json">
+      {
+        "@context":"https://schema.org",
+        "@type":"FAQPage",
+        "mainEntity":[
+          {"@type":"Question","name":"Do you support on-site installs?","acceptedAnswer":{"@type":"Answer","text":"Yes. We can coordinate on-site installation, validation, and handover. Remote staging and controller setup are also available."}},
+          {"@type":"Question","name":"Will the quiz work for office spaces?","acceptedAnswer":{"@type":"Answer","text":"It’s a great start for sizing and features. For multi-tenant or multi-AP scenarios, book a consult and we’ll design the topology."}},
+          {"@type":"Question","name":"Do you only recommend one brand?","acceptedAnswer":{"@type":"Answer","text":"No — we’re vendor-agnostic. We’ll suggest the right gear for your goals, scale, and environment."}}
+        ]
+      }
+      </script>
     </section>
 
     <!-- ===== CTA ===== -->
-    <section class="footer-cta" id="start">
+    <section class="footer-cta" id="start" aria-labelledby="design-title">
       <div class="container">
         <div class="cta-inner reveal">
-          <h2>Design Your Network</h2>
+          <h2 id="design-title">Design Your Network</h2>
           <p>From a studio flat to a full campus — we’ve got you covered.</p>
-          <div class="hero-actions">
+          <div class="hero-actions" role="group" aria-label="Get started">
             <a href="kits.html?quiz=1" class="btn primary">Start Matching →</a>
             <a href="consult.html" class="btn ghost">Enterprise Consult</a>
           </div>

@@ -35,7 +35,7 @@ for (const file of files){
   report[file] = { total: arr.length, valid: errors.length === 0, errors };
 }
 const outPath = path.join(base, 'REPORTS', 'data-validation.json');
-fs.writeFileSync(outPath, JSON.stringify(report, null, 2));
+fs.writeFileSync(outPath, JSON.stringify(report, null, 2) + '\n');
 console.log('Wrote', outPath);
 const allValid = Object.values(report).every(r => r.valid);
 if (!allValid) process.exit(1);

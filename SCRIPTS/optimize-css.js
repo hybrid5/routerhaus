@@ -29,6 +29,6 @@ for (const file of files) {
   const css = fs.readFileSync(file, 'utf8');
   const min = minify(css);
   const out = file.replace(/\.css$/, '.min.css');
-  fs.writeFileSync(out, min);
+  fs.writeFileSync(out, min + '\n');
   console.log(`Minified ${file} -> ${out}`);
 }

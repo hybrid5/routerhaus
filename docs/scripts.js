@@ -39,14 +39,14 @@ async function loadPartials() {
   const headHolder = document.getElementById("header-placeholder");
   if (headHolder && (headHolder.children?.length ?? 0) === 0) {
     try {
-      const h = await fetch("header.html", { cache: "no-store" });
+      const h = await fetch("/header.html", { cache: "no-store" });
       if (h.ok) headHolder.innerHTML = await h.text(); // keep node; cooperate with page scripts
     } catch {}
   }
   const footHolder = document.getElementById("footer-placeholder");
   if (footHolder && (footHolder.children?.length ?? 0) === 0) {
     try {
-      const f = await fetch("footer.html", { cache: "no-store" });
+      const f = await fetch("/footer.html", { cache: "no-store" });
       if (f.ok) footHolder.innerHTML = await f.text();
     } catch {}
   }

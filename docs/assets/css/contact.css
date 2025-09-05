@@ -112,25 +112,6 @@ img{max-width:100%;height:auto;display:block;}
 @supports not (backdrop-filter:blur(20px)){.glass{background:var(--surface-primary)}}
 .grad{ background: linear-gradient(90deg, var(--accent), var(--primary)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
 
-/* ------------------- Buttons (kits-aligned) ------------------- */
-.btn{
-  display:inline-flex;align-items:center;justify-content:center;gap:var(--space-2);
-  border-radius:var(--radius);padding:var(--space-3) var(--space-4);
-  border:1px solid var(--border);background:var(--surface-primary);
-  color:var(--text-1);font-weight:600;font-size:var(--text-sm);cursor:pointer;
-  box-shadow:var(--shadow-soft);transition:all var(--duration-normal) var(--easing-smooth);
-  position:relative;overflow:hidden;text-decoration:none;white-space:nowrap;
-}
-.btn::before{content:"";position:absolute;inset:0;background:linear-gradient(45deg,transparent,rgba(255,255,255,.12),transparent);transform:translateX(-100%);transition:transform var(--duration-normal) var(--easing-smooth)}
-.btn:hover{transform:translateY(-2px);box-shadow:var(--shadow);border-color:var(--border-strong)}
-.btn:hover::before{transform:translateX(100%)}
-.btn:active{transform:translateY(-1px)}
-.btn.primary{background:linear-gradient(135deg,var(--primary),var(--accent));color:#fff;border:none;box-shadow:0 4px 16px rgba(var(--primary-rgb),.25)}
-.btn.primary:hover{box-shadow:0 8px 32px rgba(var(--primary-rgb),.4)}
-.btn.ghost{background:transparent;color:var(--text-2);border-color:var(--border)}
-.btn.ghost:hover{background:var(--surface-secondary);color:var(--text-1)}
-.btn.small{padding:.55rem .8rem;border-radius:12px}
-.btn:disabled{opacity:.5;cursor:not-allowed;transform:none;box-shadow:none}
 
 /* ------------------- Hero ------------------- */
 .contact-hero{
@@ -251,5 +232,4 @@ img{max-width:100%;height:auto;display:block;}
 .reveal.in-view{opacity:1;transform:none}
 
 /* ------------------- A11y & Motion ------------------- */
-:focus-visible{outline:none;box-shadow:0 0 0 4px color-mix(in oklab,var(--ring) 55%,transparent)}
 @media (prefers-reduced-motion: reduce){*{transition:none !important;animation:none !important}}

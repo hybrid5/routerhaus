@@ -35,26 +35,6 @@ html[data-theme="dark"]{
   --shadow: 0 26px 70px rgba(0,0,0,.45);
 }
 
-/* ===== Buttons (parity with home.css) ===== */
-.btn{
-  border-radius:14px; padding:.72rem 1rem; font-weight:800;
-  border:1px solid var(--border);
-  background: color-mix(in oklab, var(--surface-secondary) 92%, transparent);
-  color:var(--text-1); cursor:pointer;
-  transition: transform .22s cubic-bezier(.22,.61,.36,1),
-              box-shadow .22s cubic-bezier(.22,.61,.36,1),
-              background .22s cubic-bezier(.22,.61,.36,1),
-              border-color .22s cubic-bezier(.22,.61,.36,1);
-  box-shadow: var(--shadow-soft);
-}
-.btn:hover{ transform:translateY(-2px); box-shadow: var(--shadow); }
-.btn.primary{
-  background: linear-gradient(135deg, var(--primary),
-             color-mix(in oklab, var(--accent) 80%, var(--primary)));
-  color:#fff;
-  border-color: color-mix(in oklab, var(--primary) 60%, transparent);
-}
-.btn.ghost{ background: transparent; color: var(--text-1); }
 
 /* Section rhythm & typography */
 .about-page section { padding: clamp(36px, 7vw, 88px) 0; }

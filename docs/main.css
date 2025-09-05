@@ -166,20 +166,70 @@ html[data-theme="dark"] .navbar{
 .nav-desktop .btn{ margin-left:.6rem; }
 
 /* ---- Buttons ---- */
-.btn,.btn-secondary{
-  display:inline-flex; align-items:center; justify-content:center;
-  font-weight:700; border-radius:999px; padding:.74rem 1.3rem;
-  transition:transform .18s ease, filter .18s ease, background-color .18s ease, color .18s ease;
+.btn,
+.btn-secondary{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:800;
 }
 .btn{
-  background:linear-gradient(135deg, var(--primary), var(--accent));
-  color:#fff; box-shadow:0 8px 22px rgba(111,125,255,.35);
+  border-radius:14px;
+  padding:.72rem 1rem;
+  border:1px solid var(--border-color);
+  background:color-mix(in oklab, var(--surface) 92%, transparent);
+  color:var(--text-primary);
+  cursor:pointer;
+  transition:transform var(--transition), box-shadow var(--transition), background var(--transition), border-color var(--transition);
+  box-shadow:var(--shadow-sm);
 }
-.btn:hover{ transform:translateY(-2px); filter:brightness(1.05); }
+.btn:hover{
+  transform:translateY(-2px);
+  box-shadow:var(--shadow);
+}
+.btn.primary{
+  background:linear-gradient(135deg, var(--primary), color-mix(in oklab, var(--accent) 80%, var(--primary)));
+  color:#fff;
+  border-color:color-mix(in oklab, var(--primary) 60%, transparent);
+}
+.btn.ghost{
+  background:transparent;
+  color:var(--text-primary);
+}
+.btn:disabled{
+  opacity:.5;
+  cursor:not-allowed;
+  transform:none;
+  box-shadow:none;
+}
+
+/* Secondary button */
 .btn-secondary{
-  border:2px solid var(--primary); color:var(--primary); background:transparent;
+  padding:.72rem 1rem;
+  border-radius:14px;
+  border:2px solid var(--primary);
+  color:var(--primary);
+  background:transparent;
+  cursor:pointer;
+  transition:transform var(--transition), box-shadow var(--transition), background var(--transition), border-color var(--transition);
 }
 .btn-secondary:hover{ background: color-mix(in oklab, var(--primary) 10%, transparent); }
+
+@media (prefers-reduced-motion: reduce){
+  .btn:hover{ transform:none; box-shadow:var(--shadow-sm); }
+}
+
+@media (forced-colors: active){
+  .btn.primary{ border:1px solid CanvasText; }
+}
+
+@media print{
+  .btn{ box-shadow:none; border:1px solid #000; }
+}
+
+@media (prefers-contrast: high){
+  .btn{ border-width:2px; }
+}
 
 /* ---- Mobile nav trigger ---- */
 .hamburger{

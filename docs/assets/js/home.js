@@ -1,5 +1,5 @@
 /* ============================
-   RouterHaus – home.js
+   RouterHaus – home.js (patched)
    Stable, aligned with other pages; safe partial mounting
 ============================ */
 (() => {
@@ -7,34 +7,35 @@
   const $ = (s, r = document) => r.querySelector(s);
   const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
 
-  const prefersReduced = matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ?? false;
-  const isCoarsePointer = matchMedia?.("(pointer: coarse)")?.matches ?? false;
+  const prefersReduced = globalThis.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches ?? false;
+  const isCoarsePointer = globalThis.matchMedia?.("(pointer: coarse)")?.matches ?? false;
 
-  /* ---- Partials (robust + idempotent; mirrors blog loader) ---- */
+  /* ---- Partials (robust + idempotent) ---- */
   async function mountPartial(target){
     const requested = target?.dataset?.partial;
     if (!requested || (target?.children?.length ?? 0) > 0) return;
 
-    const siteRoot = (location.pathname.includes('/assets/')
-      ? location.pathname.split('/assets/')[0] + '/'
-      : '/');
     const file = requested.split('/').pop();
+    const path = location.pathname;
+    const siteRoot = path.endsWith('/') ? path : path.substring(0, path.lastIndexOf('/') + 1);
+    const docsRoot = path.includes('/docs/') ? path.split('/docs/')[0] + '/docs/' : null;
+
     const candidates = [
-      requested,          // as-given (relative)
-      siteRoot + file,    // site root (e.g., /docs/header.html)
-      '/' + file          // domain root (/header.html)
-    ];
+      requested,                      // as-given
+      docsRoot ? docsRoot + file : null,
+      siteRoot + file,                // current dir root
+      '/' + file                      // domain root
+    ].filter(Boolean);
 
     for (const url of candidates){
       try {
         const res = await fetch(url, { cache: 'no-store' });
         if (res.ok){
           const html = await res.text();
-          // Only set if still empty (avoid racing with global scripts.js)
           if ((target?.children?.length ?? 0) === 0) target.innerHTML = html;
           return;
         }
-      } catch { /* swallow and try next */ }
+      } catch { /* try next */ }
     }
     console.warn('Partial load failed for', candidates);
   }
@@ -55,11 +56,13 @@
         const qs = map[key] || "quiz=1";
         window.location.href = `kits.html?${qs}`;
       });
-      // keyboard affordance (Enter/Space) if not naturally a button
+      // Keyboard affordance
       btn.addEventListener("keydown", (e) => {
         if (e.key === "Enter" || e.key === " ") { e.preventDefault(); btn.click(); }
       });
-      btn.setAttribute("aria-label", btn.textContent.trim());
+      if (!btn.hasAttribute("aria-label")) btn.setAttribute("aria-label", btn.textContent.trim());
+      if (!btn.hasAttribute("tabindex")) btn.setAttribute("tabindex", "0");
+      if (!btn.hasAttribute("role")) btn.setAttribute("role", "button");
     });
   }
 
@@ -67,33 +70,27 @@
   function revealify() {
     const els = $$(".reveal");
     if (!els.length) return;
-
     if (prefersReduced || !("IntersectionObserver" in window)) {
       els.forEach(el => el.classList.add("in-view"));
       return;
     }
-
-    const io = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((en) => {
-          if (en.isIntersecting) {
-            en.target.classList.add("in-view");
-            io.unobserve(en.target);
-          }
-        });
-      },
-      { rootMargin: "0px 0px -10% 0px", threshold: 0.1 }
-    );
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((en) => {
+        if (en.isIntersecting) {
+          en.target.classList.add("in-view");
+          io.unobserve(en.target);
+        }
+      });
+    }, { rootMargin: "0px 0px -10% 0px", threshold: 0.1 });
     els.forEach((el) => io.observe(el));
   }
 
   /* ---- FAQ accordion (ARIA without HTML edits) ---- */
   function wireAccordion(){
     $$(".accordion-item").forEach(item=>{
-      // make the header region focusable
       item.setAttribute("role","button");
       item.setAttribute("tabindex","0");
-      item.setAttribute("aria-expanded", "false");
+      item.setAttribute("aria-expanded","false");
 
       const content = $("p", item);
       if (content) {
@@ -108,11 +105,12 @@
       };
 
       item.addEventListener("click", (e)=>{
-        // avoid toggling when selecting text or clicking links inside
         if (getSelection()?.toString()) return;
-        if ((e.target as HTMLElement).closest('a,button')) return;
+        const t = e.target;
+        if (t && t.nodeType === 1 && /** Element */ t.closest && t.closest('a,button')) return; // ✅ no TS cast
         toggle();
       });
+
       item.addEventListener("keydown", (e)=>{
         if (e.key === "Enter" || e.key === " ") { e.preventDefault(); toggle(); }
         if (e.key === "Escape" && item.classList.contains("open")) { e.preventDefault(); toggle(); }
@@ -120,16 +118,25 @@
     });
   }
 
-  /* ---- Subtle tilt on product cards (perf-safe, respects reduced motion) ---- */
+  /* ---- Subtle tilt on product cards (skip inside carousels; mouse-only) ---- */
   function tiltCards() {
-    if (prefersReduced || isCoarsePointer) return; // skip on mobile / reduced motion
+    if (prefersReduced || isCoarsePointer) return;
+
     const cards = $$(".product");
     if (!cards.length) return;
 
     cards.forEach((card) => {
+      // Skip if the card lives inside a slider/carousel wrapper
+      if (card.closest('.carousel, .splide, .swiper, .glide, .keen-slider, [data-slider], [role="region"][aria-roledescription="carousel"]')) {
+        return;
+      }
+
       let rAF = 0;
 
       const onMove = (e) => {
+        // Only react to actual mouse pointers (don’t interfere with drag/swipe)
+        if (e.pointerType && e.pointerType !== "mouse") return;
+
         const rect = card.getBoundingClientRect();
         const cx = rect.left + rect.width / 2;
         const cy = rect.top + rect.height / 2;
@@ -141,15 +148,17 @@
             `perspective(800px) rotateX(${(-dy * 5).toFixed(2)}deg) rotateY(${(dx * 5).toFixed(2)}deg) translateY(-6px)`;
         });
       };
+
       const reset = () => {
         cancelAnimationFrame(rAF);
         card.style.transform = "";
       };
 
-      card.addEventListener("mousemove", onMove, { passive: true });
-      card.addEventListener("mouseleave", reset);
+      card.addEventListener("pointermove", onMove, { passive: true });
+      card.addEventListener("pointerleave", reset);
       card.addEventListener("blur", reset, true);
-      // defensive: if pointer becomes coarse mid-session (e.g., switch to touch)
+
+      // Defensive: if input switches to touch/pen mid-session
       window.addEventListener("pointerdown", (ev) => {
         if (ev.pointerType !== "mouse") reset();
       }, { passive: true });
@@ -162,7 +171,6 @@
       mountPartial($("#header-placeholder")),
       mountPartial($("#footer-placeholder")),
     ]);
-    // If your global scripts.js already mounts partials, the above is a no-op.
 
     wireQuickChips();
     revealify();

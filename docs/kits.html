@@ -3,16 +3,42 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>RouterHaus · Kits</title>
-  <meta name="description" content="Filter and compare the best router kits for apartments, homes, and offices." />
+
+  <title>Best Routers & Mesh Wi-Fi Kits (2025) — Wi-Fi 7, 6E | Filter & Compare | RouterHaus</title>
+  <meta name="description" content="Compare 2025’s best Wi-Fi 7 and Wi-Fi 6E routers and mesh systems. Filter by coverage, devices, multi-gig (2.5/5/10GbE), price, and use-case. Brands: ASUS, Netgear Orbi, TP-Link Deco/Archer, UniFi, Google Nest, Synology, Linksys, eero, AmpliFi, MSI." />
+
+  <!-- Canonical & robots (default indexable base) -->
+  <link rel="canonical" href="https://www.routerhaus.com/kits.html" />
+  <meta name="robots" content="index,follow" />
+
+  <!-- Color scheme / PWA -->
   <meta name="color-scheme" content="light dark" />
-  <link rel="preload" href="kits.json" as="fetch" type="application/json" />
+  <meta name="theme-color" content="#6f7dff">
+
+  <!-- Icons -->
   <link rel="icon" href="/favicon.ico" sizes="any">
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <link rel="manifest" href="/site.webmanifest">
-  <meta name="theme-color" content="#6f7dff">
+
+  <!-- Open Graph / Twitter -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="RouterHaus" />
+  <meta property="og:title" content="Best Routers & Mesh Wi-Fi Kits (2025) — Filter & Compare" />
+  <meta property="og:description" content="Find your upgrade fast: Wi-Fi 7/6E routers & mesh with multi-gig, coverage, and price filters." />
+  <meta property="og:url" content="https://www.routerhaus.com/kits.html" />
+  <meta property="og:image" content="https://www.routerhaus.com/assets/img/og/routerhaus-kits.webp" />
+  <meta property="og:image:alt" content="RouterHaus — compare routers and mesh Wi-Fi kits" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <!-- Data preload -->
+  <link rel="preload" href="kits.json" as="fetch" type="application/json" />
+
+  <!-- Preconnects (CWV) -->
+  <link rel="preconnect" href="https://images.unsplash.com" crossorigin>
+  <link rel="preconnect" href="https://www.routerhaus.com" crossorigin>
+  <link rel="preconnect" href="https://store.ui.com" crossorigin>
 
   <!-- Theme sync to system with no FOUC -->
   <script>
@@ -20,8 +46,7 @@
       const root = document.documentElement;
       const media = matchMedia('(prefers-color-scheme: dark)');
       const apply = () => root.setAttribute('data-theme', media.matches ? 'dark' : 'light');
-      apply();
-      media.addEventListener('change', apply);
+      apply(); media.addEventListener('change', apply);
     })();
   </script>
 
@@ -32,9 +57,7 @@
 <body>
   <!-- Ambient background system -->
   <div class="ambient-bg" aria-hidden="true">
-    <div class="bg-orb orb-1"></div>
-    <div class="bg-orb orb-2"></div>
-    <div class="bg-orb orb-3"></div>
+    <div class="bg-orb orb-1"></div><div class="bg-orb orb-2"></div><div class="bg-orb orb-3"></div>
   </div>
 
   <!-- Page progress indicator -->
@@ -48,6 +71,86 @@
 
   <!-- Header partial mounts BEFORE main to avoid CLS -->
   <div id="header-placeholder" data-partial="header.html"></div>
+
+  <!-- ===== SEO Intro + Disclosure ===== -->
+  <section class="seo-intro container" style="margin-top:1rem">
+    <p><strong>Find your upgrade fast:</strong> filter and compare <em>Wi-Fi 7</em> / <em>Wi-Fi 6E</em> routers and mesh systems by coverage, device count, multi-gig WAN/LAN (2.5/5/10GbE), and price. Popular picks include Netgear <em>Orbi 970</em>, TP-Link <em>Deco BE85</em>, Netgear <em>Nighthawk RS700S</em>, ASUS <em>ROG GT-BE98 Pro</em>, TP-Link <em>Archer BE800/BE805</em>, Ubiquiti <em>UniFi Dream Router 7</em>, and Google <em>Nest Wifi Pro</em>. See <a href="/how-we-test/">how we test</a> or try the <a href="#" id="openQuizTop">Wi-Fi Solution Finder</a>.</p>
+    <p class="subtle">Brands covered: ASUS, Netgear, TP-Link, Linksys, Ubiquiti, Google/Nest, Synology, Amazon eero, AmpliFi, MSI, D-Link, Wyze.</p>
+    <p class="mini subtle">Disclosure: RouterHaus is reader-supported. When you buy through links on this page, we may earn a commission at no extra cost to you.</p>
+  </section>
+
+  <!-- ===== Best of 2025 ===== -->
+  <section class="container best-2025" aria-labelledby="best2025-title" style="margin-top:1rem">
+    <header class="section-head">
+      <h1 id="best2025-title">Best Wi-Fi Routers of 2025</h1>
+      <p class="subtle">Curated picks from our catalog (updated 2025): Wi-Fi 7 standouts, value 6E, gaming, and budget.</p>
+    </header>
+
+    <div class="cards cards-3">
+      <article class="card">
+        <h3>Best Overall Mesh (Wi-Fi 7)</h3>
+        <p><strong>Netgear Orbi 970 Series (RBE973S, 3-pack)</strong> — elite coverage, multi-gig backhaul, great for large/multi-floor homes.</p>
+        <div class="btn-row">
+          <a class="btn small" href="kits.html?wifi=7&mesh=Mesh-ready&coverage=Large/Multi-floor&recos=1">See mesh picks</a>
+          <a class="btn small ghost" href="#orbi-970">Jump to Orbi 970</a>
+        </div>
+      </article>
+
+      <article class="card">
+        <h3>Best Value Mesh (Wi-Fi 7)</h3>
+        <p><strong>TP-Link Deco BE85 (3-pack)</strong> — strong throughput and ports without Orbi pricing; ideal with wired backhaul.</p>
+        <div class="btn-row">
+          <a class="btn small" href="kits.html?wifi=7&mesh=Mesh-ready&price=300–599&recos=1">See value Wi-Fi 7</a>
+          <a class="btn small ghost" href="#deco-be85">Jump to BE85</a>
+        </div>
+      </article>
+
+      <article class="card">
+        <h3>Best Single-Router Performance</h3>
+        <p><strong>Netgear Nighthawk RS700S</strong> — blistering Wi-Fi 7 with 10GbE; perfect for open-plan homes on multi-gig fiber.</p>
+        <div class="btn-row">
+          <a class="btn small" href="kits.html?wifi=7&mesh=no&wan=10G&recos=1">See single-router picks</a>
+          <a class="btn small ghost" href="#rs700s">Jump to RS700S</a>
+        </div>
+      </article>
+
+      <article class="card">
+        <h3>Best Gaming Router</h3>
+        <p><strong>ASUS ROG Rapture GT-BE98 Pro</strong> — low-latency tuning, multi-gig ports, and features for competitive play.</p>
+        <div class="btn-row">
+          <a class="btn small" href="kits.html?use=Gaming&wifi=7&wan=2.5G&recos=1">See gaming picks</a>
+          <a class="btn small ghost" href="#gt-be98-pro">Jump to GT-BE98 Pro</a>
+        </div>
+      </article>
+
+      <article class="card">
+        <h3>Prosumer / Multi-Gig Value</h3>
+        <p><strong>TP-Link Archer BE800/BE805</strong> — Wi-Fi 7 with 2.5/10GbE options; great for NAS and wired backbones.</p>
+        <div class="btn-row">
+          <a class="btn small" href="kits.html?wifi=7&wan=2.5G&multiGigLan=true&recos=1">See prosumer picks</a>
+          <a class="btn small ghost" href="#archer-be800">Jump to BE800</a>
+        </div>
+      </article>
+
+      <article class="card">
+        <h3>Smart-Home Simplicity</h3>
+        <p><strong>Google Nest Wifi Pro</strong> — easy setup (Wi-Fi 6E), stable for families and IoT-heavy homes.</p>
+        <div class="btn-row">
+          <a class="btn small" href="kits.html?wifi=6E&mesh=Mesh-ready&use=Smart-Home&recos=1">See 6E mesh</a>
+          <a class="btn small ghost" href="#nest-wifi-pro">Jump to Nest Wifi Pro</a>
+        </div>
+      </article>
+
+      <article class="card">
+        <h3>Budget Under $150</h3>
+        <p><strong>TP-Link Archer AX55</strong> — reliable Wi-Fi 6 starter with solid coverage for apartments/condos.</p>
+        <div class="btn-row">
+          <a class="btn small" href="kits.html?wifi=6&price=%3C150&coverage=Apartment/Small&recos=1">See budget picks</a>
+          <a class="btn small ghost" href="#tp-link-archer-ax55">Jump to AX55</a>
+        </div>
+      </article>
+    </div>
+  </section>
 
   <!-- Main two-column layout (sticky filter rail + results) -->
   <main id="main-content" class="container kits-layout" role="main">
@@ -63,18 +166,9 @@
       </div>
 
       <div class="facet-toolbar" role="group" aria-label="Facet tools">
-        <button type="button" id="expandAll" class="btn small" aria-label="Expand all">
-          <span aria-hidden="true">⬇</span>
-          Expand all
-        </button>
-        <button type="button" id="collapseAll" class="btn small" aria-label="Collapse all">
-          <span aria-hidden="true">⬆</span>
-          Collapse all
-        </button>
-        <button type="button" id="clearAllFacets" class="btn small ghost" aria-label="Clear all">
-          <span aria-hidden="true">✕</span>
-          Clear all
-        </button>
+        <button type="button" id="expandAll" class="btn small" aria-label="Expand all"><span aria-hidden="true">⬇</span>Expand all</button>
+        <button type="button" id="collapseAll" class="btn small" aria-label="Collapse all"><span aria-hidden="true">⬆</span>Collapse all</button>
+        <button type="button" id="clearAllFacets" class="btn small ghost" aria-label="Clear all"><span aria-hidden="true">✕</span>Clear all</button>
       </div>
 
       <form id="filtersForm" class="filters-form" aria-describedby="matchCount">
@@ -98,192 +192,93 @@
 
         <!-- Brand -->
         <details class="facet" data-facet="brand" open>
-          <summary>
-            <span class="facet-title">Brand</span>
-            <span class="facet-meta">
-              <span class="badge count" id="badge-brand"></span>
-              <span class="chev" aria-hidden="true">▾</span>
-            </span>
-          </summary>
-          <div class="facet-controls">
-            <button type="button" class="btn tiny facet-clear" data-clear="brand">Clear</button>
-          </div>
+          <summary><span class="facet-title">Brand</span><span class="facet-meta"><span class="badge count" id="badge-brand"></span><span class="chev" aria-hidden="true">▾</span></span></summary>
+          <div class="facet-controls"><button type="button" class="btn tiny facet-clear" data-clear="brand">Clear</button></div>
           <div class="options" id="facet-brand"></div>
         </details>
 
         <!-- Wi-Fi Generation -->
         <details class="facet" data-facet="wifi" open>
-          <summary>
-            <span class="facet-title">Wi-Fi Speed & Tech</span>
-            <span class="facet-meta">
-              <span class="badge count" id="badge-wifiGen"></span>
-              <span class="chev" aria-hidden="true">▾</span>
-            </span>
-          </summary>
-          <div class="facet-controls">
-            <button type="button" class="btn tiny facet-clear" data-clear="wifi">Clear</button>
-          </div>
+          <summary><span class="facet-title">Wi-Fi Speed & Tech</span><span class="facet-meta"><span class="badge count" id="badge-wifiGen"></span><span class="chev" aria-hidden="true">▾</span></span></summary>
+          <div class="facet-controls"><button type="button" class="btn tiny facet-clear" data-clear="wifi">Clear</button></div>
           <div class="options two-cols" id="facet-wifiGen"></div>
         </details>
 
         <!-- Wi-Fi Bands -->
         <details class="facet" data-facet="bands">
-          <summary>
-            <span class="facet-title">Wi-Fi Bands</span>
-            <span class="facet-meta">
-              <span class="chev" aria-hidden="true">▾</span>
-            </span>
-          </summary>
-          <div class="facet-controls">
-            <button type="button" class="btn tiny facet-clear" data-clear="bands">Clear</button>
-          </div>
+          <summary><span class="facet-title">Wi-Fi Bands</span><span class="facet-meta"><span class="chev" aria-hidden="true">▾</span></span></summary>
+          <div class="facet-controls"><button type="button" class="btn tiny facet-clear" data-clear="bands">Clear</button></div>
           <div class="options two-cols" id="facet-wifiBands"></div>
         </details>
 
         <!-- Mesh Coverage -->
         <details class="facet" data-facet="mesh" open>
-          <summary>
-            <span class="facet-title">Whole-Home Coverage (Mesh)</span>
-            <span class="facet-meta">
-              <span class="badge count" id="badge-meshReady"></span>
-              <span class="chev" aria-hidden="true">▾</span>
-            </span>
-          </summary>
-          <div class="facet-controls">
-            <button type="button" class="btn tiny facet-clear" data-clear="mesh">Clear</button>
-          </div>
+          <summary><span class="facet-title">Whole-Home Coverage (Mesh)</span><span class="facet-meta"><span class="badge count" id="badge-meshReady"></span><span class="chev" aria-hidden="true">▾</span></span></summary>
+          <div class="facet-controls"><button type="button" class="btn tiny facet-clear" data-clear="mesh">Clear</button></div>
           <div class="options" id="facet-meshReady"></div>
           <div class="options" id="facet-meshEco"></div>
         </details>
 
         <!-- Internet Speed Support -->
         <details class="facet" data-facet="wan">
-          <summary>
-            <span class="facet-title">Internet Speed Support</span>
-            <span class="facet-meta">
-              <span class="badge count" id="badge-wanTier"></span>
-              <span class="chev" aria-hidden="true">▾</span>
-            </span>
-          </summary>
-          <div class="facet-controls">
-            <button type="button" class="btn tiny facet-clear" data-clear="wan">Clear</button>
-          </div>
+          <summary><span class="facet-title">Internet Speed Support</span><span class="facet-meta"><span class="badge count" id="badge-wanTier"></span><span class="chev" aria-hidden="true">▾</span></span></summary>
+          <div class="facet-controls"><button type="button" class="btn tiny facet-clear" data-clear="wan">Clear</button></div>
           <div class="options two-cols" id="facet-wanTier"></div>
         </details>
 
         <!-- LAN Ports -->
         <details class="facet" data-facet="lanCount">
-          <summary>
-            <span class="facet-title">Wired Ports (LAN)</span>
-            <span class="facet-meta">
-              <span class="chev" aria-hidden="true">▾</span>
-            </span>
-          </summary>
-          <div class="facet-controls">
-            <button type="button" class="btn tiny facet-clear" data-clear="lanCount">Clear</button>
-          </div>
+          <summary><span class="facet-title">Wired Ports (LAN)</span><span class="facet-meta"><span class="chev" aria-hidden="true">▾</span></span></summary>
+          <div class="facet-controls"><button type="button" class="btn tiny facet-clear" data-clear="lanCount">Clear</button></div>
           <div class="options two-cols" id="facet-lanCount"></div>
         </details>
 
         <!-- Multi-Gig LAN -->
         <details class="facet" data-facet="multiGigLan">
-          <summary>
-            <span class="facet-title">Super-Fast Wired Ports</span>
-            <span class="facet-meta">
-              <span class="chev" aria-hidden="true">▾</span>
-            </span>
-          </summary>
-          <div class="facet-controls">
-            <button type="button" class="btn tiny facet-clear" data-clear="multiGigLan">Clear</button>
-          </div>
+          <summary><span class="facet-title">Super-Fast Wired Ports</span><span class="facet-meta"><span class="chev" aria-hidden="true">▾</span></span></summary>
+          <div class="facet-controls"><button type="button" class="btn tiny facet-clear" data-clear="multiGigLan">Clear</button></div>
           <div class="options two-cols" id="facet-multiGigLan"></div>
         </details>
 
         <!-- USB Ports -->
         <details class="facet" data-facet="usb">
-          <summary>
-            <span class="facet-title">USB Ports</span>
-            <span class="facet-meta">
-              <span class="chev" aria-hidden="true">▾</span>
-            </span>
-          </summary>
-          <div class="facet-controls">
-            <button type="button" class="btn tiny facet-clear" data-clear="usb">Clear</button>
-          </div>
+          <summary><span class="facet-title">USB Ports</span><span class="facet-meta"><span class="chev" aria-hidden="true">▾</span></span></summary>
+          <div class="facet-controls"><button type="button" class="btn tiny facet-clear" data-clear="usb">Clear</button></div>
           <div class="options two-cols" id="facet-usb"></div>
         </details>
 
         <!-- Home Size Coverage -->
         <details class="facet" data-facet="coverage" open>
-          <summary>
-            <span class="facet-title">Home Size Coverage</span>
-            <span class="facet-meta">
-              <span class="badge count" id="badge-coverageBucket"></span>
-              <span class="chev" aria-hidden="true">▾</span>
-            </span>
-          </summary>
-          <div class="facet-controls">
-            <button type="button" class="btn tiny facet-clear" data-clear="coverage">Clear</button>
-          </div>
+          <summary><span class="facet-title">Home Size Coverage</span><span class="facet-meta"><span class="badge count" id="badge-coverageBucket"></span><span class="chev" aria-hidden="true">▾</span></span></summary>
+          <div class="facet-controls"><button type="button" class="btn tiny facet-clear" data-clear="coverage">Clear</button></div>
           <div class="options two-cols" id="facet-coverageBucket"></div>
         </details>
 
         <!-- Device Load -->
         <details class="facet" data-facet="device" open>
-          <summary>
-            <span class="facet-title">Number of Devices on Wi-Fi</span>
-            <span class="facet-meta">
-              <span class="badge count" id="badge-deviceLoad"></span>
-              <span class="chev" aria-hidden="true">▾</span>
-            </span>
-          </summary>
-          <div class="facet-controls">
-            <button type="button" class="btn tiny facet-clear" data-clear="device">Clear</button>
-          </div>
+          <summary><span class="facet-title">Number of Devices on Wi-Fi</span><span class="facet-meta"><span class="badge count" id="badge-deviceLoad"></span><span class="chev" aria-hidden="true">▾</span></span></summary>
+          <div class="facet-controls"><button type="button" class="btn tiny facet-clear" data-clear="device">Clear</button></div>
           <div class="options two-cols" id="facet-deviceLoad"></div>
         </details>
 
         <!-- Primary Use -->
         <details class="facet" data-facet="use" open>
-          <summary>
-            <span class="facet-title">Main Use</span>
-            <span class="facet-meta">
-              <span class="badge count" id="badge-primaryUse"></span>
-              <span class="chev" aria-hidden="true">▾</span>
-            </span>
-          </summary>
-          <div class="facet-controls">
-            <button type="button" class="btn tiny facet-clear" data-clear="use">Clear</button>
-          </div>
+          <summary><span class="facet-title">Main Use</span><span class="facet-meta"><span class="badge count" id="badge-primaryUse"></span><span class="chev" aria-hidden="true">▾</span></span></summary>
+          <div class="facet-controls"><button type="button" class="btn tiny facet-clear" data-clear="use">Clear</button></div>
           <div class="options" id="facet-primaryUse"></div>
         </details>
 
         <!-- Internet Type -->
         <details class="facet" data-facet="access">
-          <summary>
-            <span class="facet-title">Internet Type</span>
-            <span class="facet-meta">
-              <span class="chev" aria-hidden="true">▾</span>
-            </span>
-          </summary>
-          <div class="facet-controls">
-            <button type="button" class="btn tiny facet-clear" data-clear="access">Clear</button>
-          </div>
+          <summary><span class="facet-title">Internet Type</span><span class="facet-meta"><span class="chev" aria-hidden="true">▾</span></span></summary>
+          <div class="facet-controls"><button type="button" class="btn tiny facet-clear" data-clear="access">Clear</button></div>
           <div class="options two-cols" id="facet-access"></div>
         </details>
 
         <!-- Price Range -->
         <details class="facet" data-facet="price">
-          <summary>
-            <span class="facet-title">Price Range</span>
-            <span class="facet-meta">
-              <span class="badge count" id="badge-priceBucket"></span>
-              <span class="chev" aria-hidden="true">▾</span>
-            </span>
-          </summary>
-          <div class="facet-controls">
-            <button type="button" class="btn tiny facet-clear" data-clear="price">Clear</button>
-          </div>
+          <summary><span class="facet-title">Price Range</span><span class="facet-meta"><span class="badge count" id="badge-priceBucket"></span><span class="chev" aria-hidden="true">▾</span></span></summary>
+          <div class="facet-controls"><button type="button" class="btn tiny facet-clear" data-clear="price">Clear</button></div>
           <div class="options two-cols" id="facet-priceBucket"></div>
         </details>
 
@@ -300,22 +295,16 @@
 
     <!-- Mobile filter FAB & drawer -->
     <button id="filtersFab" class="fab" aria-controls="filtersDrawer" aria-expanded="false">
-      <span aria-hidden="true">⚙</span>
-      Filters
-      <span id="activeCount" class="badge count">0</span>
+      <span aria-hidden="true">⚙</span>Filters <span id="activeCount" class="badge count">0</span>
     </button>
 
     <div id="filtersDrawer" class="drawer" aria-hidden="true" aria-labelledby="drawerTitle" role="dialog">
       <div class="drawer-panel glass">
         <div class="drawer-header">
           <h2 id="drawerTitle">Filters</h2>
-          <button class="modal-close" data-close-drawer type="button" aria-label="Close filters">
-            <span aria-hidden="true">&times;</span>
-          </button>
+          <button class="modal-close" data-close-drawer type="button" aria-label="Close filters"><span aria-hidden="true">&times;</span></button>
         </div>
-        <div class="drawer-body">
-          <div id="drawerFormMount"></div>
-        </div>
+        <div class="drawer-body"><div id="drawerFormMount"></div></div>
         <div class="drawer-footer">
           <button class="btn ghost" data-close-drawer type="button">Cancel</button>
           <button id="applyDrawer" class="btn primary" type="button">Apply Filters</button>
@@ -331,15 +320,9 @@
           <div class="search-container">
             <div class="search-wrapper">
               <span class="search-icon" aria-hidden="true">🔍</span>
-              <input type="text" id="searchInput"
-                     placeholder="Search by brand, model, or feature…"
-                     aria-label="Search routers"
-                     autocomplete="off" />
+              <input type="text" id="searchInput" placeholder="Search by brand, model, or feature…" aria-label="Search routers" autocomplete="off" />
             </div>
-            <button id="searchBtn" class="btn primary" type="button" aria-label="Run search">
-              <span aria-hidden="true">🔍</span>
-              Search
-            </button>
+            <button id="searchBtn" class="btn primary" type="button" aria-label="Run search"><span aria-hidden="true">🔍</span>Search</button>
             <button id="openQuiz" class="btn ghost" type="button">Find My Router</button>
           </div>
         </div>
@@ -351,8 +334,7 @@
       <!-- Results toolbar -->
       <div class="toolbar glass" role="region" aria-label="Results toolbar">
         <div class="toolbar-group">
-          <label class="sort">
-            <span>Sort</span>
+          <label class="sort"><span>Sort</span>
             <select id="sortSelect" aria-label="Sort results">
               <option value="relevance">Relevance</option>
               <option value="wifi-desc">Wi-Fi Gen (Latest)</option>
@@ -363,9 +345,7 @@
               <option value="reviews-desc">Best Reviewed</option>
             </select>
           </label>
-
-          <label class="pagesize">
-            <span>Per page</span>
+          <label class="pagesize"><span>Per page</span>
             <select id="pageSizeSelect" aria-label="Results per page">
               <option value="12" selected>12</option>
               <option value="24">24</option>
@@ -380,11 +360,7 @@
             <span class="toggle-slider" aria-hidden="true"></span>
             <span>Show recommendations</span>
           </label>
-
-          <button id="openFiltersHeader" class="btn glass" type="button" aria-label="Open filters">
-            <span aria-hidden="true">⚙</span>
-            Filters
-          </button>
+          <button id="openFiltersHeader" class="btn glass" type="button" aria-label="Open filters"><span aria-hidden="true">⚙</span>Filters</button>
         </div>
       </div>
 
@@ -414,7 +390,6 @@
         <!-- Empty state -->
         <div id="emptyState" class="empty-modern hide" role="note" aria-live="polite">
           <div class="empty-icon" aria-hidden="true">
-            <!-- Simple inline magnifier icon (no emoji) -->
             <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
               <circle cx="11" cy="11" r="7"></circle>
               <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
@@ -456,47 +431,29 @@
   <dialog id="quizModal" class="modal" aria-labelledby="quizTitle" aria-modal="true">
     <div class="modal-content">
       <header class="modal-header">
-        <div class="modal-title-group">
-          <h2 id="quizTitle">Help me pick a router</h2>
-        </div>
-        <button type="button" class="modal-close" aria-label="Close quiz">
-          <span aria-hidden="true">&times;</span>
-        </button>
+        <div class="modal-title-group"><h2 id="quizTitle">Help me pick a router</h2></div>
+        <button type="button" class="modal-close" aria-label="Close quiz"><span aria-hidden="true">&times;</span></button>
       </header>
 
       <form id="quizForm" class="quiz-body">
-        <!-- Top progress -->
         <div class="quiz-progress" role="status" aria-live="polite">
           <div class="progress-bar"><div class="progress-fill" style="width:14.28%"></div></div>
           <span class="progress-text">Step <span id="quizStep">1</span> of <span id="quizTotal">7</span></span>
         </div>
 
-        <!-- STEP 1: Home size -->
+        <!-- Steps (unchanged) -->
         <fieldset class="q-group q-step" data-step="1">
           <legend>Where will the Wi-Fi be used?</legend>
           <p class="hint">Size helps us choose single-router vs mesh for even coverage.</p>
           <div class="speed-grid" role="group" aria-label="Home size">
-            <label class="radio-pill">
-              <input type="radio" name="qCoverage" value="Apartment/Small" />
-              <span>Apartment / Small (under 1,800 sq ft)</span>
-            </label>
-            <label class="radio-pill">
-              <input type="radio" name="qCoverage" value="2–3 Bedroom" />
-              <span>Medium (2–3 bedrooms, up to ~3,200 sq ft)</span>
-            </label>
-            <label class="radio-pill">
-              <input type="radio" name="qCoverage" value="Large/Multi-floor" />
-              <span>Large / Multi-floor (over ~3,200 sq ft)</span>
-            </label>
-            <label class="radio-pill">
-              <input type="radio" name="qCoverage" value="" />
-              <span>I’m not sure</span>
-            </label>
+            <label class="radio-pill"><input type="radio" name="qCoverage" value="Apartment/Small" /><span>Apartment / Small (under 1,800 sq ft)</span></label>
+            <label class="radio-pill"><input type="radio" name="qCoverage" value="2–3 Bedroom" /><span>Medium (2–3 bedrooms, up to ~3,200 sq ft)</span></label>
+            <label class="radio-pill"><input type="radio" name="qCoverage" value="Large/Multi-floor" /><span>Large / Multi-floor (over ~3,200 sq ft)</span></label>
+            <label class="radio-pill"><input type="radio" name="qCoverage" value="" /><span>I’m not sure</span></label>
           </div>
           <p id="meshHint" class="hint" aria-live="polite"></p>
         </fieldset>
 
-        <!-- STEP 2: Devices -->
         <fieldset class="q-group q-step" data-step="2" hidden>
           <legend>How many devices use Wi-Fi?</legend>
           <p class="hint">Phones, laptops, tablets, TVs, smart home, consoles, etc.</p>
@@ -511,7 +468,6 @@
           </div>
         </fieldset>
 
-        <!-- STEP 3: Primary use -->
         <fieldset class="q-group q-step" data-step="3" hidden>
           <legend>What matters most?</legend>
           <p class="hint">We’ll tune for the thing you care about most. You can still do everything.</p>
@@ -526,14 +482,10 @@
           </div>
         </fieldset>
 
-        <!-- STEP 4: Mesh preference -->
         <fieldset class="q-group q-step" data-step="4" hidden>
           <legend>Do you want whole-home coverage?</legend>
           <div class="mesh-row">
-            <label class="auto">
-              <input type="checkbox" id="qMeshAuto" checked />
-              <span>Auto decide for me (recommended)</span>
-            </label>
+            <label class="auto"><input type="checkbox" id="qMeshAuto" checked /><span>Auto decide for me (recommended)</span></label>
           </div>
           <div class="mesh-row" role="group" aria-label="Mesh preference">
             <label class="radio-pill"><input type="radio" name="qMesh" value="" checked><span>No preference</span></label>
@@ -543,7 +495,6 @@
           <p class="hint">Mesh uses 2–3 smaller units so Wi-Fi stays strong across floors and far rooms.</p>
         </fieldset>
 
-        <!-- STEP 5: Internet speed -->
         <fieldset class="q-group q-step" data-step="5" hidden>
           <legend>How fast is your internet plan?</legend>
           <p class="hint">If you’re not sure, pick “I’m not sure.” We’ll choose safe options.</p>
@@ -556,7 +507,6 @@
           </div>
         </fieldset>
 
-        <!-- STEP 6: Internet type -->
         <fieldset class="q-group q-step" data-step="6" hidden>
           <legend>What kind of internet do you have?</legend>
           <div class="speed-grid" role="group" aria-label="Internet type">
@@ -569,7 +519,6 @@
           </div>
         </fieldset>
 
-        <!-- STEP 7: Budget -->
         <fieldset class="q-group q-step" data-step="7" hidden>
           <legend>What’s your budget?</legend>
           <div class="speed-grid" role="group" aria-label="Budget">
@@ -599,7 +548,7 @@
   <template id="cardTpl">
     <article class="product glass" data-id="" tabindex="0">
       <div class="product-media">
-        <img loading="lazy" alt="" src="" onerror="this.style.display='none'">
+        <img loading="lazy" decoding="async" alt="" src="" width="360" height="240" onerror="this.style.display='none'">
         <div class="product-badges">
           <span class="badge-wifi" style="display:none">Wi-Fi 7</span>
           <span class="badge-recommended" style="display:none">Recommended</span>
@@ -613,19 +562,15 @@
         </div>
       </div>
       <header class="product-header">
-        <h4 class="title">
-          <em class="brand"></em><span class="model"></span>
-        </h4>
+        <h4 class="title"><em class="brand"></em><span class="model"></span></h4>
         <div class="chips line"></div>
       </header>
       <ul class="specs" role="list"></ul>
       <div class="priceRow">
         <strong class="price" aria-label="Price"></strong>
         <div class="ctaRow">
-          <a class="btn small primary" target="_blank" rel="noopener" aria-label="Buy now">Buy</a>
-          <button class="icon-btn compare-btn" type="button" aria-pressed="false" aria-label="Add to compare">
-            <span class="sr-only">Compare</span>
-          </button>
+          <a class="btn small primary" target="_blank" rel="sponsored nofollow noopener" aria-label="Buy now">Buy</a>
+          <button class="icon-btn compare-btn" type="button" aria-pressed="false" aria-label="Add to compare"><span class="sr-only">Compare</span></button>
         </div>
       </div>
     </article>
@@ -634,7 +579,7 @@
   <!-- Skeleton template -->
   <template id="skeletonTpl">
     <article class="product glass skeleton" aria-hidden="true">
-      <div class="product-media shimmer"></div>
+      <div class="product-media shimmer" style="width:360px;height:240px"></div>
       <header class="product-header">
         <div class="title shimmer" style="height:1.5em;width:80%"></div>
         <div class="chips line">
@@ -660,14 +605,9 @@
   <!-- Footer partial -->
   <div id="footer-placeholder" data-partial="footer.html"></div>
 
-  <!-- Configuration -->
+  <!-- Config -->
   <script>
-    window.RH_CONFIG = {
-      jsonUrl: 'kits.json',
-      enableRecos: true,
-      enableAnimations: true,
-      enableAnalytics: false
-    };
+    window.RH_CONFIG = { jsonUrl: 'kits.json', enableRecos: true, enableAnimations: true, enableAnalytics: false };
   </script>
 
   <!-- Core scripts -->
@@ -675,8 +615,9 @@
   <script type="module" src="assets/js/kits.js"></script>
   <script type="module" src="assets/js/quiz-modal.js"></script>
 
-  <!-- Quick Picks, progress ring, reveals, a11y, perf (unchanged functional logic) -->
+  <!-- UX / a11y / perf helpers -->
   <script>
+    // Quick Picks
     (function initQuickPicks() {
       const QUICK_PICK_MAP = {
         families: { use: 'Family Streaming', device: '16–30', coverage: '2–3 Bedroom', mesh: 'Mesh-ready' },
@@ -707,6 +648,7 @@
       });
     })();
 
+    // Scroll progress
     (function initScrollProgress() {
       const ring = document.querySelector('.page-progress-ring');
       const circle = ring?.querySelector('.progress-ring-circle');
@@ -724,92 +666,173 @@
       }
       let ticking = false;
       window.addEventListener('scroll', () => {
-        if (!ticking) {
-          requestAnimationFrame(() => { update(); ticking = false; });
-          ticking = true;
-        }
+        if (!ticking) { requestAnimationFrame(() => { update(); ticking = false; }); ticking = true; }
       }, { passive: true });
       update();
     })();
 
+    // Reveal observer
     (function initRevealAnimations() {
       if (!window.IntersectionObserver) return;
       const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('in-view');
-            observer.unobserve(entry.target);
-          }
-        });
+        entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('in-view'); observer.unobserve(entry.target); } });
       }, { threshold: 0.1, rootMargin: '50px' });
 
       const observeReveals = () => {
-        document.querySelectorAll('.product:not(.in-view)').forEach(el => {
-          el.classList.add('reveal');
-          observer.observe(el);
-        });
+        document.querySelectorAll('.product:not(.in-view)').forEach(el => { el.classList.add('reveal'); observer.observe(el); });
       };
-
       observeReveals();
       const mo = new MutationObserver(() => { setTimeout(observeReveals, 100); });
       mo.observe(document.getElementById('kitResults'), { childList: true, subtree: true });
     })();
 
+    // Accessibility & skip link
     (function initAccessibility() {
       const skip = document.createElement('a');
-      skip.href = '#main-content';
-      skip.textContent = 'Skip to main content';
-      skip.className = 'sr-only';
-      skip.style.position = 'fixed';
-      skip.style.top = '10px';
-      skip.style.left = '10px';
-      skip.style.zIndex = '9999';
+      skip.href = '#main-content'; skip.textContent = 'Skip to main content';
+      skip.className = 'sr-only'; skip.style.position='fixed'; skip.style.top='10px'; skip.style.left='10px'; skip.style.zIndex='9999';
       skip.addEventListener('focus', () => skip.classList.remove('sr-only'));
       skip.addEventListener('blur', () => skip.classList.add('sr-only'));
       document.body.prepend(skip);
 
       document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') {
-          const openModal = document.querySelector('dialog[open]');
-          if (openModal) openModal.querySelector('.modal-close')?.click();
-          const openDrawer = document.querySelector('.drawer[aria-hidden="false"]');
-          if (openDrawer) openDrawer.querySelector('[data-close-drawer]')?.click();
+          const openModal = document.querySelector('dialog[open]'); if (openModal) openModal.querySelector('.modal-close')?.click();
+          const openDrawer = document.querySelector('.drawer[aria-hidden="false"]'); if (openDrawer) openDrawer.querySelector('[data-close-drawer]')?.click();
         }
       });
 
       const announcer = document.createElement('div');
-      announcer.setAttribute('aria-live', 'polite');
-      announcer.setAttribute('aria-atomic', 'true');
-      announcer.className = 'sr-only';
-      announcer.id = 'announcer';
-      document.body.appendChild(announcer);
+      announcer.setAttribute('aria-live', 'polite'); announcer.setAttribute('aria-atomic', 'true');
+      announcer.className = 'sr-only'; announcer.id = 'announcer'; document.body.appendChild(announcer);
       window.announce = (m) => { announcer.textContent = m; setTimeout(() => announcer.textContent = '', 1000); };
     })();
 
+    // Perf: progressive image load for data-src (if present)
     (function initPerformanceOptimizations() {
-      if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
-        document.documentElement.classList.add('reduce-motion');
-      }
+      if (matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('reduce-motion');
       if ('connection' in navigator) {
         const c = navigator.connection;
-        if (c.effectiveType === 'slow-2g' || c.effectiveType === '2g') {
-          document.documentElement.classList.add('performance-mode');
-        }
+        if (c.effectiveType === 'slow-2g' || c.effectiveType === '2g') document.documentElement.classList.add('performance-mode');
       }
       if ('IntersectionObserver' in window) {
         const imgObs = new IntersectionObserver((entries) => {
           entries.forEach(entry => {
-            if (entry.isIntersecting) {
-              const img = entry.target;
-              if (img.dataset.src) { img.src = img.dataset.src; img.removeAttribute('data-src'); }
-              imgObs.unobserve(img);
-            }
+            if (entry.isIntersecting) { const img = entry.target; if (img.dataset.src) { img.src = img.dataset.src; img.removeAttribute('data-src'); } imgObs.unobserve(img); }
           });
         });
         const observeImages = () => document.querySelectorAll('img[data-src]').forEach(img => imgObs.observe(img));
         observeImages();
       }
     })();
+
+    // SEO: canonicalize param pages & add noindex for faceted URLs
+    (function facetedSEO(){
+      const hasParams = location.search.length > 1;
+      if (hasParams) {
+        const robots = document.createElement('meta');
+        robots.name = 'robots'; robots.content = 'noindex,follow';
+        document.head.appendChild(robots);
+        // keep canonical pointing to base (already present)
+      }
+    })();
+
+    // Deep-link “Jump to” anchors: scroll to a card by its data-id when hash matches
+    (function jumpToCard() {
+      function scrollToHash() {
+        const id = location.hash.slice(1); if (!id) return;
+        const tryFind = () => {
+          const el = document.querySelector(`[data-id="${id}"]`);
+          if (el) { el.scrollIntoView({ behavior:'smooth', block:'center' }); el.classList.add('highlight'); setTimeout(()=>el.classList.remove('highlight'), 2000); return true; }
+          return false;
+        };
+        if (!tryFind()) {
+          const mo = new MutationObserver(() => { if (tryFind()) mo.disconnect(); });
+          mo.observe(document.getElementById('kitResults'), { childList:true, subtree:true });
+        }
+      }
+      window.addEventListener('hashchange', scrollToHash);
+      window.addEventListener('load', scrollToHash);
+    })();
+
+    // Ensure entity-rich ALT text when cards render (kits.js should set this)
+    // Example mapping (if you modify kits.js): img.alt = `${item.brand} ${item.model} ${item.meshReady ? 'mesh system' : 'router'}`;
+  </script>
+
+  <!-- ===== Buying FAQ ===== -->
+  <section class="faq container" id="kits-faq" style="margin-top:2rem">
+    <h2>Router & Mesh Buying FAQ</h2>
+    <div class="accordion">
+      <div class="accordion-item">
+        <h4>Is Wi-Fi 7 worth it over Wi-Fi 6E?</h4>
+        <p>Yes if you have multi-gig internet, many new 6E/7 devices, or congestion—otherwise 6E remains excellent for most homes.</p>
+      </div>
+      <div class="accordion-item">
+        <h4>Mesh or single router for ~3,000 sq ft?</h4>
+        <p>Mesh (2–3 nodes) wins for multi-floor or brick/concrete homes; a single high-end router can work in open layouts.</p>
+      </div>
+      <div class="accordion-item">
+        <h4>Do I need 2.5/5/10GbE?</h4>
+        <p>Use multi-gig WAN/LAN if your plan exceeds 1 Gbps, you transfer large files, or you run a NAS/pro-grade wired backbone.</p>
+      </div>
+      <div class="accordion-item">
+        <h4>Will these work with cable, fiber, 5G, or satellite?</h4>
+        <p>Yes—select a WAN tier that matches your modem/ONT. All listed kits support cable/fiber; many also handle 5G/satellite.</p>
+      </div>
+      <div class="accordion-item">
+        <h4>How many devices can a kit handle?</h4>
+        <p>Use the device filter. Typical Wi-Fi 7 mesh handles 100–200+ devices; mid-range Wi-Fi 6/6E handles ~30–100.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Structured data -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"CollectionPage",
+    "name":"Best Routers & Mesh Wi-Fi Kits (2025)",
+    "description":"Filter and compare Wi-Fi 7, 6E, and 6 routers and mesh systems by coverage, device count, multi-gig, and price.",
+    "breadcrumb":{
+      "@type":"BreadcrumbList",
+      "itemListElement":[
+        {"@type":"ListItem","position":1,"name":"Home","item":"https://www.routerhaus.com/"},
+        {"@type":"ListItem","position":2,"name":"Kits","item":"https://www.routerhaus.com/kits.html"}
+      ]
+    },
+    "mainEntity":{
+      "@type":"ItemList",
+      "itemListOrder":"https://schema.org/ItemListOrderAscending",
+      "itemListElement":[
+        {"@type":"ListItem","position":1,"item":{"@type":"Product","name":"Netgear Orbi 970 Series (RBE973S 3-pack)","brand":"Netgear","category":"Mesh Wi-Fi","url":"https://www.routerhaus.com/kits.html#orbi-970"}},
+        {"@type":"ListItem","position":2,"item":{"@type":"Product","name":"TP-Link Deco BE85 (3-pack)","brand":"TP-Link","category":"Mesh Wi-Fi","url":"https://www.routerhaus.com/kits.html#deco-be85"}},
+        {"@type":"ListItem","position":3,"item":{"@type":"Product","name":"Netgear Nighthawk RS700S","brand":"Netgear","category":"Wi-Fi Router","url":"https://www.routerhaus.com/kits.html#rs700s"}},
+        {"@type":"ListItem","position":4,"item":{"@type":"Product","name":"ASUS ROG Rapture GT-BE98 Pro","brand":"ASUS","category":"Wi-Fi Router","url":"https://www.routerhaus.com/kits.html#gt-be98-pro"}},
+        {"@type":"ListItem","position":5,"item":{"@type":"Product","name":"TP-Link Archer BE805","brand":"TP-Link","category":"Wi-Fi Router","url":"https://www.routerhaus.com/kits.html#archer-be805"}},
+        {"@type":"ListItem","position":6,"item":{"@type":"Product","name":"TP-Link Archer BE800","brand":"TP-Link","category":"Wi-Fi Router","url":"https://www.routerhaus.com/kits.html#archer-be800"}},
+        {"@type":"ListItem","position":7,"item":{"@type":"Product","name":"Ubiquiti UniFi Dream Router 7","brand":"Ubiquiti","category":"Wi-Fi Router","url":"https://www.routerhaus.com/kits.html#udr7"}},
+        {"@type":"ListItem","position":8,"item":{"@type":"Product","name":"Amazon eero Max 7","brand":"Amazon","category":"Mesh Wi-Fi","url":"https://www.routerhaus.com/kits.html#eero-max-7"}},
+        {"@type":"ListItem","position":9,"item":{"@type":"Product","name":"Google Nest Wifi Pro","brand":"Google","category":"Mesh Wi-Fi (6E)","url":"https://www.routerhaus.com/kits.html#nest-wifi-pro"}},
+        {"@type":"ListItem","position":10,"item":{"@type":"Product","name":"Linksys Velop Pro 6E (3-pack)","brand":"Linksys","category":"Mesh Wi-Fi (6E)","url":"https://www.routerhaus.com/kits.html#velop-pro-6e"}},
+        {"@type":"ListItem","position":11,"item":{"@type":"Product","name":"Synology WRX560","brand":"Synology","category":"Wi-Fi Router (6)","url":"https://www.routerhaus.com/kits.html#synology-wrx560"}},
+        {"@type":"ListItem","position":12,"item":{"@type":"Product","name":"TP-Link Archer AX55","brand":"TP-Link","category":"Wi-Fi Router (Budget)","url":"https://www.routerhaus.com/kits.html#tp-link-archer-ax55"}}
+      ]
+    }
+  }
+  </script>
+
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"FAQPage",
+    "mainEntity":[
+      {"@type":"Question","name":"Is Wi-Fi 7 worth it over Wi-Fi 6E?","acceptedAnswer":{"@type":"Answer","text":"Yes if you have multi-gig internet, many new 6E/7 devices, or congestion—otherwise 6E remains excellent for most homes."}},
+      {"@type":"Question","name":"Mesh or single router for ~3,000 sq ft?","acceptedAnswer":{"@type":"Answer","text":"Mesh (2–3 nodes) wins for multi-floor or brick/concrete homes; a single high-end router can work in open layouts."}},
+      {"@type":"Question","name":"Do I need 2.5/5/10GbE?","acceptedAnswer":{"@type":"Answer","text":"Use multi-gig WAN/LAN if your plan exceeds 1 Gbps, you transfer large files, or you run a NAS/pro-grade wired backbone."}},
+      {"@type":"Question","name":"Compatibility with cable, fiber, 5G, or satellite?","acceptedAnswer":{"@type":"Answer","text":"Yes—select a WAN tier that matches your modem/ONT. All listed kits support cable/fiber; many also handle 5G/satellite."}},
+      {"@type":"Question","name":"How many devices can a kit handle?","acceptedAnswer":{"@type":"Answer","text":"Use the device filter. Typical Wi-Fi 7 mesh handles 100–200+ devices; mid-range Wi-Fi 6/6E handles ~30–100."}}
+    ]
+  }
   </script>
 
   <noscript>

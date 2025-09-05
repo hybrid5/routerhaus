@@ -1,0 +1,23 @@
+[
+  {
+    "title": "Wi-Fi Bottlenecks: Where Your Speed Really Dies",
+    "url": "/assets/blog/wifi-bottlenecks.html",
+    "image": "/assets/img/wifi-bottlenecks-hero.jpg",
+    "excerpt": "Modem, router, backhaul, or client? We map the choke points and how to fix them.",
+    "date": "2025-08-30"
+  },
+  {
+    "title": "Mesh vs. Single Router for 2-Story Homes",
+    "url": "/assets/blog/mesh-vs-single.html",
+    "image": "/assets/img/mesh-vs-single.jpg",
+    "excerpt": "When a single high-gain unit beats a 2-pack—and when it doesn’t.",
+    "date": "2025-08-24"
+  },
+  {
+    "title": "Picking the Right WAN Tier (1G, 2.5G, 10G)",
+    "url": "/assets/blog/wan-tiers.html",
+    "image": "/assets/img/wan-tiers-hero.jpg",
+    "excerpt": "What you gain above a gig—and what your wiring must support.",
+    "date": "2025-08-18"
+  }
+]

@@ -22,6 +22,9 @@
   <link rel="stylesheet" href="main.css" />
   <link rel="stylesheet" href="assets/css/home.css" />
 
+  <!-- Preload blog index for the carousel -->
+  <link rel="preload" href="assets/blog/blog.json" as="fetch" crossorigin="anonymous" />
+
   <!-- Theme sync (same pattern used on other pages) -->
   <script>
     (() => {
@@ -34,6 +37,112 @@
 
   <!-- Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+  <!-- Component-scoped styles: Journal carousel -->
+  <style>
+    /* ===== Journal (Home Blog Carousel) ===== */
+    .journal{
+      border-top:1px solid var(--border);
+      background: linear-gradient(180deg, color-mix(in oklab, var(--surface-tertiary, rgba(0,0,0,.04)) 30%, transparent), transparent), var(--bg);
+    }
+    .journal .section-head{ margin-bottom: clamp(12px, 1.6vw, 18px); }
+    .journal-headbar{
+      display:flex; align-items:center; justify-content:space-between; gap:.75rem; flex-wrap:wrap;
+      margin: .35rem 0 .6rem;
+    }
+    .journal-actions{ display:flex; align-items:center; gap:.5rem; }
+    .journal-rail{
+      position:relative;
+    }
+    .journal-track{
+      display:grid;
+      grid-auto-flow: column;
+      grid-auto-columns: minmax(clamp(260px, 26vw, 360px), 1fr);
+      gap: clamp(12px, 1.6vw, 18px);
+      overflow-x: auto;
+      padding: .25rem .25rem .5rem;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+    }
+    .journal-track::-webkit-scrollbar{ height:10px; }
+    .journal-track::-webkit-scrollbar-thumb{ background: color-mix(in oklab, var(--text-2) 16%, transparent); border-radius: 999px; }
+    .edge-fade{
+      pointer-events:none;
+      position: absolute; inset: 0;
+      mask: linear-gradient(90deg, rgba(0,0,0,.0) 0, rgba(0,0,0,1) 24px, rgba(0,0,0,1) calc(100% - 24px), rgba(0,0,0,.0) 100%);
+      -webkit-mask: linear-gradient(90deg, rgba(0,0,0,.0) 0, rgba(0,0,0,1) 24px, rgba(0,0,0,1) calc(100% - 24px), rgba(0,0,0,.0) 100%);
+      background: linear-gradient(180deg, transparent, transparent);
+    }
+
+    /* Card */
+    .j-card{
+      scroll-snap-align: start;
+      display:grid; grid-template-rows: auto auto auto 1fr auto;
+      gap:.55rem; padding: clamp(14px, 1.6vw, 18px);
+      border:1px solid var(--border);
+      border-radius: var(--radius-lg, 18px);
+      background: color-mix(in oklab, var(--card) 92%, transparent);
+      box-shadow: var(--shadow-sm);
+      transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+    }
+    .j-card:hover{ transform: translateY(-4px); box-shadow: var(--shadow-md); border-color: color-mix(in oklab, var(--accent) 28%, var(--border)); }
+    .j-cover{
+      position:relative; border-radius:14px; overflow:hidden; border:1px solid var(--border);
+      aspect-ratio: 16/9; background: color-mix(in oklab, var(--primary) 10%, transparent);
+    }
+    .j-cover img{ width:100%; height:100%; object-fit:cover; display:block; }
+    .j-badges{ position:absolute; top:.5rem; left:.5rem; display:flex; gap:.35rem; }
+    .j-badge{ color:#fff; font-size:.72rem; font-weight:800; padding:.28rem .5rem; border-radius:999px; background: var(--success); box-shadow: var(--shadow-sm); }
+    .j-title{ margin:.1rem 0 0; font-size: clamp(1rem, .95rem + .25vw, 1.125rem); line-height:1.25; }
+    .j-meta{ display:flex; align-items:center; gap:.45rem; color: var(--text-2); font-size:.9rem; }
+    .j-dot{ opacity:.6; color: var(--primary); }
+    .j-tags{ display:flex; flex-wrap:wrap; gap:.35rem; margin:.1rem 0 .1rem; }
+    .j-tag{ font-size:.75rem; font-weight:700; padding:.25rem .5rem; border-radius:999px; border:1px solid var(--border); background: color-mix(in oklab, var(--card) 88%, transparent); color: var(--text-1); }
+    .j-excerpt{ color: var(--text-2); margin: .15rem 0 .2rem; }
+    .j-cta{ display:flex; gap:.5rem; align-items:center; }
+    .j-cta .btn{ padding:.6rem .85rem; }
+
+    /* Arrows */
+    .j-arrow{
+      width:42px; height:42px; border-radius:12px; border:1px solid var(--border);
+      background: var(--surface, color-mix(in oklab, var(--card) 92%, transparent));
+      display:inline-flex; align-items:center; justify-content:center;
+      box-shadow: var(--shadow-sm); cursor:pointer;
+      transition: transform var(--t), box-shadow var(--t), border-color var(--t);
+    }
+    .j-arrow:hover{ transform: translateY(-2px); box-shadow: var(--shadow-md); border-color: color-mix(in oklab, var(--primary) 40%, var(--border)); }
+    .j-arrow[disabled]{ opacity:.45; cursor:not-allowed; transform:none; }
+
+    /* Preview button visibility: desktop only */
+    .j-preview{ display:none; }
+    @media (min-width: 900px){ .j-preview{ display:inline-flex; } }
+
+    /* Skeletons */
+    .j-skel{ border-radius: var(--radius-lg); border:1px solid var(--border); background: color-mix(in oklab, var(--card) 92%, transparent); padding:14px; }
+    .shimmer{ position:relative; overflow:hidden; }
+    .shimmer::after{
+      content:""; position:absolute; inset:0;
+      background: linear-gradient(90deg, transparent, color-mix(in oklab, var(--bg-elev, #fff) 55%, transparent), transparent);
+      transform: translateX(-100%); animation: j-shimmer 1.6s infinite;
+    }
+    .sk-cover{ height: 160px; border-radius:14px; background: color-mix(in oklab, var(--card) 80%, transparent); border:1px solid var(--border); }
+    .sk-line{ height: 14px; border-radius:8px; margin:.5rem 0; background: color-mix(in oklab, var(--card) 80%, transparent); }
+    @keyframes j-shimmer{ 100% { transform: translateX(100%); } }
+
+    /* Dialog (preview) */
+    dialog.hp-preview{
+      width:min(95vw, 900px); max-height:95vh; border:none; border-radius: 22px;
+      background: var(--surface, color-mix(in oklab, var(--card) 90%, transparent)); color: var(--text-1);
+      box-shadow: var(--shadow-md); border:1px solid var(--border); overflow:hidden;
+    }
+    .hp-head{ display:flex; align-items:center; justify-content:space-between; gap:.75rem; padding:16px 18px; border-bottom:1px solid var(--border); background: color-mix(in oklab, var(--card) 88%, transparent); }
+    .hp-close{ width:40px; height:40px; border-radius:12px; border:1px solid var(--border); background: var(--surface); display:grid; place-items:center; cursor:pointer; }
+    .hp-body{ display:grid; gap:12px; padding:16px 18px; overflow:auto; max-height: 70vh; }
+    .hp-cover img{ width:100%; height:auto; border-radius:14px; border:1px solid var(--border); }
+    .hp-meta{ color: var(--text-2); font-size:.95rem; }
+    .hp-actions{ display:flex; justify-content:flex-end; gap:.5rem; padding:14px 18px; border-top:1px solid var(--border); background: color-mix(in oklab, var(--card) 88%, transparent); }
+    dialog.hp-preview::backdrop{ background: rgba(0,0,0,.6); backdrop-filter: blur(6px); }
+  </style>
 </head>
 <body>
   <!-- Header partial -->
@@ -119,6 +228,84 @@
       </div>
     </section>
 
+    <!-- ===== JOURNAL (blog carousel) ===== -->
+    <section class="journal" aria-labelledby="journal-title">
+      <div class="container">
+        <header class="section-head">
+          <h2 id="journal-title">From the Journal</h2>
+          <p class="subtle">Guides, reviews, and Wi-Fi tactics.</p>
+          <div class="journal-headbar">
+            <div class="journal-actions">
+              <button class="j-arrow" id="jPrev" type="button" aria-label="Scroll left"><i class="fa-solid fa-chevron-left"></i></button>
+              <button class="j-arrow" id="jNext" type="button" aria-label="Scroll right"><i class="fa-solid fa-chevron-right"></i></button>
+            </div>
+            <a class="btn ghost" href="blog.html" aria-label="See all articles">All articles</a>
+          </div>
+        </header>
+
+        <div class="journal-rail">
+          <div class="edge-fade" aria-hidden="true"></div>
+          <div id="journalTrack" class="journal-track" role="list" aria-label="Recent articles">
+            <!-- Skeletons (replaced by JS) -->
+            <article class="j-skel shimmer" role="listitem" aria-hidden="true">
+              <div class="sk-cover"></div>
+              <div class="sk-line" style="width:70%"></div>
+              <div class="sk-line" style="width:45%"></div>
+              <div class="sk-line" style="width:90%"></div>
+            </article>
+            <article class="j-skel shimmer" role="listitem" aria-hidden="true">
+              <div class="sk-cover"></div>
+              <div class="sk-line" style="width:65%"></div>
+              <div class="sk-line" style="width:40%"></div>
+              <div class="sk-line" style="width:80%"></div>
+            </article>
+            <article class="j-skel shimmer" role="listitem" aria-hidden="true">
+              <div class="sk-cover"></div>
+              <div class="sk-line" style="width:60%"></div>
+              <div class="sk-line" style="width:40%"></div>
+              <div class="sk-line" style="width:85%"></div>
+            </article>
+          </div>
+        </div>
+      </div>
+
+      <!-- Template for cards -->
+      <template id="hpPostTpl">
+        <article class="j-card reveal" role="listitem">
+          <a class="j-cover" href="#" target="_self" rel="noopener">
+            <img alt="" loading="lazy" />
+            <div class="j-badges"><span class="j-badge" data-featured hidden>Featured</span></div>
+          </a>
+          <h3 class="j-title"><a class="title-link" href="#" target="_self" rel="noopener"></a></h3>
+          <div class="j-meta">
+            <span class="author"></span><span class="j-dot">•</span><time class="date"></time><span class="j-dot">•</span><span class="read"></span>
+          </div>
+          <div class="j-tags"></div>
+          <p class="j-excerpt"></p>
+          <div class="j-cta">
+            <a class="btn" href="#" target="_self" rel="noopener">Read</a>
+            <button class="btn ghost j-preview" type="button">Quick preview</button>
+          </div>
+        </article>
+      </template>
+
+      <!-- Preview dialog -->
+      <dialog id="hpPreview" class="hp-preview" aria-labelledby="hpPreviewTitle">
+        <div class="hp-head">
+          <h3 id="hpPreviewTitle" style="margin:0; font-weight:800;"></h3>
+          <button id="hpClose" class="hp-close" type="button" aria-label="Close preview"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <div class="hp-body">
+          <div class="hp-meta" id="hpMeta"></div>
+          <div class="hp-cover" id="hpCover"></div>
+          <article id="hpBody" class="hp-article"></article>
+        </div>
+        <div class="hp-actions">
+          <a id="hpRead" class="btn primary" href="#" target="_self" rel="noopener">Go to full article</a>
+        </div>
+      </dialog>
+    </section>
+
     <!-- ===== FEATURED PICKS ===== -->
     <section class="product-grid">
       <div class="container">
@@ -186,7 +373,7 @@
             <p>Yes. We can coordinate on-site installation, validation, and handover. Remote staging and controller setup are also available.</p>
           </div>
 
-        <div class="accordion-item reveal">
+          <div class="accordion-item reveal">
             <h4>Will the quiz work for office spaces?</h4><span aria-hidden="true">+</span>
             <p>It’s a great start for sizing and features. For multi-tenant or multi-AP scenarios, book a consult and we’ll design the topology.</p>
           </div>
@@ -220,5 +407,173 @@
   <!-- Scripts -->
   <script src="scripts.js" defer></script>
   <script type="module" src="assets/js/home.js"></script>
+
+  <!-- Home-only: Journal carousel logic (standalone, no dependency on blog.js) -->
+  <script type="module">
+    (() => {
+      const $ = (s, r=document) => r.querySelector(s);
+      const $$ = (s, r=document) => Array.from(r.querySelectorAll(s));
+      const track = $('#journalTrack');
+      const tpl = $('#hpPostTpl');
+      const dlg = $('#hpPreview');
+      const dTitle = $('#hpPreviewTitle'), dMeta = $('#hpMeta'), dCover = $('#hpCover'), dBody = $('#hpBody'), dRead = $('#hpRead'), dClose = $('#hpClose');
+      const cfg = { json: 'assets/blog/blog.json', base: 'assets/blog', postSelector: 'article, main article, .post, #post' };
+
+      const fmtDate = (d) => { try { return new Intl.DateTimeFormat(undefined, {year:'numeric', month:'short', day:'2-digit'}).format(new Date(d)); } catch { return d; } };
+      const postUrl = (slug) => `${cfg.base.replace(/\/$/,'')}/${slug}.html`;
+      const normalize = (p, i) => ({
+        id: p.id || `hp_${i}_${(p.slug||p.title||'post').replace(/\W+/g,'').slice(0,18)}`,
+        title: String(p.title||'Untitled').trim(),
+        slug: String(p.slug || p.id || `post_${i}`),
+        author: p.author || 'RouterHaus',
+        date: p.date || new Date().toISOString().slice(0,10),
+        tags: Array.isArray(p.tags) ? p.tags.filter(Boolean) : [],
+        excerpt: p.excerpt || '',
+        cover: typeof p.cover==='string' ? p.cover : '',
+        minutes: Number.isFinite(+p.minutes) ? +p.minutes : undefined,
+        featured: !!p.featured,
+        views: Number.isFinite(+p.views) ? +p.views : 0,
+        url: p.url || postUrl(p.slug || p.id || `post_${i}`),
+        _contentHtml: '',
+        _contentText: '',
+      });
+
+      async function fetchIndex(){
+        try{
+          const r = await fetch(cfg.json, { cache: 'no-store' });
+          if(!r.ok) throw new Error('bad status');
+          const arr = await r.json();
+          return (Array.isArray(arr)?arr:[]).map(normalize);
+        }catch{
+          return [];
+        }
+      }
+
+      async function fetchPostBody(p){
+        if (p._contentHtml) return p;
+        try{
+          const r = await fetch(p.url, { cache: 'no-store' });
+          if(!r.ok) throw new Error('bad status');
+          const html = await r.text();
+          const doc = new DOMParser().parseFromString(html, 'text/html');
+          const node = doc.querySelector(cfg.postSelector) || doc.body;
+          node.querySelectorAll('script,style,iframe,object,embed,link').forEach(n=>n.remove());
+          node.querySelectorAll('a[href]').forEach(a=>{ a.target='_blank'; a.rel='noopener' });
+          p._contentHtml = node.innerHTML;
+          p._contentText = node.textContent || '';
+          if (!p.minutes) p.minutes = Math.max(3, Math.round(p._contentText.split(/\s+/).filter(Boolean).length / 200));
+        }catch{
+          p._contentHtml ||= `<p>${escapeHtml(p.excerpt)}</p>`;
+          p._contentText ||= p.excerpt || '';
+          if (!p.minutes) p.minutes = Math.max(3, Math.round((p._contentText||'').split(/\s+/).filter(Boolean).length / 200));
+        }
+        return p;
+      }
+
+      const escapeHtml = (s) => String(s||'').replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]));
+      const isDesktop = () => matchMedia('(min-width:900px)').matches;
+
+      function render(posts){
+        track.innerHTML = '';
+        const frag = document.createDocumentFragment();
+        posts.forEach((p, idx) => {
+          const node = tpl.content.cloneNode(true);
+          const aCover = node.querySelector('.j-cover'); const img = node.querySelector('img');
+          const badge = node.querySelector('[data-featured]');
+          const tLink = node.querySelector('.title-link');
+          const author = node.querySelector('.author'); const date = node.querySelector('.date'); const read = node.querySelector('.read');
+          const tags = node.querySelector('.j-tags'); const excerpt = node.querySelector('.j-excerpt');
+          const readBtn = node.querySelector('.j-cta .btn'); const prevBtn = node.querySelector('.j-preview');
+
+          aCover.href = p.url; aCover.target = '_self'; aCover.setAttribute('aria-label', p.title);
+          img.src = p.cover || ''; img.alt = '';
+
+          if (p.featured) badge.hidden = false;
+
+          tLink.href = p.url; tLink.textContent = p.title; tLink.target = '_self';
+          author.textContent = p.author; date.textContent = fmtDate(p.date); read.textContent = p.minutes ? `${p.minutes} min read` : '';
+
+          tags.innerHTML = (p.tags||[]).slice(0,3).map(t => `<span class="j-tag">${escapeHtml(t)}</span>`).join('');
+          excerpt.textContent = p.excerpt;
+
+          readBtn.href = p.url; readBtn.target = '_self';
+
+          // Prefetch on hover (desktop) and wire preview
+          const prefetch = () => fetchPostBody(p).catch(()=>{});
+          [aCover, tLink, prevBtn].forEach(el => el && el.addEventListener('mouseenter', () => { if (isDesktop()) prefetch(); }, { once:true }));
+          prevBtn?.addEventListener('click', async () => openPreview(await fetchPostBody(p)));
+
+          // First two images not lazy for better LCP perception in viewport
+          if (idx > 1) img.loading = 'lazy';
+
+          frag.appendChild(node);
+        });
+        track.appendChild(frag);
+        revealify();
+        updateArrows();
+      }
+
+      function revealify(){
+        const els = $$('.reveal', track);
+        if (!('IntersectionObserver' in window) || !els.length) return;
+        const io = new IntersectionObserver((entries)=>{
+          entries.forEach(en=>{ if(en.isIntersecting){ en.target.classList.add('in-view'); io.unobserve(en.target); } });
+        }, { threshold: 0.1, rootMargin: '0px 0px -10% 0px' });
+        els.forEach(el=>io.observe(el));
+      }
+
+      // Dialog behavior
+      let lastFocus = null;
+      async function openPreview(p){
+        if (!dlg) return;
+        lastFocus = document.activeElement;
+        dTitle.textContent = p.title;
+        dMeta.textContent = `${p.author} • ${fmtDate(p.date)}${p.minutes ? ' • ' + p.minutes + ' min read' : ''}`;
+        dCover.innerHTML = p.cover ? `<img src="${escapeHtml(p.cover)}" alt="">` : '';
+        dBody.innerHTML = p._contentHtml || `<p>${escapeHtml(p.excerpt||'')}</p>`;
+        dRead.href = p.url;
+        try { dlg.showModal(); } catch { dlg.setAttribute('open',''); }
+      }
+      function closePreview(){
+        try { dlg.close(); } catch { dlg.removeAttribute('open'); }
+        if (lastFocus && typeof lastFocus.focus === 'function') lastFocus.focus();
+      }
+      dClose?.addEventListener('click', closePreview);
+      dlg?.addEventListener('click', (e) => {
+        const r = dlg.getBoundingClientRect();
+        const inside = e.clientX >= r.left && e.clientX <= r.right && e.clientY >= r.top && e.clientY <= r.bottom;
+        if (!inside) closePreview();
+      });
+      dlg?.addEventListener('cancel', (e)=>{ e.preventDefault(); closePreview(); });
+
+      // Arrows and scroll
+      const prev = $('#jPrev'), next = $('#jNext');
+      const scrollByAmount = () => Math.max(track.clientWidth * 0.9, 320);
+      prev?.addEventListener('click', () => track.scrollBy({ left: -scrollByAmount(), behavior:'smooth' }));
+      next?.addEventListener('click', () => track.scrollBy({ left:  scrollByAmount(), behavior:'smooth' }));
+      track?.addEventListener('scroll', throttle(updateArrows, 80), { passive:true });
+      function updateArrows(){
+        const max = track.scrollWidth - track.clientWidth - 1;
+        prev.disabled = (track.scrollLeft <= 1);
+        next.disabled = (track.scrollLeft >= max);
+      }
+      function throttle(fn, wait=80){ let t=0, id; return (...a)=>{ const n=Date.now(); if(n-t>=wait){ t=n; fn(...a);} else { clearTimeout(id); id=setTimeout(()=>{ t=Date.now(); fn(...a); }, wait-(n-t)); } }; }
+
+      // Init
+      (async () => {
+        const posts = (await fetchIndex()).sort((a,b)=> new Date(b.date)-new Date(a.date));
+        const picked = pickPosts(posts, 6);
+        render(picked);
+      })();
+
+      function pickPosts(arr, n=6){
+        if (!arr.length) return [];
+        const feat = arr.filter(p=>p.featured);
+        const rest = arr.filter(p=>!p.featured);
+        const ordered = [...feat.slice(0,1), ...rest].slice(0, n);
+        return ordered;
+      }
+    })();
+  </script>
 </body>
 </html>

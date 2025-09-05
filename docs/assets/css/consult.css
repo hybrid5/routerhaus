@@ -331,10 +331,15 @@ img{max-width:100%;height:auto;display:block;}
 .faq p{color:var(--text-2);margin:.5rem 0 0}
 @media (max-width:900px){.faq-grid{grid-template-columns:1fr}}
 
-/* ------------------- Footer CTA ------------------- */
-.footer-cta{background:linear-gradient(180deg,color-mix(in oklab,var(--surface-tertiary) 45%,transparent),transparent),var(--bg);border-top:1px solid var(--border)}
-.cta-inner{text-align:center}
-.cta-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:8px}
+/* ===== Footer CTA ===== */
+.footer-cta{
+  background: linear-gradient(180deg, color-mix(in oklab, var(--surface-tertiary) 45%, transparent), transparent), var(--bg);
+  border-top: 1px solid var(--border);
+}
+.footer-cta .cta-inner{ text-align:center; }
+.footer-cta .cta-actions,
+.footer-cta .hero-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:8px;}
+.footer-cta .cta-inner p{color: inherit;margin: revert;}
 
 /* ------------------- Reveal ------------------- */
 .reveal{opacity:0;transform:translateY(8px);transition:opacity var(--duration-normal) var(--easing-smooth),transform var(--duration-normal) var(--easing-smooth)}

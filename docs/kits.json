@@ -1229,7 +1229,8 @@
     ],
     "primaryUses": [
       "Prosumer",
-      "Work-From-Home"
+      "Work-From-Home",
+      "Gaming"
     ],
     "primaryUse": "Prosumer",
     "img": "https://www.routerhaus.com/assets/product-images/dream-router-7.png",
@@ -1246,13 +1247,14 @@
     "priceBucket": "150\u2013299",
     "useTags": [
       "Prosumer",
-      "Work-From-Home"
+      "Work-From-Home",
+      "Gaming"
     ],
     "fitSummary": "A Wi-Fi 7 tri-band router ideal for Prosumer, Work-From-Home.",
     "fitBullets": [
       "Supports up to 80 devices with 3000 sq ft coverage",
       "10G WAN port and 3 LAN ports",
-      "Ideal for Prosumer, Work-From-Home",
+      "Ideal for Prosumer, Work-From-Home, Gaming",
       "Mesh-ready"
     ],
     "chipsOverride": [],
@@ -12678,7 +12680,8 @@
     ],
     "primaryUses": [
       "Family Streaming",
-      "Smart-Home"
+      "Smart-Home",
+      "Gaming"
     ],
     "primaryUse": "Family Streaming",
     "img": "https://www.routerhaus.com/assets/product-images/dream-router-7.png",
@@ -12695,11 +12698,12 @@
     "priceBucket": "300\u2013599",
     "useTags": [
       "Family Streaming",
-      "Smart-Home"
+      "Smart-Home",
+      "Gaming"
     ],
-    "fitSummary": "A Wi-Fi 5 dual-band router ideal for Family Streaming.",
+    "fitSummary": "A Wi-Fi 7 dual-band router ideal for Family Streaming.",
     "fitBullets": [
-      "Supports up to 10 devices with 1500 sq ft coverage",
+      "Supports up to 100 devices with 1500 sq ft coverage",
       "\u22641G WAN port and 4 LAN ports",
       "Ideal for Family Streaming, Smart-Home",
       "Standalone router"

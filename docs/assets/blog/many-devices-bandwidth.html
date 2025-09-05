@@ -2,25 +2,74 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Too Many Devices? How Bandwidth Splits in a 50-Device Home (2025)</title>
+  <title>Too Many Devices? 50-Device Home Bandwidth Guide (2025, Wi-Fi 7 & QoS)</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Homes now run 30–50 devices. Learn how Wi-Fi 7 handles congestion with MU-MIMO, OFDMA, and QoS—plus a practical playbook to keep calls smooth and streams stable.">
-  <meta name="keywords" content="many devices bandwidth, 50 device home, Wi-Fi 7, MU-MIMO, OFDMA, MLO, QoS, SQM, bufferbloat, airtime fairness, 6 GHz, mesh Wi-Fi, smart home congestion">
+  <meta name="description" content="Smart homes now run 30–50+ devices. Learn, in plain English, how Wi-Fi 7, OFDMA, MU-MIMO, MLO, and QoS/SQM keep calls smooth and streams stable—plus a 15-minute congestion playbook.">
+  <meta name="keywords" content="too many devices wifi, 50 device home bandwidth, smart home congestion, Wi-Fi 7 capacity, MU-MIMO, OFDMA, MLO, QoS, SQM, bufferbloat fix, airtime fairness, 6 GHz, mesh Wi-Fi, best router for many devices">
   <link rel="canonical" href="https://routerhaus.com/assets/blog/many-devices-bandwidth.html">
+
+  <!-- Favicons -->
   <link rel="icon" href="/favicon.ico" sizes="any">
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <link rel="manifest" href="/site.webmanifest">
   <meta name="theme-color" content="#6f7dff">
+  <meta name="color-scheme" content="light dark">
+  <meta name="robots" content="index,follow,max-image-preview:large">
 
-  <!-- Styles -->
+  <!-- Styles (keep same connectors) -->
   <link rel="stylesheet" href="../../main.css">
   <link rel="stylesheet" href="../../assets/css/blog.css">
   <link rel="stylesheet" href="../../assets/css/post.css">
 
+  <!-- Open Graph / Twitter -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Too Many Devices? 50-Device Home Bandwidth Guide (2025, Wi-Fi 7 & QoS)">
+  <meta property="og:description" content="Airtime—not just Mbps. Use Wi-Fi 7 features (OFDMA, MU-MIMO, MLO) and QoS/SQM to keep busy homes responsive. Includes a 15-minute playbook.">
+  <meta property="og:image" content="https://routerhaus.com/assets/blog/img/many-devices-hero.jpg">
+  <meta property="og:url" content="https://routerhaus.com/assets/blog/many-devices-bandwidth.html">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Too Many Devices? 50-Device Home Bandwidth Guide (2025, Wi-Fi 7 & QoS)">
+  <meta name="twitter:description" content="Plain-English congestion fixes for smart homes with 30–50+ devices.">
+  <meta name="twitter:image" content="https://routerhaus.com/assets/blog/img/many-devices-hero.jpg">
+
+  <!-- Icons (optional) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+  <!-- Article JSON-LD (enhanced) -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"BlogPosting",
+    "headline":"Too Many Devices? 50-Device Home Bandwidth Guide (2025, Wi-Fi 7 & QoS)",
+    "description":"Smart homes now run 30–50+ devices. Learn, in plain English, how Wi-Fi 7, OFDMA, MU-MIMO, MLO, and QoS/SQM keep calls smooth and streams stable—plus a 15-minute congestion playbook.",
+    "author":{"@type":"Person","name":"RouterHaus Editorial","url":"https://routerhaus.com/about.html"},
+    "publisher":{"@type":"Organization","name":"RouterHaus","logo":{"@type":"ImageObject","url":"https://routerhaus.com/assets/img/logo-og.png"}},
+    "image":"https://routerhaus.com/assets/blog/img/many-devices-hero.jpg",
+    "datePublished":"2025-08-26",
+    "dateModified":"2025-09-05",
+    "mainEntityOfPage":{"@type":"WebPage","@id":"https://routerhaus.com/assets/blog/many-devices-bandwidth.html"},
+    "keywords":"too many devices wifi, 50 device home bandwidth, smart home congestion, Wi-Fi 7 capacity, MU-MIMO, OFDMA, MLO, QoS, SQM, bufferbloat, airtime fairness, 6 GHz, mesh Wi-Fi",
+    "timeRequired":"PT10M",
+    "articleSection":["Wi-Fi Basics","Smart Home","Troubleshooting","QoS","Mesh"]
+  }
+  </script>
+
+  <!-- Breadcrumbs JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"BreadcrumbList",
+    "itemListElement":[
+      {"@type":"ListItem","position":1,"name":"Home","item":"https://routerhaus.com/"},
+      {"@type":"ListItem","position":2,"name":"Journal","item":"https://routerhaus.com/blog.html"},
+      {"@type":"ListItem","position":3,"name":"Many Devices & Bandwidth","item":"https://routerhaus.com/assets/blog/many-devices-bandwidth.html"}
+    ]
+  }
+  </script>
+
   <!-- Theme sync -->
-  <meta name="color-scheme" content="light dark">
   <script>
     (() => {
       const root = document.documentElement;
@@ -29,37 +78,6 @@
       apply(); m.addEventListener('change', apply);
     })();
   </script>
-
-  <!-- Open Graph / Twitter -->
-  <meta property="og:type" content="article">
-  <meta property="og:title" content="Too Many Devices? How Bandwidth Splits in a 50-Device Home (2025)">
-  <meta property="og:description" content="Airtime, not just Mbps. Use Wi-Fi 7 features—MU-MIMO, OFDMA, MLO, QoS—to keep heavy homes responsive.">
-  <meta property="og:image" content="https://routerhaus.com/assets/blog/img/many-devices-hero.jpg">
-  <meta property="og:url" content="https://routerhaus.com/assets/blog/many-devices-bandwidth.html">
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Too Many Devices? How Bandwidth Splits in a 50-Device Home (2025)">
-  <meta name="twitter:description" content="A practical congestion playbook for smart homes.">
-  <meta name="twitter:image" content="https://routerhaus.com/assets/blog/img/many-devices-hero.jpg">
-
-  <!-- Icons (optional) -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-
-  <!-- Article JSON-LD -->
-  <script type="application/ld+json">
-  {
-    "@context":"https://schema.org",
-    "@type":"Article",
-    "headline":"Too Many Devices? How Bandwidth Splits in a 50-Device Home (2025)",
-    "description":"Homes now run 30–50 devices. Learn how Wi-Fi 7 handles congestion with MU-MIMO, OFDMA, and QoS—plus a practical playbook to keep calls smooth and streams stable.",
-    "author":{"@type":"Person","name":"RouterHaus"},
-    "publisher":{"@type":"Organization","name":"RouterHaus","logo":{"@type":"ImageObject","url":"https://routerhaus.com/assets/img/logo-og.png"}},
-    "image":"https://routerhaus.com/assets/blog/img/many-devices-hero.jpg",
-    "datePublished":"2025-08-26",
-    "dateModified":"2025-08-26",
-    "mainEntityOfPage":{"@type":"WebPage","@id":"https://routerhaus.com/assets/blog/many-devices-bandwidth.html"},
-    "keywords":"Wi-Fi 7, MU-MIMO, OFDMA, MLO, QoS, SQM, smart home bandwidth, airtime fairness, 6 GHz"
-  }
-  </script>
 </head>
 <body>
   <!-- Header -->
@@ -67,13 +85,14 @@
 
   <main class="post-shell">
     <nav class="breadcrumb" aria-label="Breadcrumb">
-      <a href="../../index.html">Home</a> › <a href="../../blog.html">Journal</a> › Many Devices & Bandwidth
+      <a href="../../index.html">Home</a> › <a href="../../blog.html">Journal</a> › Many Devices &amp; Bandwidth
     </nav>
 
     <header class="post-hero">
-      <p class="post-meta">By RouterHaus • Aug 26, 2025 • ~10 min read</p>
+      <p class="post-meta">By RouterHaus • Updated Sep 5, 2025 • ~10 min read</p>
       <h1>Too Many Devices? How Bandwidth Splits in a 50-Device Home</h1>
       <figure class="post-cover">
+        <!-- SAME IMAGE preserved -->
         <img src="../img/many-devices-hero.jpg" alt="Wi-Fi 7 router with many smart home devices and phones connected">
         <figcaption>Airtime—not just headline Mbps—determines if your busy home feels fast.</figcaption>
       </figure>
@@ -85,36 +104,34 @@
       <ul>
         <li><a href="#tldr">TL;DR</a></li>
         <li><a href="#airtime">Airtime, not Mbps: how Wi-Fi really splits capacity</a></li>
-        <li><a href="#tools">The Wi-Fi 7 toolbox: MU-MIMO, OFDMA, MLO, 6 GHz</a></li>
+        <li><a href="#tools">The Wi-Fi 7 toolbox: OFDMA, MU-MIMO, MLO, 6&nbsp;GHz</a></li>
         <li><a href="#device-mix">Device mix: who should live on which band</a></li>
-        <li><a href="#qos">QoS & SQM: stopping bufferbloat</a></li>
-        <li><a href="#mesh">Mesh & backhaul: don’t starve clients</a></li>
+        <li><a href="#qos">QoS &amp; SQM: stopping bufferbloat</a></li>
+        <li><a href="#mesh">Mesh &amp; backhaul: don’t starve clients</a></li>
         <li><a href="#playbook">15-minute congestion playbook</a></li>
+        <li><a href="#related-searches">Related searches</a></li>
         <li><a href="#faq">FAQ</a></li>
       </ul>
     </aside>
 
     <article id="post" class="post-body">
-      <h2 id="tldr">TL;DR — capacity is shared; manage airtime and uplink</h2>
+      <h2 id="tldr">TL;DR — Capacity is shared; control <em>airtime</em> and uplink</h2>
       <ul>
-        <li><strong>Segment devices by band:</strong> Phones/laptops on 6&nbsp;GHz; TVs/consoles on 5&nbsp;GHz or wired; IoT on 2.4&nbsp;GHz.</li>
-        <li><strong>Turn on OFDMA/MU-MIMO & WPA3.</strong></li>
-        <li><strong>Enable QoS/SQM</strong> and cap bulk uploads to ~80–90% of upstream to prevent bufferbloat.</li>
-        <li><strong>Use mesh with wired backhaul</strong> (or MoCA) in larger homes so nodes don’t steal client airtime.</li>
+        <li><strong>Segment devices by band:</strong> Phones/laptops on <strong>6&nbsp;GHz</strong>; TVs/consoles on <strong>5&nbsp;GHz</strong> or wired; IoT on <strong>2.4&nbsp;GHz</strong>.</li>
+        <li><strong>Enable OFDMA + MU-MIMO + WPA3.</strong></li>
+        <li><strong>Turn on QoS/SQM</strong>; cap bulk uploads to ~80–90% of upstream to kill bufferbloat.</li>
+        <li><strong>Use mesh with wired backhaul</strong> (Ethernet/MoCA) so nodes don’t steal client airtime.</li>
         <li><strong>One SSID</strong> with band steering; avoid random extenders.</li>
       </ul>
 
       <div class="callout info">
         <div class="icon"><i class="fa-solid fa-chart-pie"></i></div>
-        <div>
-          <strong>Key idea:</strong> Wi-Fi performance is governed by <em>airtime</em>. Slow or chatty devices can consume
-          disproportionate time, shrinking what’s left for everything else.
-        </div>
+        <div><strong>Key idea:</strong> Wi-Fi is time-shared. One slow/chatty device can hog the <em>time</em> and make the whole house feel slow.</div>
       </div>
 
       <h2 id="airtime">Airtime, not Mbps: how Wi-Fi really splits capacity</h2>
       <p>
-        On a channel, clients take turns. A single slow device (weak signal, legacy standard, low-rate modulation) can occupy more <em>time</em> to send the same amount of data, throttling everyone else. That’s why separating device types and improving signal quality matters more than chasing theoretical peak Mbps.
+        Devices take turns talking on a channel. A weak or old device needs <em>more time</em> to send the same data. That’s why organizing devices and improving signal quality matters more than chasing theoretical “Gbps.”
       </p>
 
       <table>
@@ -129,19 +146,17 @@
         </tbody>
       </table>
 
-      <h2 id="tools">The Wi-Fi 7 toolbox: MU-MIMO, OFDMA, MLO, 6&nbsp;GHz</h2>
+      <h2 id="tools">The Wi-Fi 7 toolbox: OFDMA, MU-MIMO, MLO, 6&nbsp;GHz</h2>
       <ul>
-        <li><strong>OFDMA:</strong> Splits a channel into sub-carriers so multiple clients can transmit simultaneously—great for many small packets (IoT, phones).</li>
-        <li><strong>MU-MIMO:</strong> Spatial streams to serve multiple clients at once; helps when several high-throughput devices are active.</li>
-        <li><strong>MLO (Multi-Link Operation):</strong> A single device uses multiple bands/links concurrently, smoothing bursts and reducing retries.</li>
-        <li><strong>6&nbsp;GHz + 320&nbsp;MHz (Wi-Fi&nbsp;7):</strong> Big, clean lanes for modern clients = less airtime per transfer → lower contention.</li>
+        <li><strong>OFDMA:</strong> Splits a channel into smaller sub-channels so multiple devices talk at once—great for phones and IoT.</li>
+        <li><strong>MU-MIMO:</strong> Multiple streams to serve several fast devices together.</li>
+        <li><strong>MLO:</strong> Lets one device use multiple bands/links in parallel for steadier performance.</li>
+        <li><strong>6&nbsp;GHz (&nbsp;160–320&nbsp;MHz):</strong> Cleaner, wider lanes for modern clients → less airtime per transfer.</li>
       </ul>
 
       <div class="callout success">
         <div class="icon"><i class="fa-solid fa-bolt"></i></div>
-        <div>
-          <strong>Translation:</strong> Enable these features and keep modern clients on 6&nbsp;GHz; their work finishes faster, leaving more airtime for everyone else.
-        </div>
+        <div><strong>Plain English:</strong> Turn these on and keep modern phones/laptops on 6&nbsp;GHz so they finish quickly and leave time for everything else.</div>
       </div>
 
       <h2 id="device-mix">Device mix: who should live on which band</h2>
@@ -150,71 +165,82 @@
         <tbody>
           <tr>
             <td><strong>6&nbsp;GHz</strong></td>
-            <td>Phones, laptops, tablets (Wi-Fi&nbsp;6E/7)</td>
-            <td>Highest capacity, lowest latency near nodes; frees 5&nbsp;GHz for legacy/heavier clients.</td>
+            <td>Phones, laptops, tablets (Wi-Fi 6E/7)</td>
+            <td>Highest capacity, lowest latency near nodes; frees 5&nbsp;GHz for heavier/older clients.</td>
           </tr>
           <tr>
             <td><strong>5&nbsp;GHz</strong></td>
             <td>TVs, consoles, older laptops</td>
-            <td>Good reach + throughput. Wire if possible to avoid airtime use during binges.</td>
+            <td>Great blend of reach/throughput. Wire when possible to save airtime.</td>
           </tr>
           <tr>
             <td><strong>2.4&nbsp;GHz</strong></td>
             <td>IoT (plugs, sensors), long-reach gadgets</td>
-            <td>Best penetration; keep chatter away from fast bands. Use channels 1/6/11 only.</td>
+            <td>Best penetration; stick to channels 1/6/11 to avoid overlap.</td>
           </tr>
         </tbody>
       </table>
 
       <h2 id="qos">QoS &amp; SQM: stopping bufferbloat</h2>
       <p>
-        Congestion pain often comes from the <strong>uplink</strong> (your upload pipe). When one device saturates uploads (cloud backup, camera, phone sync), queueing delay explodes—calls sound robotic, games stutter. Fix it:
+        The usual villain is your <strong>upload</strong>. When something maxes your upstream (cloud backup, cameras), delay skyrockets—calls glitch, games lag. Fix it:
       </p>
       <ol>
-        <li><strong>Enable QoS/SQM</strong> on the router and set real ISP speeds (use off-peak speed test).</li>
-        <li><strong>Cap bulk uploads</strong> to ~80–90% of upstream.</li>
-        <li><strong>Prioritize work devices/apps</strong> (conferencing, real-time) via MAC or application profiles.</li>
+        <li><strong>Enable QoS/SQM</strong> and enter your real ISP speeds (measure off-peak).</li>
+        <li><strong>Cap bulk uploads</strong> to ~80–90% of upstream to prevent queue bloat.</li>
+        <li><strong>Prioritize work devices/apps</strong> (video calls, gaming) via profiles.</li>
       </ol>
-      <pre><code># SQM baseline example
-downlink_mbps = measured_down * 0.9
+      <pre><code># SQM baseline (example)
+downlink_mbps = measured_down * 0.90
 uplink_mbps   = measured_up   * 0.85
-# Mark work laptop/phone as high priority; cap backup/NAS tasks</code></pre>
+# Prioritize work devices; de-prioritize backups/cameras</code></pre>
 
       <h2 id="mesh">Mesh &amp; backhaul: don’t starve clients</h2>
       <ul>
-        <li><strong>Wired backhaul (best):</strong> Ethernet or MoCA between nodes preserves wireless airtime for clients.</li>
-        <li><strong>Wireless backhaul (good):</strong> Prefer tri/quad-band or Wi-Fi&nbsp;7 with MLO so backhaul doesn’t collide with client traffic.</li>
-        <li><strong>Placement:</strong> Nodes ~30–40&nbsp;ft line-of-sight; reduce through heavy walls. Aim for −55 to −65&nbsp;dBm between nodes.</li>
+        <li><strong>Wired backhaul (best):</strong> Ethernet or MoCA between nodes keeps the air free for devices.</li>
+        <li><strong>Wireless backhaul (good):</strong> Prefer tri/quad-band or Wi-Fi 7 with MLO to isolate backhaul from clients.</li>
+        <li><strong>Placement:</strong> Nodes ~30–40&nbsp;ft line-of-sight; minimize heavy walls. Aim for −55 to −65&nbsp;dBm between nodes.</li>
       </ul>
 
       <div class="callout warn">
         <div class="icon"><i class="fa-solid fa-triangle-exclamation"></i></div>
-        <div>
-          <strong>Avoid:</strong> Random “extenders” that halve throughput and raise latency. Use proper mesh/APs integrated into one system.
-        </div>
+        <div><strong>Avoid:</strong> Random “extenders” that halve throughput and raise latency. Use one integrated mesh/AP system.</div>
       </div>
 
       <h2 id="playbook">15-minute congestion playbook</h2>
       <ol>
         <li><strong>Update firmware</strong>; enable WPA3, OFDMA, MU-MIMO, 6&nbsp;GHz.</li>
-        <li><strong>One SSID</strong> (band steering on). Move modern clients to 6&nbsp;GHz automatically.</li>
-        <li><strong>Wire the hogs:</strong> TV/console/NAS via Ethernet; if not possible, park them on 5&nbsp;GHz.</li>
-        <li><strong>IoT segregation:</strong> Keep IoT on 2.4&nbsp;GHz (or Guest/IoT SSID) with no LAN access.</li>
-        <li><strong>QoS/SQM:</strong> Set speeds, prioritize work devices, cap backup/sync apps.</li>
-        <li><strong>Backhaul:</strong> Wire mesh if you can; otherwise ensure a dedicated wireless backhaul and good node RSSI.</li>
-        <li><strong>Room tests:</strong> Run speed + latency in office, TV room, bedrooms; move nodes 5–10&nbsp;ft and re-test.</li>
+        <li><strong>One SSID</strong> (band steering on). Let modern clients pick 6&nbsp;GHz.</li>
+        <li><strong>Wire the hogs:</strong> TV/console/NAS via Ethernet; otherwise park them on 5&nbsp;GHz.</li>
+        <li><strong>IoT segregation:</strong> Keep IoT on 2.4&nbsp;GHz or an IoT/Guest SSID (no LAN access).</li>
+        <li><strong>QoS/SQM:</strong> Set speeds; prioritize calls/work devices; cap backup apps.</li>
+        <li><strong>Backhaul:</strong> Wire mesh if possible; else ensure dedicated wireless backhaul + strong node-to-node signal.</li>
+        <li><strong>Room tests:</strong> Run speed + latency in office/TV/bedrooms; nudge node placement 5–10&nbsp;ft and re-test.</li>
       </ol>
 
       <hr>
+
+      <section id="related-searches" aria-label="Related searches">
+        <h2>Related searches we answer</h2>
+        <ul class="bulleted">
+          <li>“Too many devices on Wi-Fi—how to fix?”</li>
+          <li>“Best router for 50 devices / large family”</li>
+          <li>“Stop bufferbloat and lag on Zoom/Teams”</li>
+          <li>“OFDMA vs MU-MIMO explained simply”</li>
+          <li>“Wi-Fi 7 mesh vs extenders for smart homes”</li>
+        </ul>
+      </section>
 
       <div class="post-share"><!-- filled by post.js --></div>
 
       <div class="post-tags">
         <span class="chip">Bandwidth</span>
         <span class="chip">Wi-Fi 7</span>
-        <span class="chip">MU-MIMO</span>
         <span class="chip">OFDMA</span>
+        <span class="chip">MU-MIMO</span>
+        <span class="chip">MLO</span>
         <span class="chip">QoS</span>
+        <span class="chip">SQM</span>
       </div>
 
       <div class="author-card">
@@ -232,7 +258,7 @@ uplink_mbps   = measured_up   * 0.85
         </a>
         <a href="../../kits.html">
           <div class="meta">Next</div>
-          <div class="title">See Our Wi-Fi 7 Router Picks & Kits</div>
+          <div class="title">See Our Wi-Fi 7 Router Picks &amp; Kits</div>
         </a>
       </nav>
     </article>
@@ -264,28 +290,49 @@ uplink_mbps   = measured_up   * 0.85
       {
         "@type":"Question",
         "name":"Why does my network slow down when lots of devices are online?",
-        "acceptedAnswer":{"@type":"Answer","text":"Because Wi-Fi shares airtime. Slow or chatty devices consume more time to transmit, leaving less for others. Segment by band, enable OFDMA/MU-MIMO, and use QoS/SQM to control uploads."}
+        "acceptedAnswer":{"@type":"Answer","text":"Because Wi-Fi shares airtime. Slow or chatty devices consume more time to transmit, leaving less for others. Segment devices by band, enable OFDMA/MU-MIMO, and use QoS/SQM to control uploads."}
       },
       {
         "@type":"Question",
         "name":"Do I need Wi-Fi 7 for a busy home?",
-        "acceptedAnswer":{"@type":"Answer","text":"It helps. Wi-Fi 7’s 6 GHz, 320 MHz channels, MLO, and improved scheduling reduce contention and latency for modern clients."}
+        "acceptedAnswer":{"@type":"Answer","text":"It helps. Wi-Fi 7’s 6 GHz, wider channels, MLO, and smarter scheduling reduce contention and latency for modern phones and laptops."}
       },
       {
         "@type":"Question",
-        "name":"What’s the best fix if I can only do one thing?",
-        "acceptedAnswer":{"@type":"Answer","text":"Turn on QoS/SQM and cap bulk uploads to about 80–90% of your upstream. Uplink bufferbloat is a common cause of choppy calls and gaming lag."}
+        "name":"What’s the single best quick fix?",
+        "acceptedAnswer":{"@type":"Answer","text":"Enable QoS/SQM and cap bulk uploads to about 80–90% of your upstream. Uplink bufferbloat is a common cause of choppy calls and gaming lag."}
       },
       {
         "@type":"Question",
         "name":"Is mesh required for many devices?",
-        "acceptedAnswer":{"@type":"Answer","text":"Not always, but in larger or multi-story homes, mesh with wired backhaul keeps client airtime free and improves consistency across rooms."}
+        "acceptedAnswer":{"@type":"Answer","text":"Not always, but in larger or multi-story homes, a mesh with wired backhaul preserves wireless airtime for clients and keeps performance consistent across rooms."}
       }
     ]
   }
   </script>
 
-  <!-- Scripts -->
+  <!-- HowTo JSON-LD (for the 15-minute playbook) -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"HowTo",
+    "name":"15-minute Wi-Fi congestion playbook for 30–50 device homes",
+    "totalTime":"PT15M",
+    "supply":[{"@type":"HowToSupply","name":"Router admin app or web UI"}],
+    "tool":[{"@type":"HowToTool","name":"Ethernet cable (optional for wiring backhaul)"}],
+    "step":[
+      {"@type":"HowToStep","name":"Update and enable modern features","text":"Update firmware; enable WPA3, OFDMA, MU-MIMO, and 6 GHz."},
+      {"@type":"HowToStep","name":"Use one SSID","text":"Turn on band steering so modern clients move to 6 GHz automatically."},
+      {"@type":"HowToStep","name":"Wire heavy devices","text":"Connect TV/console/NAS via Ethernet, or park them on 5 GHz."},
+      {"@type":"HowToStep","name":"Segregate IoT","text":"Place IoT on 2.4 GHz or an IoT/Guest SSID without LAN access."},
+      {"@type":"HowToStep","name":"Configure QoS/SQM","text":"Set real ISP speeds; prioritize calls/work devices; cap backups to 80–90% upstream."},
+      {"@type":"HowToStep","name":"Fix backhaul","text":"Use wired backhaul if possible; otherwise ensure a dedicated wireless backhaul with strong node-to-node signal."},
+      {"@type":"HowToStep","name":"Room tests","text":"Test speed and latency in key rooms; adjust node placement 5–10 ft and re-test."}
+    ]
+  }
+  </script>
+
+  <!-- Scripts (keep same connectors) -->
   <script defer src="../../scripts.js"></script>
   <script defer src="../../assets/js/post.js"></script>
 </body>

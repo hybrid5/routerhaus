@@ -152,7 +152,7 @@ function initUI() {
     const t = e.target.closest("#openQuiz,[data-open-quiz]");
     if (!t) return;
     e.preventDefault();
-    window.location.href = "kits.html?quiz=1";
+    window.location.href = "/kits.html?quiz=1";
   });
 }
 

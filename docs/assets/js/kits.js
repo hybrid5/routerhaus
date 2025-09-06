@@ -39,7 +39,8 @@
     page: Math.max(1, Number(urlQS.get('page')) || 1),
     pageSize: Number(urlQS.get('ps')) || 12,
     compare: new Set(LS.get('rh.compare', [])),
-    showRecos: (urlQS.get('recos') ?? '0') !== '0',
+    // Default OFF; only user toggle may enable (ignore URL/localStorage)
+    showRecos: false,
     search: (urlQS.get('q') || '').trim().toLowerCase(),
     quiz: null,                      // latest quiz answers (object) or null
   };
@@ -262,7 +263,7 @@
     if (state.sort !== 'relevance') qs.set('sort', state.sort);
     if (state.page > 1) qs.set('page', String(state.page));
     if (state.pageSize !== 12) qs.set('ps', String(state.pageSize));
-    if (!state.showRecos) qs.set('recos', '0');
+    // Do not persist recos state; default is OFF and only user toggle changes it
     if (state.search) qs.set('q', state.search);
     for (const [k, set] of Object.entries(state.facets)) if (set.size) qs.set(k, [...set].join(','));
     history.replaceState(null, '', qs.toString() ? `?${qs}` : location.pathname);
@@ -848,8 +849,13 @@
       el.pageSizeSelect.addEventListener('change', () => { state.pageSize = Number(el.pageSizeSelect.value); state.page = 1; onStateChanged({}); });
     }
     if (el.toggleRecos) {
-      el.toggleRecos.checked = state.showRecos;
-      el.toggleRecos.addEventListener('change', () => { state.showRecos = el.toggleRecos.checked; syncUrl(); renderRecommendations(); });
+      el.toggleRecos.checked = state.showRecos; // starts false
+      el.toggleRecos.addEventListener('change', () => {
+        // Only user action here may enable/disable recommendations
+        state.showRecos = el.toggleRecos.checked;
+        syncUrl();
+        renderRecommendations();
+      });
     }
     el.openFiltersHeader?.addEventListener('click', openDrawer);
     el.filtersFab?.addEventListener('click', () => { openDrawer(); el.filtersFab.setAttribute('aria-expanded','true'); });
@@ -1005,7 +1011,8 @@
     state.sort = 'relevance';
     state.page = 1;
     state.pageSize = 12;
-    state.showRecos = true;
+    // Reset returns to default OFF
+    state.showRecos = false;
     state.quiz = null;
     state.search = '';
     state.compare.clear();
@@ -1013,7 +1020,7 @@
     const si = byId('searchInput'); if (si) si.value = '';
     if (el.sortSelect) el.sortSelect.value = state.sort;
     if (el.pageSizeSelect) el.pageSizeSelect.value = String(state.pageSize);
-    if (el.toggleRecos) el.toggleRecos.checked = state.showRecos;
+    if (el.toggleRecos) el.toggleRecos.checked = state.showRecos; // false
     LS.set('rh.compare', []);
     onStateChanged({});
   });
@@ -1032,9 +1039,9 @@
     if (answers.mesh === 'yes') { state.facets.mesh.clear(); state.facets.mesh.add('Mesh-ready'); }
     if (answers.mesh === 'no')  { state.facets.mesh.clear(); state.facets.mesh.add('Standalone'); }
 
-    state.showRecos = true;
-    if (el.toggleRecos) el.toggleRecos.checked = true;
-    onStateChanged({ scrollToRecos: true });
+    // Do NOT auto-enable recos; respect current toggle state.
+    if (el.toggleRecos) el.toggleRecos.checked = state.showRecos;
+    onStateChanged(state.showRecos ? { scrollToRecos: true } : {});
 
     // Reveal an "Edit quiz" button in header if present
     byId('editQuiz')?.removeAttribute('hidden');
@@ -1129,7 +1136,7 @@
 
       if (opts?.focusAfter?.focus) requestAnimationFrame(() => opts.focusAfter.focus());
       if (opts?.scrollToTop) window.scrollTo({ top:0, behavior:'smooth' });
-      if (opts?.scrollToRecos) el.recommendations?.scrollIntoView({ behavior:'smooth', block:'start' });
+      if (opts?.scrollToRecos && state.showRecos) el.recommendations?.scrollIntoView({ behavior:'smooth', block:'start' });
     });
   }
 

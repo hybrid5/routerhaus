@@ -5,32 +5,91 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Page not found." />
-  <meta name="robots" content="noindex" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>404 – RouterHaus</title>
 
-  <!-- Fonts & Styles -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet" />
+  <!-- SEO -->
+  <meta name="description" content="Page not found." />
+  <meta name="robots" content="noindex,follow" />
+
+  <!-- Styles (same connectors) -->
   <link rel="stylesheet" href="main.css" />
+  <link rel="stylesheet" href="assets/css/blog.css" />
+  <link rel="stylesheet" href="assets/css/post.css" />
 </head>
-<body>
-  <div id="header-placeholder"></div>
+<body data-page-404="true">
+  <!-- Keep header/footer via partial loader -->
+  <div id="header-placeholder" data-partial="header.html"></div>
 
-  <main>
+  <main class="post-shell">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="index.html">Home</a> › 404
+    </nav>
 
-  <!-- ===== 404 Hero ===== -->
-  <section class="hero">
-    <h1>404 – Page Not Found</h1>
-    <p>The page you're looking for doesn't exist.</p>
-    <div class="hero-actions">
-      <a href="index.html" class="btn">Back Home</a>
-    </div>
-  </section>
+    <header class="post-hero">
+      <h1>We can’t find that page</h1>
+      <p class="post-meta">It might have moved or the link had a typo.</p>
+    </header>
+
+    <article class="post-body">
+      <div class="callout info">
+        <div class="icon"><i class="fa-solid fa-circle-info"></i></div>
+        <div>
+          <strong>Try this:</strong> use search, or jump to our most-read guides below.
+        </div>
+      </div>
+
+      <!-- Search -->
+      <section aria-labelledby="search-title">
+        <h2 id="search-title">Search RouterHaus</h2>
+        <form id="siteSearch" class="nl-form" role="search" novalidate>
+          <label class="sr-only" for="q">Search</label>
+          <input id="q" name="q" type="search" placeholder="Search articles (e.g., Wi-Fi 7 mesh, iPhone 17)" />
+          <button class="btn primary" type="submit">Search</button>
+        </form>
+        <small id="searchMsg" role="status" aria-live="polite"></small>
+        <ul id="searchResults" class="link-list"></ul>
+      </section>
+
+      <!-- Maybe you meant… (auto-suggestion / auto-fix) -->
+      <section aria-labelledby="maybe-title" class="mt">
+        <h2 id="maybe-title">Maybe you meant</h2>
+        <div id="maybeContainer" class="card-grid"></div>
+      </section>
+
+      <!-- Popular / High-intent links -->
+      <section aria-labelledby="popular-title" class="mt">
+        <h2 id="popular-title">Popular</h2>
+        <ul class="chip-row">
+          <li><a class="chip" href="assets/blog/iphone-wifi7-upgrade.html">iPhone 17 & Wi-Fi 7</a></li>
+          <li><a class="chip" href="assets/blog/mesh-vs-single-router-2025.html">Mesh vs Single Router</a></li>
+          <li><a class="chip" href="assets/blog/work-from-home-network.html">WFH Network</a></li>
+          <li><a class="chip" href="assets/blog/why-range-matters-dead-zones.html">Fix Dead Zones</a></li>
+          <li><a class="chip" href="assets/blog/many-devices-bandwidth.html">50-Device Homes</a></li>
+          <li><a class="chip" href="assets/blog/structured-wiring-new-home.html">Structured Wiring</a></li>
+        </ul>
+      </section>
+
+      <!-- Primary CTAs -->
+      <section aria-labelledby="cta-title" class="mt">
+        <h2 id="cta-title" class="sr-only">Next steps</h2>
+        <div class="cta-row">
+          <a class="btn primary" href="kits.html">See Wi-Fi 7 Router Picks</a>
+          <a class="btn" href="consult.html">Book a Network Consult</a>
+          <a class="btn" href="blog.html">Browse All Articles</a>
+        </div>
+      </section>
+
+      <p class="mt">
+        Still stuck? <a id="reportLink" href="#">Report this broken link</a>.
+      </p>
+    </article>
   </main>
 
-  <div id="footer-placeholder"></div>
+  <div id="footer-placeholder" data-partial="footer.html"></div>
 
+  <!-- Icons + Scripts -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
   <script src="scripts.js" defer></script>
 </body>
 </html>

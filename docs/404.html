@@ -1,95 +1,151 @@
 <!-- ===========================
-     RouterHaus v1 – 404.html
-     =========================== -->
+     RouterHaus v3 — 404.html
+     Elegant, helpful, self-healing
+=========================== -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>404 – RouterHaus</title>
-
-  <!-- SEO -->
-  <meta name="description" content="Page not found." />
   <meta name="robots" content="noindex,follow" />
+  <meta name="color-scheme" content="light dark" />
+  <meta name="theme-color" content="#6f7dff" />
+  <title>404 — Let’s get you back on track | RouterHaus</title>
 
-  <!-- Styles (same connectors) -->
+  <!-- Fonts & Base -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="main.css" />
-  <link rel="stylesheet" href="assets/css/blog.css" />
-  <link rel="stylesheet" href="assets/css/post.css" />
+  <!-- Reuse site tokens/components -->
+  <link rel="stylesheet" href="assets/css/home.css" />
+  <link rel="stylesheet" href="assets/css/consult.css" />
+  <!-- Local page styles -->
+  <link rel="stylesheet" href="assets/css/404.css" />
+
+  <!-- Theme sync (silent) -->
+  <script>
+    (() => {
+      const root = document.documentElement;
+      const media = matchMedia('(prefers-color-scheme: dark)');
+      const apply = () => root.setAttribute('data-theme', media.matches ? 'dark' : 'light');
+      apply(); media.addEventListener('change', apply);
+    })();
+  </script>
+
+  <!-- Helpful hints for crawlers -->
+  <link rel="canonical" href="https://routerhaus.com/404.html" />
 </head>
-<body data-page-404="true">
-  <!-- Keep header/footer via partial loader -->
+<body data-page-404="1">
+  <!-- Header partial -->
   <div id="header-placeholder" data-partial="header.html"></div>
 
-  <main class="post-shell">
-    <nav class="breadcrumb" aria-label="Breadcrumb">
-      <a href="index.html">Home</a> › 404
-    </nav>
+  <main class="notfound">
+    <!-- ===== HERO ===== -->
+    <section class="nf-hero">
+      <div class="container hero-grid">
+        <div class="nf-copy reveal">
+          <span class="eyebrow">We couldn’t find that page</span>
+          <h1>404 — <span class="grad">Link not found</span></h1>
+          <p class="lede">The URL might be out of date, renamed, or mistyped. Try a quick search or jump to one of the popular destinations below.</p>
 
-    <header class="post-hero">
-      <h1>We can’t find that page</h1>
-      <p class="post-meta">It might have moved or the link had a typo.</p>
-    </header>
+          <!-- Quick actions -->
+          <div class="hero-actions" role="group" aria-label="Primary actions">
+            <a class="btn primary" href="kits.html?quiz=1">Start Recommendation</a>
+            <a class="btn ghost" href="consult.html">Talk to an Engineer</a>
+            <a class="btn ghost" href="blog.html">See the Journal</a>
+          </div>
 
-    <article class="post-body">
-      <div class="callout info">
-        <div class="icon"><i class="fa-solid fa-circle-info"></i></div>
-        <div>
-          <strong>Try this:</strong> use search, or jump to our most-read guides below.
+          <!-- Mini chips to common hubs -->
+          <div class="nf-chips">
+            <a class="chip" href="/solutions/home-wifi/">Home Wi-Fi</a>
+            <a class="chip" href="/solutions/business-networking/">Business / SMB</a>
+            <a class="chip" href="/solutions/new-construction/">New Construction</a>
+          </div>
         </div>
-      </div>
 
-      <!-- Search -->
-      <section aria-labelledby="search-title">
-        <h2 id="search-title">Search RouterHaus</h2>
-        <form id="siteSearch" class="nl-form" role="search" novalidate>
-          <label class="sr-only" for="q">Search</label>
-          <input id="q" name="q" type="search" placeholder="Search articles (e.g., Wi-Fi 7 mesh, iPhone 17)" />
+        <!-- Ambient art (same visual language as consult hero) -->
+        <aside class="nf-art glass reveal" aria-hidden="true">
+          <div class="rings"></div>
+          <div class="stats">
+            <div class="stat"><strong>0</strong><span>dead links (goal)</span></div>
+            <div class="stat"><strong>&lt;1s</strong><span>to a solution</span></div>
+            <div class="stat"><strong>1</strong><span>click to kits</span></div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- ===== SEARCH / SELF HEAL ===== -->
+    <section class="nf-search">
+      <div class="container">
+        <header class="section-head reveal">
+          <h2>Search the site</h2>
+          <p class="subtle">We’ll also try to auto-fix close matches for you.</p>
+        </header>
+
+        <form id="siteSearch" class="nf-searchbar glass reveal" role="search" aria-label="Search RouterHaus">
+          <label for="q" class="visually-hidden">Search</label>
+          <input id="q" name="q" type="search" placeholder="Try: Wi-Fi 7 routers, wired backhaul, VLANs…" autocomplete="off" />
           <button class="btn primary" type="submit">Search</button>
         </form>
-        <small id="searchMsg" role="status" aria-live="polite"></small>
-        <ul id="searchResults" class="link-list"></ul>
-      </section>
 
-      <!-- Maybe you meant… (auto-suggestion / auto-fix) -->
-      <section aria-labelledby="maybe-title" class="mt">
-        <h2 id="maybe-title">Maybe you meant</h2>
-        <div id="maybeContainer" class="card-grid"></div>
-      </section>
+        <p id="searchMsg" class="nf-msg" role="status" aria-live="polite"></p>
+        <ul id="searchResults" class="nf-results" aria-label="Search results"></ul>
+      </div>
+    </section>
 
-      <!-- Popular / High-intent links -->
-      <section aria-labelledby="popular-title" class="mt">
-        <h2 id="popular-title">Popular</h2>
-        <ul class="chip-row">
-          <li><a class="chip" href="assets/blog/iphone-wifi7-upgrade.html">iPhone 17 & Wi-Fi 7</a></li>
-          <li><a class="chip" href="assets/blog/mesh-vs-single-router-2025.html">Mesh vs Single Router</a></li>
-          <li><a class="chip" href="assets/blog/work-from-home-network.html">WFH Network</a></li>
-          <li><a class="chip" href="assets/blog/why-range-matters-dead-zones.html">Fix Dead Zones</a></li>
-          <li><a class="chip" href="assets/blog/many-devices-bandwidth.html">50-Device Homes</a></li>
-          <li><a class="chip" href="assets/blog/structured-wiring-new-home.html">Structured Wiring</a></li>
-        </ul>
-      </section>
+    <!-- ===== SUGGESTIONS (populated by scripts.js → routerhaus404) ===== -->
+    <section class="nf-suggest">
+      <div class="container">
+        <header class="section-head reveal">
+          <h2>Maybe you were looking for</h2>
+          <p class="subtle">Closest matches from the Journal</p>
+        </header>
 
-      <!-- Primary CTAs -->
-      <section aria-labelledby="cta-title" class="mt">
-        <h2 id="cta-title" class="sr-only">Next steps</h2>
-        <div class="cta-row">
-          <a class="btn primary" href="kits.html">See Wi-Fi 7 Router Picks</a>
-          <a class="btn" href="consult.html">Book a Network Consult</a>
-          <a class="btn" href="blog.html">Browse All Articles</a>
+        <div id="maybeContainer" class="cards cards-4 reveal" aria-live="polite">
+          <!-- JS will inject article cards here.
+               Graceful fallback below in case JSON isn’t available. -->
         </div>
-      </section>
 
-      <p class="mt">
-        Still stuck? <a id="reportLink" href="#">Report this broken link</a>.
-      </p>
-    </article>
+        <!-- Fallback static picks (rendered only if JS doesn’t fill) -->
+        <noscript>
+          <div class="cards cards-4">
+            <a class="card" href="kits.html"><h3>Find the right kit</h3><p>Answer a few questions and get tuned picks.</p></a>
+            <a class="card" href="consult.html"><h3>Consulting</h3><p>Design & deployment for large homes and SMB.</p></a>
+            <a class="card" href="assets/blog/iphone-wifi7-upgrade.html"><h3>iPhone 16 Pro + Wi-Fi 7</h3><p>Why your phone wants a new router.</p></a>
+            <a class="card" href="assets/blog/mesh-vs-single-router-2025.html"><h3>Mesh vs. Single Router</h3><p>What actually fits your home.</p></a>
+          </div>
+        </noscript>
+      </div>
+    </section>
+
+    <!-- ===== HELP / REPORT ===== -->
+    <section class="nf-help">
+      <div class="container">
+        <div class="help-grid">
+          <article class="card glass reveal">
+            <h3>Try these quick paths</h3>
+            <div class="nf-links">
+              <a class="btn" href="kits.html?quiz=1">Kit Finder</a>
+              <a class="btn" href="consult.html">Enterprise / Builder Consult</a>
+              <a class="btn" href="blog.html">All Articles</a>
+              <a class="btn" href="solutions/new-construction/">Structured Wiring</a>
+            </div>
+          </article>
+
+          <article class="card reveal">
+            <h3>Report a broken link</h3>
+            <p class="subtle">Spotted something off? Send us the URL and we’ll fix it fast.</p>
+            <a id="reportLink" class="btn ghost" href="#">Email this issue</a>
+          </article>
+        </div>
+      </div>
+    </section>
   </main>
 
+  <!-- Footer partial -->
   <div id="footer-placeholder" data-partial="footer.html"></div>
 
-  <!-- Icons + Scripts -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <!-- Scripts -->
   <script src="scripts.js" defer></script>
 </body>
 </html>
